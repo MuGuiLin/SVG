@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>SVG图形绘制 - 基本图形、属性</title>
+		<style type="text/css">
+			h1 {
+				text-align: center;
+			}
+
+			svg {
+				width: 100%;
+				height: 600px;
+				border: 1px solid blue;
+			}
+
+			.box {
+				margin: auto;
+				width: 80%;
+				font-size: 18px;
+				line-height: 36px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>SVG的基本图形 和 属性</h1>
+		<hr />
+
+		<div class="box">
+			<h2>SVG标签:</h2>
+			<ul>
+				<h4>标签</h4>
+				<li>&lt;svg width="" height="" style="" viewBox="0 0 0 0" &gt;&lt;/svg&gt;</li>
+				
+				<h4>属性</h4>
+				<li>宽度：width</li>
+				<li>高度：height</li>
+				<li>样式：style</li>
+				<li>视窗：viewBox="x, y, width, height"</li>
+				<li>视窗显示方式：preserveAspectRatio="xMidYMid meet"
+					<ol>
+						<b>值1</b>
+						<li>xMin viewport和viewBox左边对齐</li>
+						<li>xMid viewport和viewBox x轴中心对齐</li>
+						<li>xMax viewport和viewBox右边对齐</li>
+						<li>YMin viewport和viewBox上边缘对齐。注意Y是大写。</li>
+						<li>YMid viewport和viewBox y轴中心点对齐。注意Y是大写。</li>
+						<li>YMax viewport和viewBox下边缘对齐。注意Y是大写。</li>
+					</ol>
+					<ol>
+						<b>值2</b>
+						<li>meet 保持纵横比缩放viewBox适应viewport</li>
+						<li>slice 保持纵横比同时比例小的方向放大填满viewport</li>
+						<li>none 扭曲纵横比以充分适应viewport</li>
+
+					</ol>
+				</li>
+			</ul>
+			
+			<h2>SVG图形标签:</h2>
+			<ul>
+				<h4>标签</h4>
+				<li>圆形：circle</li>
+				<li>椭圆：ellipse</li>
+				<li>直线：line</li>
+				<li>折线：polyline</li>
+				<li>路径：path</li>
+				<li>矩形：rect</li>
+				<li>多边形：polygon</li>
+				<li>路径：path</li>
+				<li>蒙版：clipPath</li>
+
+				<h4>属性</h4>
+				<h3>SVG边线边框属性：</h3>
+				<li>stroke="边框色"</li>
+				<li>stroke-width="边框粗细"</li>
+				<li>stroke-linecap="边框端点样式"</li>
+				<li>stroke-dasharray="边框线型样式(虚线)"</li>
+			</ul>
+			
+			<h2>SVG结构标签:</h2>
+			<ul>
+				<h4>标签</h4>
+				<li>图形组合：g</li>
+				<li>引用：use</li>
+				<li>图像模板 symbol</li>
+			</ul>
+			
+			<h2>SVG文本标签:</h2>
+			<ul>
+				<h4>标签</h4>
+				<li>文本：text</li>
+				<li>文本路径：textPath</li>
+				<li>文本引用: tref（新版的svg中已经将<tref>这个标记删除，可以使用<use>标记替代它）</li>
+				<li>文本包裹：tspan</li>
+				
+			</ul>
+			
+
+			<h3>SVG的基本图形【SVG 意为可缩放矢量图形（不失真）。SVG 使用 XML 格式定义图像。】</h3>
+			<svg xmlns="http://www.w3.org/2000/svg">
+
+				<!--圆形-->
+				<circle cx="220" cy="150" r="100" opacity="0.8" fill="#00BC90" stroke="white" stroke-width="4">
+				</circle>
+				<circle cx="180" cy="120" r="18" fill="white" stroke="white" stroke-width="4"></circle>
+				<circle cx="260" cy="120" r="18" fill="white" stroke="white" stroke-width="4"></circle>
+				<circle cx="175" cy="115" r="10" fill="rgba(0,188,255,0.5)" stroke="white" stroke-width="4"></circle>
+				<circle cx="255" cy="115" r="10" fill="hsla(0,25%,80%,0.8)" stroke="white" stroke-width="4"></circle>
+				<path d="M 160 180 A 80 80 0 0 0 280 180" stroke="white" stroke-width="3" fill="none"></path>
+				<text x="190" y="280" fill="#00BC90">圆形 circle</text>
+
+
+				<!--椭圆-->
+				<ellipse cx="600" cy="150" rx="150" ry="100" fill="orange" stroke="red" stroke-width="4"></ellipse>
+				<text x="600" y="280" fill="orange">椭圆 ellipse</text>
+
+
+				<!--直线-->
+				<line x1="50" y1="400" x2="400" y2="400" stroke="blue" stroke-width="5"></line>
+				<text x="200" y="420" fill="blue">直线 line</text>
+
+
+				<!--折线-->
+				<polyline points="1000 250
+						1100 50
+						900 150
+						900 50
+						1100 250
+						1100 150
+						900 250
+						1000 50
+						1000 250
+						" fill="none" stroke="blue" stroke-width="2"></polyline>
+				<text x="1000" y="280" fill="blue">折线 polyline</text>
+
+
+				<!--路径-->
+				<path d="M 60 450 A 90 60 0 0 0 400 450" stroke="green" stroke-width="3" fill="none"></path>
+				<text x="180" y="500" fill="green">路径 path</text>
+
+
+				<!--圆角矩形-->
+				<rect x="850" y="320" rx="10" ry="10" width="300" height="200" fill="cyan" stroke="red"></rect>
+				<text x="980" y="550" fill="black">矩形 rect</text>
+
+
+				<!--直角矩形-->
+				<rect x="900" y="370" width="200" height="100" fill="white" stroke="blue"></rect>
+
+
+				<!--多边形 自动合闭-->
+				<polygon points="450 350
+						550 300
+						650 300
+						750 350
+						750 450
+						650 500
+						550 500
+						450 450" fill="rgba(255,0,255,0.5)" stroke="blue" stroke-dasharray="10 2" stroke-width="2"></polygon>
+				<text x="580" y="520" fill="blue">多边形 polygon</text>
+
+			</svg>
+
+			<p><img src="./img/1.矩形rect.jpg"></p>
+			<p><img src="./img/2.圆形cricle.jpg"></p>
+			<p><img src="./img/3.椭圆ellipse.jpg"></p>
+			<p><img src="./img/4.直线line.jpg"></p>
+			<p><img src="./img/5.折线polyline.jpg"></p>
+			<p><img src="./img/6.多边形polygon.jpg"></p>
+			<p><img src="./img/基本API.jpg"></p>
+			<p><img src="./img/基本属性.jpg"></p>
+
+		</div>
+
+	</body>
+
+	<html>

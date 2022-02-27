@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>SVG视野、坐标系统 - 坐标变换实例</title>
+		<style type="text/css">
+			h1 {
+				text-align: center;
+			}
+
+			svg {
+				border: 1px solid red;
+				margin: auto;
+				display: block;
+			}
+
+			#transform {
+				width: 300px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>SVG的坐标变换实例</h1>
+		<hr />
+
+		<fieldset>
+			<legend>SVG坐标变换设置</legend><br />
+			<label>分组选择：
+				<select id="group">
+					<option value="a">A组</option>
+					<option value="b">L_B组</option>
+					<option value="c">&nbsp;&nbsp;L_C组</option>
+					<option value="d">L_D组</option>
+				</select>
+			</label>
+
+			<label>变换属性：
+				<input id="tc" type="text" name="" value="" placeholder="请输入变换属性" />
+				<span id="ts"></span>
+				&nbsp;&nbsp;&nbsp;&nbsp;如：<label>偏移translate(50 50) 、旋转rotate(45) 、缩放scale(3) 矩阵matrix(0 2 1 0 2
+					1)</label>
+			</label><br /><br />
+		</fieldset>
+		<br /><br />
+		<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="-50 -50 1000 600">
+			<defs>
+				<g id="coord">
+					<!--方便被调用-->
+					<line x1="0" y1="0" x2="400" y2="0"></line>
+					<!--横坐标线 x-->
+					<line x1="0" y1="0" x2="0" y2="400"></line>
+					<!--竖坐标线 y-->
+					<circle cx="0" cy="0" r="4" fill="red" stroke="blue" stroke-width="2"></circle>
+					<!--小圆点-->
+					<circle cx="100" cy="0" r="4" fill="yellow" stroke="purple"></circle>
+					<circle cx="200" cy="0" r="4" fill="yellow" stroke="purple"></circle>
+					<circle cx="0" cy="100" r="4" fill="yellow" stroke="purple"></circle>
+					<circle cx="0" cy="200" r="4" fill="yellow" stroke="purple"></circle>
+				</g>
+			</defs>
+			<use xlink:href="#coord" stroke="black" fill="black"></use>
+			<text x="-10" y="-10">分组</text>
+
+			<g id="a" fill="red" stroke="red">
+				<use xlink:href="#coord"></use>
+				<!--调用-->
+				<text x="5" y="20">a</text>
+
+				<g id="b" fill="green" stroke="green">
+					<use xlink:href="#coord"></use>
+					<!--调用-->
+					<text x="15" y="20">b</text>
+
+					<g id="c" fill="blue" stroke="blue">
+						<use xlink:href="#coord"></use>
+						<!--调用-->
+						<text x="25" y="20">c</text>
+					</g>
+				</g>
+
+				<g id="d" fill="purple" stroke="purple">
+					<use xlink:href="#coord"></use>
+					<!--调用-->
+					<text x="35" y="20">d</text>
+				</g>
+			</g>
+		</svg>
+	</body>
+
+	<script type="text/javascript">
+		//		var tc = document.getElementById('tc').value;
+		function target() {
+			return document.getElementById(group.value);
+		}
+
+		function tc2ts(tc) {
+			var arr = (tc || '').split('  '); //split() 方法用于把一个字符串分割成字符串数组。
+			var ts = '';
+			var elem, lastElemType;
+			var cmd = {
+				't': 'translate(',
+				'r': 'rotate(',
+				's': 'scale(',
+				'm': 'matrix('
+			};
+
+			while (elem = arr.shift()) //shift() 方法用于把数组的第一个元素从其中删除，并返回第一个元素的值。
+			{
+				if (cmd[elem]) {
+					if (lastElemType == 'number') ts += ')'
+					ts += cmd[elem];
+					lastElemType = 'command';
+				} else {
+					if (lastElemType == 'number') ts += ', ';
+					ts += elem;
+					lastElemType = 'number';
+				}
+			}
+			if (ts.length) ts += ')';
+			return ts;
+		}
+
+		group.oninput = function() {
+			tc.value = target().tc || '';
+			ts.innerHTML = tc2ts(tc.value);
+		}
+
+		tc.oninput = function() {
+			target().tc = tc.value;
+			target().setAttribute('transform', ts.innerHTML = tc2ts(tc.value));
+		}
+	</script>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>SVG填充方式：RGB 和 HSL 与 透明度</title>
+		<style type="text/css">
+			html,
+			body {
+				font-family: "微软雅黑";
+			}
+
+			h1 {
+				text-align: center;
+			}
+
+			h3 {
+				color: red;
+				vertical-align: text-top;
+			}
+
+			pre {
+				font-size: 24px;
+			}
+
+			svg {
+				width: 800px;
+				height: 600px;
+				border: 1px solid red;
+				display: block;
+				margin: auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>SVG填充方式：RGB 和 HSL、透明度</h1>
+		<hr />
+		
+		<ul>
+			<h3>填充颜色，透明度</h3>
+			<li>&lt;rect fill="rgb(255, 255, 0)" opacity="0.5"/&gt;</li>
+			<li>&lt;rect fill="hsl(0, 50%, 20%)" opacity="0.5"/&gt;</li>
+			
+			<h3>填充颜色及透明度</h3>
+			<li>&lt;rect fill="rgba(255, 255, 0, 0.5)" /&gt;</li>
+			<li>&lt;rect fill="hsla(0, 50%, 20%, 0.5)" /&gt;</li>
+		</ul>
+		
+		<h3>
+			<a target="_blank" href="https://paletton.com/">https://paletton.com 在线配色方案</a>
+			<br>
+			<br>
+			
+			<img src="img/SVG填充方式与透明度.jpg" width="800" />
+			<iframe src="https://paletton.com" width="1000" height="860"></iframe>
+		</h3>
+		
+		<p>
+			<svg xmlns="http://www.w3.org/2000/svg">
+				<circle cx="100" cy="100" r="90" fill="#39F"></circle>
+				<circle cx="70" cy="80" r="20" fill="white"></circle>
+				<circle cx="130" cy="80" r="20" fill="white"></circle>
+				<circle cx="65" cy="75" r="10" fill="black"></circle>
+				<circle cx="125" cy="75" r="10" fill="black"></circle>
+				<path d="M 50 140 A 60 60 0 0 0 150 140" stroke="white" stroke-width="3" fill="none"></path>
+			</svg>
+		</p>
+	</body>
+
+</html>
