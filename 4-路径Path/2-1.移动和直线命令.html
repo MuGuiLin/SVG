@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG路径Path - 移动和直线命令</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .text {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+
+
+        }
+
+        table {
+            border: 2px solid gray;
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+            background-color: transparent;
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        table tr th {
+            background-color: #EEE;
+            border: 1px solid #ddd;
+        }
+
+        table tr td {
+            padding: 0 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG路径Path - 移动和直线命令</h1>
+    <hr>
+    <div class="text">
+
+        <img src="./img/Path移动和直线命令.jpg" />
+
+        <h3>Path指令</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 60px;">指令</th>
+                    <th style="width: 160px;">参数</th>
+                    <th style="width: 150px;">名称</th>
+                    <th>描述</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>M</th>
+                    <td>x,y</td>
+                    <td>moveto<br>
+                        移动到</td>
+                    <td>移动虚拟画笔到指定的（x,y）坐标，仅移动不绘制</td>
+                </tr>
+                <tr>
+                    <th>m</th>
+                    <td>x,y</td>
+                    <td>moveto</td>
+                    <td>同M，但使用相对坐标</td>
+                </tr>
+                <tr>
+                    <th>L</th>
+                    <td>x,y</td>
+                    <td>lineto<br>
+                        连直线到</td>
+                    <td>从当前画笔所在位置绘制一条直线到指定的（x,y）坐标</td>
+                </tr>
+                <tr>
+                    <th>l</th>
+                    <td>x,y</td>
+                    <td>lineto</td>
+                    <td>同L，但使用相对坐标</td>
+                </tr>
+                <tr>
+                    <th>H</th>
+                    <td>x</td>
+                    <td>horizontal lineto<br>
+                        水平连线到</td>
+                    <td>绘制一条水平直线到参数指定的x坐标点，y坐标为画笔的y坐标</td>
+                </tr>
+                <tr>
+                    <th>h</th>
+                    <td>x</td>
+                    <td>horizontal lineto</td>
+                    <td>同H，但使用相对坐标</td>
+                </tr>
+                <tr>
+                    <th>V</th>
+                    <td>y</td>
+                    <td>vertical lineto<br>
+                        垂直连线到</td>
+                    <td>从当前位置绘制一条垂直直线到参数指定的y坐标</td>
+                </tr>
+                <tr>
+                    <th>v</th>
+                    <td>y</td>
+                    <td>vertical lineto</td>
+                    <td>同V，但使用相对坐标</td>
+                </tr>
+                <tr>
+                    <th>C</th>
+                    <td>x1,y1 x2,y2 x,y</td>
+                    <td>curveto<br>
+                        三次方贝塞尔曲线</td>
+                    <td>从当前画笔位置绘制一条三次贝兹曲线到参数（x,y）指定的坐标。x1，y1和x2,y2是曲线的开始和结束控制点，用于控制曲线的弧度</td>
+                </tr>
+                <tr>
+                    <th>c</th>
+                    <td>x1,y1 x2,y2 x,y</td>
+                    <td>curveto</td>
+                    <td>同C，但使用相对坐标</td>
+                </tr>
+                <tr>
+                    <th>S</th>
+                    <td>x2,y2 x,y</td>
+                    <td>shorthand / 平滑三次方贝塞尔曲线</td>
+                    <td>从当前画笔位置绘制一条三次贝塞尔曲线到参数（x,y）指定的坐标。x2,y2是结束控制点。开始控制点和前一条曲线的结束控制点相同</td>
+                </tr>
+                <tr>
+                    <th>s</th>
+                    <td>x2,y2 x,y</td>
+                    <td>shorthand / 平滑三次方贝塞尔曲线</td>
+                    <td>同S，但使用相对坐标</td>
+                </tr>
+                <tr>
+                    <th>Q</th>
+                    <td>x1,y1 x,y</td>
+                    <td>二次方贝塞尔曲线</td>
+                    <td>从当前画笔位置绘制一条二次方贝塞尔曲线到参数（x,y）指定的坐标。x1,y1是控制点，用于控制曲线的弧度</td>
+                </tr>
+                <tr>
+                    <th>q</th>
+                    <td>x1,y1 x,y</td>
+                    <td>二次方贝塞尔曲线</td>
+                    <td>同Q，但使用相对坐标</td>
+                </tr>
+                <tr>
+                    <th>T</th>
+                    <td>x,y</td>
+                    <td>平滑的二次贝塞尔曲线</td>
+                    <td>从当前画笔位置绘制一条二次贝塞尔曲线到参数（x,y）指定的坐标。控制点被假定为最后一次使用的控制点</td>
+                </tr>
+                <tr>
+                    <th>t</th>
+                    <td>x,y</td>
+                    <td>平滑的二次贝塞尔曲线</td>
+                    <td>同T，但使用相对坐标</td>
+                </tr>
+                <tr>
+                    <th>A</th>
+                    <td>rx,ry x-axis-rotation large-arc-flag,sweepflag x,y</td>
+                    <td>椭圆弧线</td>
+                    <td>从当前画笔位置开始绘制一条椭圆弧线到（x,y）指定的坐标。rx和ry分别为椭圆弧线水平和垂直方向上的半径。x-axis-rotation指定弧线绕x轴旋转的度数。它只在rx和ry的值不相同是有效果。large-arc-flag是大弧标志位，取值0或1，用于决定绘制大弧还是小弧。sweep-flag用于决定弧线绘制的方向
+                    </td>
+                </tr>
+                <tr>
+                    <th>a</th>
+                    <td>rx,ry x-axis-rotation large-arc-flag,sweepflag x,y</td>
+                    <td>椭圆弧线</td>
+                    <td>同A，但使用相对坐标</td>
+                </tr>
+                <tr>
+                    <th>Z</th>
+                    <td>无</td>
+                    <td>闭合路径</td>
+                    <td>从结束点绘制一条直线到开始点，闭合路径</td>
+                </tr>
+                <tr>
+                    <th>z</th>
+                    <td>无</td>
+                    <td>闭合路径</td>
+                    <td>同Z</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="500px">
+            <path d="M 100 100 H 300 V 200 Z" style="fill: transparent; stroke: red; stroke-width: 2"></path>
+        </svg>
+
+    </div>
+</body>
+
+</html>
