@@ -53,17 +53,26 @@
     <hr>
 
     <div class="text">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="transparent">
+            <image xlink:href="./img/computer.png" width="100" height="100" x="600" y="20"></image>
+            <image xlink:href="./img/mobile.png" width="100" height="100" x="1200" y="20"></image>
             <path id="path" fill="white" stroke="#02edf9" stroke-width="2" stroke-dasharray="5 2"></path>
+            <rect id="rect" x="650" y="400" width="100" height="200" fill="transparent" stroke="#02edf9" stroke-width="3" stroke-dasharray="6 3"></rect>
         </svg>
         <textarea class="textarea" id="textarea" placeholder="请在此处输入Path绘制命令！"></textarea>
     </div>
 
     <script>
         const path = document.querySelector('#path');
+        const rect = document.querySelector('#rect');
         const textarea = document.querySelector('#textarea');
 
-        const d = ``;
+        const d = `
+    M700 100 l500 0 M950 100 v50 M200 150 h1500 M280 150 v50 h100 v150 h-30 v100 h-100 v-200 h100 v100 h-20 v60 h-50 v1-120 h50 v60
+    M450 350 h1250
+    M450 350 v50 h50 v200 h-100 v-200 h50 v50 l-30 40 m 30 -40 l30 40
+    `;
+
         textarea.value = d;
         path.setAttribute('d', d);
 
@@ -71,6 +80,13 @@
             // path.setAttribute('d', 'M250 150 L150 350 L350 350 Z');
             path.setAttribute('d', e.target.value);
         }, false);
+
+        const stroke = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple'];
+
+        setInterval(() => {
+            rect.setAttribute('stroke', stroke[parseInt(Math.random() * 7)]);
+        }, 1000);
+
     </script>
 </body>
 
