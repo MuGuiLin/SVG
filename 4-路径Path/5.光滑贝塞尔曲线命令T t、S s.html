@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG路径Path - 椭圆弧线命令A a</title>
+    <title>SVG路径Path - 光滑贝塞尔曲线命令T t、S s</title>
     <style>
         html,
         body {
@@ -49,10 +49,15 @@
 </head>
 
 <body>
-    <h1>SVG路径Path - 椭圆弧线命令A a</h1>
+    <h1>SVG路径Path - 光滑贝塞尔曲线命令T t、S s</h1>
     <hr>
-
-    <img src="./img/Path 弧线命令 A a.jpg" alt="" />
+    <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+    <a href="https://www.w3school.com.cn/svg/index.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+    <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+    <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+    <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+    
+    <img src="./img/光滑(平滑)贝瑟尔曲线.jpg" alt="" />
 
     <div class="text">
         <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
@@ -65,12 +70,19 @@
         const path = document.querySelector('#path');
 
         const d = `
-    M 200 200 A 400 200 0 0 1 300 300 
-    M 300 400 A 200 100 0 1 0 400 500 
-    M 500 200 A 400 200 0 0 0 600 300 
-    M 800 200 A 200 100 0 1 1 900 300  
+    M100 200 C100 100 250 100 250 200 S400 300 400 200 
+    M100 300 C100 200 250 200 250 300 
+    M100 300 C100 400 250 400 250 300
 
-    M 1000 500 h 100 l -100 100 v -100 m 100 0 a 100 100 0 0 1 -100 100
+
+    M1150 200 C1010 200 1010 400 1150 400 S1300 590 1150 600
+
+    M1150 280 C1122 280 1122 320 1150 320 M1150 280 C1177 280 1177 320 1150 320
+
+    M1150 480 C1122 480 1122 520 1150 520 M1150 480 C1177 480 1177 520 1150 520
+
+    M1150 200 C870  200 870 600 1150 600 M1150 200 C1430 200 1430 600 1150 600
+
     `;
 
         const textarea = document.querySelector('#textarea');
