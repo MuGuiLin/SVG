@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG文本 - Text 和 tspan标签dx dy 实例-波浪文字效果</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .text {
+            margin: auto;
+            width: 80%;
+            height: 800px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 2px double rgb(99, 99, 99);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG文本 - Text 和 tspan标签dx dy 实例-波浪文字效果</h1>
+    <hr>
+    <div class="text">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3school.com.cn/svg/index.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+
+        <img src="./img/SVG文本.jpg" />
+
+        <h3>text元素定义了一个由文字组成的图形，可以将渐变、图案、剪切路径、遮罩或者滤镜应用到text上。</h3>
+
+        <svg xmlns:xlink="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <pattern id="pen1" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M0 0 H20 V20" stroke="gray" stroke-dasharray="1 2" fill="none"></path>
+                </pattern>
+            </defs>
+
+            <!-- dx 和 dy 的值可以是数组，注：数组中每个值就是对应文本的的间隔距离【也就是对应到每个具体的文字】 -->
+            <rect x="0" y="0" width="100%" height="100%" fill="url(#pen1)"></rect>
+            <path d="M0 200 H1510 M200 0 V400" stroke="blue" fill="none"></path>
+            <text x="180" y="200" id="text" dx="" dy="" style="font-size: 20;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</text>
+        </svg>
+
+    </div>
+
+    <script>
+        const text = document.querySelector('#text');
+        const len = text.innerHTML.length;
+
+        let dx = [];
+        let dy = [];
+        let i = len;
+        let t = 0;
+
+        while (i--) {
+            dx.push(20);
+        };
+
+        function arange(t) {
+            dy = [];
+            let ly = 0, cy = 0;
+            for (let i = 0; i < dx.length; i++) {
+                cy = -100 * Math.sin(i * 18.85 + t);  // 上下
+                cy = -100 * Math.sin(i * 18.5 + t); // 前后
+                // cy = -100 * Math.sin(0.02 * i * 18.85 + t); // 后前
+                dy.push(cy - ly);
+                ly = cy;   // 小甩、大甩
+            }
+        };
+
+        function render() {
+            text.setAttribute('dx', dx.join(' '));
+            text.setAttribute('dy', dy.join(' '));
+        };
+
+        !(function frame() {
+            t += 0.04;
+            arange(t);
+            render();
+            requestAnimationFrame(frame);
+        })();
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG文本 - Text 和 tspan标签</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .text {
+            margin: auto;
+            width: 80%;
+            height: 800px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 2px double rgb(99, 99, 99);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG文本 - Text 和 tspan标签</h1>
+    <hr>
+    <div class="text">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3school.com.cn/svg/index.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+
+        <img src="./img/SVG文本.jpg" />
+
+        <h3>text元素定义了一个由文字组成的图形，可以将渐变、图案、剪切路径、遮罩或者滤镜应用到text上。</h3>
+
+        <svg xmlns:xlink="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <pattern id="pen1" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M0 0 H20 V20" stroke="gray" stroke-dasharray="1 2" fill="none"></path>
+                </pattern>
+            </defs>
+
+            <!-- tspan标签是在text中，用于包含文字使用的 -->
+            <rect x="0" y="0" width="100%" height="100%" fill="url(#pen1)"></rect>
+            <path d="M0 100 H1460 M100 0 V200" stroke="red" fill="none"></path>
+            <text x="100" y="100" style="font-size: 100;">
+                我是<tspan stroke="red" stroke-width="2" fill="none">SVG</tspan>中的
+                <tspan stroke="blue" stroke-width="1" fill="cyan">Text文本</tspan>元素
+            </text>
+
+            <!-- 用dx 和 dy 改变文字对齐基线， 如果在text中的tspan标签中设置了dx 和 dy 那么text中的dx 和 dy就会被覆盖掉！！ -->
+            <rect x="0" y="300" width="100%" height="100%" fill="url(#pen1)"></rect>
+            <path d="M0 300 H1460 M100 200 v200" stroke="blue" fill="none"></path>
+            <text x="100" y="300" dx="0" dy="30" style="font-size: 100;">
+                <tspan dy="-50 50" fill="red">AB</tspan><tspan dy="-50 50" stroke="green" fill="none">C<tspan fill="yellow">D</tspan>E</tspan>FG
+            </text>
+
+
+        </svg>
+
+    </div>
+</body>
+
+</html>
