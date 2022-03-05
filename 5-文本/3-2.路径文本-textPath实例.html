@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG文本 - 路径文本-textPath</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .text {
+            margin: auto;
+            width: 80%;
+            height: 800px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 2px double rgb(99, 99, 99);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG文本 - 路径文本-textPath</h1>
+    <hr>
+    <div class="text">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3school.com.cn/svg/index.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+
+        <h3>&lt;text>除了笔直地绘制一行文字以外， SVG 也可以根据&lt;path> 元素的形状来放置文字。
+            只要在textPath元素内部放置文本，并通过其xlink:href属性值引用&lt;path>元素，我们就可以让文字块呈现在&lt;path>元素给定的路径上了。</h3>
+
+        <img src="./img/文本路径相关属性.jpg" alt="" />
+
+        <ul>
+            <h3>textPath元素中的相关属性：</h3>
+            <li>startOffset - 定义在将路径转换为<textPath>元素的坐标系后，沿路径的初始当前文本位置从路径起点开始的偏移量。</li>
+            <li>method - 指示应沿&lt;textPath> 元素的路径呈现文本的方法。</li>
+            <li>spacing - 定义字符之间的间距</li>
+            <li>xlink:href - 对资源的引用定义为引用 IRI。该链接的确切含义取决于使用它的每个元素的上下文。</li>
+        </ul>
+
+        <h3>textPath元素中的相关属性实例：</h3>
+
+        <div id="ctrl">
+            x位置：<input type="range" ctrl="x" value="0" min="-200" max="200" />
+            ，dy位置：<input type="range" ctrl="dy" value="0" min="-200" max="200" />
+            ，startOffset偏移：<input type="range" ctrl="startOffset" value="0" min="0" max="100" />
+            ，水平对齐方式：<select ctrl="text-anchor">
+                <option value="start">水平左对齐-start</option>
+                <option value="middle">水平居中对齐-middle</option>
+                <option value="end">水平右对齐-end</option>
+            </select>
+
+            ，垂直对齐方式：<select ctrl="dominant-baseline">
+                <option value="top">垂直上对齐-top</option>
+                <option value="middle">垂直居中对齐-middle</option>
+                <option value="bottom">垂直上对齐-bottom</option>
+            </select>
+
+            ，<input type="reset" ctrl="reset" value="重置" />
+        </div>
+
+        <svg xmlns:xlink="http://www.w3.org/2000/svg" width="100%" height="100%">
+
+            <text id="text" text-anchor="start" dominant-baseline="middle" style="font-size: 22;">
+                <textPath xlink:href="#path">
+                    我是
+                    <tspan dx="20" dy="-30" fill="blue">textPath</tspan>
+                    <tspan dx="20" dy="30">这个</tspan>
+                    <tspan dx="20" dy="30" fill="green">标签</tspan>
+                    <tspan dx="20" dy="-30">中的文本</tspan>
+                </textPath>
+            </text>
+
+            <path id="path" d="M100 200 Q200 100 300 200 T500 200" fill="none" stroke="red"></path>
+
+            <g fill="blue">
+                <circle cx="100" cy="200" r="5"></circle>
+                <circle cx="300" cy="200" r="5"></circle>
+                <circle cx="500" cy="200" r="5"></circle>
+            </g>
+
+        </svg>
+
+        <script>
+            const ctrl = document.querySelector('#ctrl');
+
+            const text = document.querySelector('#text');
+            const textPath = text.firstElementChild;
+            console.log(textPath)
+
+            function getAlignmentDy(type) {
+                // https://developer.mozilla.org/zh-CN/docs/Web/API/SVGGraphicsElement/getBBox
+                // SVGGraphicsElement.getBBox()允许我们确定对象适合的最小矩形的坐标。返回的坐标是相对于当前svg空间的，即在将所有几何属性应用于目标元素中包含的所有元素之后。
+                const box = text.getBBox();
+                // console.log('getBBox()', box);
+
+                const y = +text.getAttribute('y');
+                switch (type) {
+                    case 'top':
+                        return y - box.y;
+                        break;
+                    case 'middle':
+                        return y - (box.y + box.height / 2);
+                        break;
+                    case 'bottom':
+                        return y - (box.y + box.height);
+                        break;
+                    default:
+                        return box.y;
+                        break;
+                }
+            };
+
+            function upDate(target) {
+                let attr = target.getAttribute('ctrl');
+                if (!attr) return false;
+                if ('startOffset' === attr) {
+                    // 偏移量
+                    textPath.setAttribute(attr, target.value + '%');
+                } else if ('dominant-baseline' === attr) {
+                    // 垂直对齐方式
+                    text.setAttribute('dy', 0);
+                    text.setAttribute('dy', getAlignmentDy(target.value));
+                } else {
+                    text.setAttribute(attr, target.value);
+                }
+            };
+
+            // 事件代理1
+            ctrl.addEventListener('input', function (evt) {
+                upDate(evt.target);
+            });
+
+            // 事件代理2
+            ctrl.addEventListener('reset', function (evt) {
+                setTimeout(() => {
+                    let list = document.querySelectorAll('#ctrl *[ctrl]');
+                    [].slice.call(list).forEach(upDate)
+                });
+            });
+
+        </script>
+    </div>
+</body>
+
+</html>
