@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG文本 - 路径文本-textPath 脚本控制</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .text {
+            margin: auto;
+            width: 80%;
+            height: 800px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 2px double rgb(99, 99, 99);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG文本 - 路径文本-textPath 脚本控制</h1>
+    <hr>
+    <div class="text">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3school.com.cn/svg/index.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+
+        <h3>&lt;text>除了笔直地绘制一行文字以外， SVG 也可以根据&lt;path> 元素的形状来放置文字。
+            只要在textPath元素内部放置文本，并通过其xlink:href属性值引用&lt;path>元素，我们就可以让文字块呈现在&lt;path>元素给定的路径上了。</h3>
+
+        <img src="./img/脚本控制textPath.jpg" alt="" />
+
+        <ul>
+            <h3>textPath元素中的相关属性：</h3>
+            <li>startOffset - 定义在将路径转换为<textPath>元素的坐标系后，沿路径的初始当前文本位置从路径起点开始的偏移量。</li>
+            <li>method - 指示应沿&lt;textPath> 元素的路径呈现文本的方法。</li>
+            <li>spacing - 定义字符之间的间距</li>
+            <li>xlink:href - 对资源的引用定义为引用 IRI。该链接的确切含义取决于使用它的每个元素的上下文。</li>
+        </ul>
+
+
+        <h3>textPath元素中的相关属性实例：</h3>
+
+        <div>
+            Path：<select id="select">
+                <option value="none">none</option>
+                <option value="#path1">#path1</option>
+                <option value="#path2">#path2</option>
+                <option value="#path3">#path3</option>
+            </select>
+        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+
+            <g fill="purple">
+                <circle cx="100" cy="200" r="5"></circle>
+                <circle cx="300" cy="200" r="5"></circle>
+                <circle cx="500" cy="200" r="5"></circle>
+            </g>
+
+            <path id="path1" d="M100 200 Q200 100 300 200 T500 200" fill="none" stroke="red"></path>
+            <path id="path2" d="M100 300 l100 -50 200 100 100 -50" fill="none" stroke="green"></path>
+            <path id="path3" d="M100 400 A400 300 0 0 0 500 400" fill="none" stroke="blue"></path>
+
+            <text id="text" x="100" y="100" style="font-size: 22;">
+                Text Path Scripting
+                <tspan id="tspan" stroke-width="5">
+                    我是tspan这个标签中的文本
+                </tspan>
+            </text>
+
+
+        </svg>
+
+        <script>
+            const SVG_NS = 'http://www.w3.org/2000/svg';
+            const XLINK_NS = 'http://www.w3.org/1999/xlink';
+
+            const select = document.querySelector('#select');
+            const text = document.querySelector('#text');
+            const tspan = document.querySelector('#tspan');
+
+
+            function addTextPath() {
+                const textPath = document.createElementNS(SVG_NS, 'textPath');
+                while (text.firstChild) {
+                    textPath.appendChild(text.firstChild);
+                }
+                text.appendChild(textPath);
+            };
+
+            function setTextPath(path) {
+                const textPath = text.firstChild;
+                textPath.removeAttribute(XLINK_NS, 'xlink:href');
+                textPath.setAttributeNS(XLINK_NS, 'xlink:href', path);
+
+                const pathDom = document.querySelector(path);
+                tspan.setAttribute('fill', pathDom.getAttribute('stroke'));
+            };
+
+            function delTextPath(target) {
+                const textPath = text.firstChild;
+                while (textPath.firstChild) {
+                    text.appendChild(textPath.firstChild);
+                }
+                text.removeChild(textPath);
+                tspan.removeAttribute('fill');
+            };
+
+
+            select.addEventListener('input', function (evt) {
+                const { value } = (evt.target);
+                if (text.firstChild.tagName && 'TEXTPATH' === text.firstChild.tagName.toUpperCase()) {
+                    delTextPath();
+                    addTextPath();
+                    setTextPath(value);
+                } else {
+                    if ('none' !== value) {
+                        addTextPath();
+                        setTextPath(value);
+                    }
+                }
+            });
+        </script>
+    </div>
+</body>
+
+</html>
