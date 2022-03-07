@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG图形引用、裁切、蒙版 - mask标签-图形蒙版实例-满天星3</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: #001122;
+        }
+
+        h1 {
+            box-sizing: border-box;
+            color: white;
+            text-align: center;
+        }
+
+        .text {
+            margin: auto;
+            line-height: 36px;
+            color: white;
+            font-size: 18px;
+        }
+
+        .text a {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG图形引用、裁切、蒙版 - mask标签-图形蒙版实例-满天星3</h1>
+
+    <hr>
+
+    <div class="text">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3school.com.cn/svg/index.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="-400 -300 800 600"
+        preserveAspectRatio="xMidYMid slice">
+        <defs>
+            <!-- 通过use引用的图形，在图形改变后，所有use的引用也会改变 -->
+            <polygon id="star" points="0 -10 2 -2 10 0 2 2 0 10 -2 2 -10 0 -2 -2" fill="wheat"></polygon>
+        </defs>
+
+        <!-- 星星背景 -->
+        <g id="star-group"></g>
+
+        <!-- 月亮 -->
+        <g id="moon-group">
+            <!-- <circle cx="-250" cy="-100" r="80" fill="yellow"></circle>
+            <circle cx="-220" cy="-140" r="80" fill="#001122"></circle> -->
+            <!-- 蒙版 -->
+            <mask id="moon-mask">
+                <circle cx="-250" cy="-100" r="80" fill="yellow"></circle>
+                <circle cx="-220" cy="-140" r="80" fill="black"></circle>
+            </mask>
+            <circle cx="-250" cy="-100" r="80" fill="yellow" mask="url(#moon-mask)"></circle>
+        </g>
+
+        <!-- 灯塔、灯光 -->
+        <g id="light-tower" transform="translate(250, 0)">
+            <defs>
+                <!-- 线性渐变 -->
+                <linearGradient id="tower" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#666"></stop>
+                    <stop offset="1" stop-color="#333"></stop>
+                </linearGradient>
+                <!-- 径向渐变 -->
+                <radialGradient id="light" cx="0.5" cy="0.5" r="0.5">
+                    <!-- <stop offset="0" stop-color="rgba(255, 0, 0, 0.8)"></stop>
+                    <stop offset="1" stop-color="rgba(255, 0, 0, 0.0)"></stop> -->
+                    <stop offset="0" stop-color="rgba(255, 255, 155, 0.8)"></stop>
+                    <stop offset="1" stop-color="rgba(255, 255, 255, 0.0)"></stop>
+                </radialGradient>
+                <!-- 裁切 -->
+                <clipPath id="light-clip">
+                    <!-- 三角形灯光 -->
+                    <polygon points="0 0 -500 -20 -500 20" fill="rgba(255, 0, 0, 0.5)">
+                        <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0" to="360" dur="3s" repeatCount="indefinite"></animateTransform>
+                    </polygon>
+                    <polygon points="0 0 -500 -20 -500 20" fill="rgba(255, 255, 0, 0.5)">
+                        <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0" to="360" dur="6s" delay="2" repeatCount="indefinite"></animateTransform>
+                    </polygon>
+                    <!-- 灯塔顶小圆 -->
+                    <circle x="0" y="0" r="4"></circle>
+                </clipPath>
+            </defs>
+            <!-- 灯塔 -->
+            <polygon points="0 0 30 100 -30 100" fill="url(#tower)"></polygon>
+            <!-- 灯塔顶小圆 -->
+            <circle x="0" y="0" r="8" fill="url(#light)" stroke="url(#tower)"></circle>
+
+            <!-- 灯光 -->
+            <!-- <ellipse cx="0" cy="0" rx="300" ry="200" fill="rgba(255, 255, 255, 0.5)"></ellipse>
+            <ellipse cx="0" cy="0" rx="300" ry="200" fill="url(#light)"></ellipse> -->
+            <ellipse cx="0" cy="0" rx="300" ry="200" fill="url(#light)" clip-path="url(#light-clip)"></ellipse>
+
+        </g>
+    </svg>
+
+    <script>
+        const SVG_NS = 'http://www.w3.org/2000/svg';
+        const XLINK_NS = 'http://www.w3.org/1999/xlink';
+
+        const svg = document.querySelector('svg');
+
+        function use(origin) {
+            // 绘制use标签
+            var useDom = document.createElementNS(SVG_NS, 'use');
+
+            // 将用polygon绘制的星星引用到use标签中
+            // useDom.setAttributeNS(XLINK_NS, 'xlink:href', `#${origin.id}`);
+            useDom.setAttributeNS(XLINK_NS, 'href', `#${origin.id}`);
+            return useDom;
+        };
+
+        function random(min, max) {
+            // 返回指写的最小值和最大值之间的除随机值
+            return min + (max - min) * Math.random();
+        };
+
+        function drawStar() {
+            const starDom = document.querySelector('#star');
+            let strtNum = 300;
+            const starGroup = document.querySelector('#star-group');
+
+            let star;
+            while (strtNum--) {
+                star = use(starDom);
+                star.setAttribute('opacity', `${random(0.1, 0.8)}`);
+                star.setAttribute('transform', `translate(${random(-400, 400)}, ${random(-300, 50)}) scale(${random(0.1, 0.6)})`);
+                starGroup.appendChild(star);
+            };
+        };
+        drawStar();
+    </script>
+
+</body>
+
+</html>

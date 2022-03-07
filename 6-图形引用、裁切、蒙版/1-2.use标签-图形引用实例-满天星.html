@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG图形引用、裁切、蒙版 - use标签 图形引用实例-满天星</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: #001122;
+        }
+
+        h1 {
+            box-sizing: border-box;
+            color: white;
+            text-align: center;
+        }
+
+        .text {
+            margin: auto;
+            line-height: 36px;
+            color: white;
+            font-size: 18px;
+        }
+
+        .text a {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG图形引用、裁切、蒙版 - use标签 图形引用实例-满天星</h1>
+
+    <hr>
+
+    <div class="text">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3school.com.cn/svg/index.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="-400 -300 800 600" preserveAspectRatio="xMidYMid slice">
+
+        <defs>
+            <!-- 通过use引用的图形，在图形改变后，所有use的引用也会改变 -->
+            <polygon id="star" points="0 -10 2 -2 10 0 2 2 0 10 -2 2 -10 0 -2 -2" fill="wheat"></polygon>
+        </defs>
+
+        <g id="star-group"></g>
+    </svg>
+
+    <script>
+        const SVG_NS = 'http://www.w3.org/2000/svg';
+        const XLINK_NS = 'http://www.w3.org/1999/xlink';
+
+        const svg = document.querySelector('svg');
+
+        function use(origin) {
+            // 绘制use标签
+            var useDom = document.createElementNS(SVG_NS, 'use');
+
+            // 将用polygon绘制的星星引用到use标签中
+            // useDom.setAttributeNS(XLINK_NS, 'xlink:href', `#${origin.id}`);
+            useDom.setAttributeNS(XLINK_NS, 'href', `#${origin.id}`);
+            return useDom;
+        };
+
+        function random(min, max) {
+            // 返回指写的最小值和最大值之间的除随机值
+            return min + (max - min) * Math.random();
+        };
+
+        function drawStar() {
+            const starDom = document.querySelector('#star');
+            let strtNum = 300;
+            const starGroup = document.querySelector('#star-group');
+
+            let star;
+            while (strtNum--) {
+                star = use(starDom);
+                star.setAttribute('opacity', `${random(0.1, 0.8)}`);
+                star.setAttribute('transform', `translate(${random(-400, 400)}, ${random(-300, 50)}) scale(${random(0.1, 0.6)})`);
+                starGroup.appendChild(star);
+            };
+        };
+        drawStar();
+    </script>
+
+</body>
+
+</html>
