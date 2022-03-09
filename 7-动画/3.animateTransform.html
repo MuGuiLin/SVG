@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG动画 - 变换动画animateTransform</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .text {
+            margin: auto;
+            width: 80%;
+            height: 800px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 2px double rgb(99, 99, 99);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG动画 - 变换动画animateTransform</h1>
+    <hr>
+    <div class="text">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG
+            手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br />
+
+        <img src="./img/变换动画animateTransform.jpg" alt="" />
+
+        <h3>&lt;animateTransform>动画元素变动了目标元素上的一个变形属性，从而允许动画控制转换、缩放、旋转或斜切。</h3>
+
+        <ul>
+            <h4>&lt;animateTransform>专有属性：</h4>
+            <li>attributeType - 指定目标属性和它相对应的值处于哪个命名空间里，属性值：CSS | XML | auto(默认)
+                <ul>
+                    <li>CSS：指定attributeName的值是一个CSS属性名。</li>
+                    <li>XML：指定attributeName的值是一个CSS属性名。</li>
+                    <li>auto(默认)：编译器将把attributeName匹配到目标元素的一个属性。用户代理先搜索CSS属性列表以找出一个匹配的属性名，如果找不到，再为这个元素搜索默认XML命名空间。【出于性能考虑，不推荐用！！】
+                    </li>
+                </ul>
+            </li>
+            <li>attributeName - 需要被改变的属性名</li>
+            <li>by - 指定将在动画期间修改的属性的相对偏移值。</li>
+            <li>from - 被修改属性的初始值</li>
+            <li>to - 被修改属性的最终值。</li>
+            <li>type - 应该属性是一个类属性，他在不同的使用语境下有不同的意思。
+                <ul>
+                    <li>对于&lt;animateTransform>元素 ， 它决定了那些随时间变化的值的转换的类型</li>
+                    <li>对于&lt;feColorMatrix> 元素， 它指明了矩阵运算的类型。关键词 表明一个全 5x4 矩阵的值会被提供.其他关键字快捷方式代表允许不执行复杂矩阵运算下使用常用颜色。</li>
+                    <li>对于&lt;feFuncR>， &lt;feFuncG>， &lt;feFuncB>， 和&lt;feFuncA> 元素， 它指明了组件传递函数的类型。</li>
+                    <li>对于&lt;feTurbulence> 元素， 它表示应以噪声函数还是湍流函数执行过滤。</li>
+                    <li>对于&lt;style> 和 &lt;script> 元素， 它定义了元素内容的类型。</li>
+                </ul>
+            </li>
+            <li>dur - 动画的简单持续时间（动画时长），属性值：时钟值|不定
+                <ul>
+                    <li>
+                        <b>时钟值</b>
+                        指定简单持续时间的时长。值必须大于0。可以用小时（h）、分钟（m）、秒（s）、毫秒（ms）表达这个值。可以组合这些时间表达式以提供一个复合的持续时间，比如这样：或者这样：。hh:mm:ss.iiimm:ss.iii
+                    </li>
+                    <li>如果一个动画元素不带有属性，简单持续时间就是无限期的。请注意：如果一个简单持续时间是无限期的，则插值不能起作用（虽然它对 &lt;set> 元素依然是有用的）</li>
+                </ul>
+            </li>
+            <li>begin - 定义动画应何时开始或何时应丢弃元素。(可设置动画延时执行)</li>
+            <li>fill - 填充，属性值：freeze 动画执行结束后，停留在最后一帧</li>
+            <li>repeatCount - 指定动画重复的次数。它也可以包括用分数值表示。它的值必须大于0，属性值：数值 | indefinite（无限期）</li>
+
+        </ul>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="-400 -300 800 600">
+
+            <rect x="-100" y="-50" rx="20" width="200" height="100" fill="blue" >
+
+                <animateTransform attributeType="XML" attributeName="transform" type="rotate" from="0" to="360" dur="3s" fill="freeze" repeatCount="10"></animateTransform>
+
+                <!-- 不可以同时执行多个animateTransform动画，如果有多个：后面会覆盖前面的animateTransform -->
+                <!-- <animateTransform attributeType="XML" attributeName="transform" type="scale" from="1" to="3" dur="3s" fill="freeze" repeatCount="10"></animateTransform> -->
+
+                <!-- 可以同时执行多个不同效果的动画 -->
+                <animate attributeType="XML" attributeName="fill" from="blue" to="red" dur="3s" fill="" repeatCount="indefinite"></animate>
+            </rect>
+
+
+            <defs>
+                <radialGradient id="myGradient">
+                    <stop offset="0%" stop-color="blue" />
+                    <stop offset="100%" stop-color="black" />
+                </radialGradient>
+            </defs>
+
+            <circle cx="250" cy="0" r="50" fill="url(#myGradient)">
+                <animate attributeType="XML" attributeName="r" from="0" to="80" dur="5s" fill="freeze" repeatCount="indefinite" />
+            </circle>
+
+
+            <defs>
+                <g id="port">
+                    <path d="M405.2152293662887,198.9024446667334 C425.00539881644755,155.1943092077779 502.54393158015296,198.9024446667334 405.2152293662887,255.09861882824845 C307.8865271524277,198.9024446667334 385.4250599161457,155.1943092077779 405.2152293662887,198.9024446667334 z"></path>
+                    <path d="M262.0999879041511,199.3356732462119 L295.7132276572328,199.3356732462119 L306.09997738999635,169.54224732776058 L316.48673302880326,199.3356732462119 L350.0999668758425,199.3356732462119 L322.9063344478095,217.7488123235581 L333.2936216301118,247.5422382420097 L306.09997738999635,229.12859771646916 L278.90633905592836,247.5422382420097 L289.2936291912444,217.7488123235581 L262.0999879041511,199.3356732462119 z"></path>
+                </g>
+            </defs>
+            <use x="-50" y="-220" href="#port" fill="#ff004c">
+                <animateTransform attributeType="XML" attributeName="transform" type="rotate" from="0" to="-360" dur=".2s" fill="freeze" repeatCount="indefinite"></animateTransform>
+            </use>
+            <use x="0" y="0" href="#port" fill="#2196f3">
+                <animateTransform attributeType="XML" attributeName="transform" type="scale" from="0 " to="2" dur="1s" fill="freeze" repeatCount="indefinite"></animateTransform>
+            </use>
+
+        </svg>
+
+    </div>
+</body>
+
+</html>
