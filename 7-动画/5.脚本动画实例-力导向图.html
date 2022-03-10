@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG动画 - 脚本动画实例-力导向图</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .text {
+            margin: auto;
+            width: 80%;
+            height: 800px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 2px double rgb(99, 99, 99);
+
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG动画 - 脚本动画实例-力导向图</h1>
+    <hr>
+    <div class="text">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG
+            手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br />
+
+        <img src="./img/力导向图-弹簧模型.jpg" alt="" />
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="-400 -300 800 600">
+            <path id="links" fill="none" stroke="red" />
+        </svg>
+    </div>
+
+    <script src="./js/vector.js"></script>
+    <script>
+        const SVG_NS = 'http://www.w3.org/2000/svg';
+
+        const svg = document.querySelector('svg');
+
+        const Vector = window.Vector;
+
+        // 弹力
+        const relation = 300;
+        const k = 0.05;
+
+        // 圆形数组
+        const points = '1,2,3'.split(',').map((item, index, arr) => {
+        // const points = '1,2,3,4,5'.split(',').map((item, index, arr) => {
+            return {
+                item,
+                color: `hsl(${360 * index / arr.length}, 100%, 60%)`,
+            }
+        });
+
+        // 生成指定大小之间的随机值
+        function rendom(min, max) {
+            return Math.round(min + (max - min) * Math.random());
+        };
+
+        // 随机创建圆形
+        points.forEach((item) => {
+            let circle = document.createElementNS(SVG_NS, 'circle');
+
+            let x = rendom(-400, 400);
+            let y = rendom(-300, 300);
+
+            circle.setAttribute('cx', x);
+            circle.setAttribute('cy', y);
+            // 圆形半径
+            circle.setAttribute('r', rendom(20, 80));
+            // 圆形填充
+            circle.setAttribute('fill', item.color);
+            // 添加圆形
+            svg.appendChild(circle);
+
+            item.circle = circle;
+
+            // 初始化圆形当前位移
+            item.s = new Vector(x, y);
+            // 初始化圆形当前速度
+            item.v = new Vector();
+            // 初始化圆形当前加速度
+            item.a = new Vector();
+        });
+
+        // 上一帧时间
+        let lastFrameTime = +new Date();
+
+        // 执行渲染
+        function render() {
+            // 当前帧时间
+            let nowFrameTime = +new Date();
+            // 计算两帧的时间差(毫秒)
+            let diff = nowFrameTime - lastFrameTime;
+
+            // 将时间差 
+            diff /= 100;
+
+            // 更新圆形点位（弹簧模型：合力、位移，速度、加速度）
+            points.forEach((pa) => {
+                let f = new Vector();
+
+                //计算合力
+                points.forEach((pb) => {
+                    // 如查pa 和pb是同一个圆，就不参与合力计算
+                    if (pa == pb) {
+                        return;
+                    }
+                    // 计算pa到pb的位移向量
+                    let x = Vector.fromPoints(pa.s, pb.s);
+
+                    // 弹性值
+                    let delta = x.length() - relation;
+
+                    // 求合力：f = k * x; 
+                    f = f.add(x.normalize(delta * k));
+                });
+
+                // 加速度
+                pa.a = f;
+
+                // 速度：无损弹力
+                // pa.v = pa.v.add(pa.a.multipy(diff));
+
+                // 速度：有损弹力
+                pa.v = pa.v.add(pa.a.multipy(diff)).multipy(0.98);
+
+                // 位移
+                pa.s = pa.s.add(pa.v.multipy(diff));
+
+                pa.circle.setAttribute('cx', pa.s.x);
+                pa.circle.setAttribute('cy', pa.s.y);
+
+            });
+
+            // 更新圆形连线
+            let linkPath = [];
+            points.forEach((pa) => {
+                const pas = pa.s;
+                points.forEach((pb) => {
+                    // 如查pa 和pb是同一个圆，就不参与连线
+                    if (pa == pb) {
+                        return;
+                    }
+                    const pbs = pb.s;
+                    linkPath = linkPath.concat([
+                        'M', pas.x, pas.y,
+                        'L', pbs.x, pbs.y
+                    ]);
+                });
+            });
+
+            document.querySelector('#links').setAttribute('d', linkPath.join(' '));
+
+            // 将当前帧时间 赋给 上一帧时间
+            lastFrameTime = nowFrameTime;
+            window.requestAnimationFrame(render);
+
+        };
+
+        window.requestAnimationFrame(render);
+
+    </script>
+</body>
+
+</html>
