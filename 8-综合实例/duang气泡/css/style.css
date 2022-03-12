@@ -1,0 +1,36 @@
+h1 {
+    text-align: center;
+}
+
+.text {
+    margin     : auto;
+    width      : 80%;
+    height     : 800px;
+    line-height: 36px;
+    font-size  : 18px;
+}
+
+.duang {
+    margin: 300px;
+    width : 360px;
+    height: 300px;
+}
+
+.duang a {
+    display: block;
+}
+
+.duang a h5 {
+    text-align: center;
+}
+
+.duang a:hover .duang svg {
+    opacity: 1;
+    color  : red;
+}
+
+.duang svg {
+    opacity   : 0;
+    border    : 2px double rgb(99, 99, 99);
+    transition: opacity 1s;
+}
