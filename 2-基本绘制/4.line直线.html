@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>SVG图形绘制 - line直线</title>
+	<style type="text/css">
+		h1 {
+			text-align: center;
+		}
+
+		svg {
+			border: 1px solid blue;
+		}
+
+		.box {
+			margin: auto;
+			width: 80%;
+			font-size: 18px;
+			line-height: 36px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>SVG图形绘制 - line直线</h1>
+	<hr />
+
+	<div class="box">
+		<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+		<a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+		<a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+		<a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+		<a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+
+		<h2>SVG直线标签<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/line" target="_blank">&lt;line></a>：</h2>
+		<ul>
+			<h4>专有属性：</h4>
+			<li>x1="线条起点 x横坐标"</li>
+			<li>y1="线条起点 y纵坐标"</li>
+			<li>x2="线条终点 x横坐标"</li>
+			<li>y2="线条终点 y纵坐标"</li>
+			<li>【记住：两点一线】</li>
+		</ul>
+
+		<p><img src="./img/4.直线line.jpg"></p>
+
+		<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+
+			<line x1="100" y1="200" x2="400" y2="100" stroke="blue" stroke-width="5" ></line>
+
+			<text x="200" y="250" fill="blue">直线 line</text>
+
+		</svg>
+		<p><img src="./img/基本API.jpg"></p>
+		<p><img src="./img/基本属性.jpg"></p>
+
+	</div>
+
+</body>
+<html>

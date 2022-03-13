@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>SVG图形绘制 - ellipse椭圆</title>
+	<style type="text/css">
+		h1 {
+			text-align: center;
+		}
+
+		svg {
+			border: 1px solid blue;
+		}
+
+		.box {
+			margin: auto;
+			width: 80%;
+			font-size: 18px;
+			line-height: 36px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>SVG图形绘制 - ellipse椭圆</h1>
+	<hr />
+
+	<div class="box">
+		<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+		<a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+		<a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+		<a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+		<a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+
+		<h2>SVG椭圆标签<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/ellipse" target="_blank">&lt;ellipse></a>：</h2>
+		<ul>
+			<h4>专有属性：</h4>
+			<li>cx="椭圆心x坐标"</li>
+			<li>cy="椭圆心y坐标"</li>
+			<li>rx="椭圆水平轴向的圆角半径"</li>
+			<li>ry="椭圆垂直轴向的圆角半径"</li>
+		</ul>
+
+		<p><img src="./img/3.椭圆ellipse.jpg"></p>
+
+		<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+
+			<!--椭圆-->
+			<ellipse cx="300" cy="200" rx="150" ry="100" fill="orange" stroke="red" stroke-width="4"></ellipse>
+			<text x="250" y="350" fill="orange">椭圆 ellipse</text>
+
+			<ellipse cx="600" cy="200" rx="100" ry="150" fill="cyan" stroke="blue" stroke-width="2"></ellipse>
+			<text x="550" y="400" fill="blue">椭圆 ellipse</text>
+
+		</svg>
+		<p><img src="./img/基本API.jpg"></p>
+		<p><img src="./img/基本属性.jpg"></p>
+
+	</div>
+
+</body>
+<html>

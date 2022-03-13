@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG图像 - image标签</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .text {
+            margin: auto;
+            width: 80%;
+            height: 400px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 2px double rgb(99, 99, 99);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG图像 - image标签</h1>
+    <hr>
+    <div class="text">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br />
+
+        <h2>SVG图像标签<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/image" target="_blank">&lt;image></a>：</h2>
+
+        <p>SVG文档中的SVG元素包含图像信息。它表现为图像文件或者其他SVG文件。</p> 
+        <p>SVG图像格式转换软件支持JPEG、PNG格式，是否支持动图GIF不明确。</p>
+        <p>SVG文件是这样的一种图像：不被当做外部资源加载，不可以用:visited 样式，不能有交互。使用动态SVG元素，可以用&lt;use>引入外部的URL。使用SVG文件并添加scripts在里面，可以用&lt;object> 放在 &lt;foreignObject>中。</p>
+        
+        <h4>注意：HTML规范中定义&lt;image>和&lt;img>在解析时是等效的。这种规范只适用于SVG文件或SVG区块内。</h4>
+
+		<ul>
+			<h4>专有属性：</h4>
+			<li>x：图像水平方向上到原点的距离</li>
+            <li>y：图像竖直方向上到原点的距离</li>
+            <li>width：图像宽度。和HTML的&lt;img>不同，该属性是必须的</li>
+            <li>height：图像高度。和HTML的&lt;img>不同，该属性是必须的</li>
+            <li>xlink:href：图像的URL指向，可直接用 href</li>
+            <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/preserveAspectRatio" target="_blank">preserveAspectRatio：控制图像比例</a></li>
+
+            <h4>API：https://developer.mozilla.org/en-US/docs/Web/API/SVGImageElement</h4>
+		</ul>
+
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" fill="transparent">
+           
+            <image x="50" y="100"  width="300" height="300" href="./img/img2.png"></image>
+
+            <!-- preserveAspectRatio="xMidYMid" xMidYMid为默认值，所以preserveAspectRatio属性加不加都一样  -->
+            <image x="400" y="100"  width="300" height="300" href="./img/img2.png" preserveAspectRatio="xMidYMid"></image>
+
+            <image x="750" y="100"  width="300" height="300" href="./img/img2.png" preserveAspectRatio="none"></image>
+
+        </svg> 
+        
+        <br><br>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" >
+           
+            <image width="100%" height="100%" href="./img/bg.jpg" preserveAspectRatio="none"></image>
+
+            <image width="600" height="400" href="./img/img3.png" fill="none" ></image>
+
+            <!-- <path fill="none" stroke="red" d="M465,329 l-300 -185" /> -->
+            <circle r="5" fill="rgba(0, 255, 255, 0.5)">
+                <animateMotion path="M465,329 l-300 -185" dur="2s" repeatCount="indefinite" />
+            </circle>
+
+            <!-- <path fill="none" stroke="red" d="M280,225 l-165 110" /> -->
+            <circle r="5" fill="rgba(255, 255, 0, 0.5)">
+                <animateMotion path="M280,225 l-165 110" dur="2s" begin="1.2s" repeatCount="indefinite" />
+            </circle>
+
+            <!-- <path fill="none" stroke="red" d="M310,235 l120 -75" /> -->
+            <circle r="5" fill="rgba(255, 255, 255, 0.5)">
+                <animateMotion path="M310,235 l120 -75" dur="2s" begin="1s" repeatCount="indefinite" />
+            </circle>
+
+            <image x="560" y="80"  width="300" height="300" href="./img/img2.png"></image>
+
+            <image x="950" y="40"  width="300" height="300" href="./img/img1.png"></image>
+        </svg>
+
+    </div>
+</body>
+
+</html>

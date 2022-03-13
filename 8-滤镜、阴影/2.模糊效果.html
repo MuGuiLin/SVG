@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SVG滤镜-模糊效果</title>
+	<style>
+		h1 {
+			text-align: center;
+		}
+
+		.text {
+			margin: auto;
+			width: 80%;
+			line-height: 36px;
+			font-size: 18px;
+			min-height: 2000px;
+		}
+
+		svg {
+			border: 1px solid gray;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>SVG滤镜-模糊效果</h1>
+	<hr>
+	<div class="text">
+		<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+		<a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+		<a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+		<a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+		<a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+
+		<h3>SVG滤镜-模糊效果</h3>
+		<p>所有互联网的SVG滤镜定义在&lt;defs>元素中。&lt;defs>元素定义短并含有特殊元素（如滤镜）定义</p>
+		<li>&lt;feGaussianBlur> 模糊效果</li>
+
+		<!-- <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="100vh" fill="transparent"> -->
+		<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="600">
+
+			<defs>
+				<filter id="filter-1" x="0" y="0">
+					<feGaussianBlur in="SourceGraphic" stdDeviation="15" />
+				</filter>
+			</defs>
+			<rect x="100" y="100" width="200" height="100" stroke="green" stroke-width="3" fill="blue" filter="url(#filter-1)" />
+		</svg>
+
+	</div>
+</body>
+
+</html>

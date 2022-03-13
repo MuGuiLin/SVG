@@ -30,10 +30,14 @@
         <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
         <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
 
-        SVG是一种图像文件格式，它的英文全称为Scalable Vector Graphics，意思为可缩放的矢量图形。它是基于XML（Extensible Markup Language），
-        由World Wide Web Consortium（W3C）联盟进行开发的。严格来说应该是一种开放标准的矢量图形语言，可让你设计激动人心的、高分辨率的Web图形页面。
-        用户可以直接用代码来描绘图像，可以用任何文字处理工具打开SVG图像，通过改变部分代码来使图像具有交互功能，并可以随时插入到HTML中通过浏览器来观看。
-
+        <p>SVG 是由<a href="https://www.w3.org/" class="external" rel=" noopener">万维网联盟（W3C[World Wide Web Consortium]）</a>自 1999 年开始开发的开放标准。</p>
+        <p>SVG 是一种基于<a target="_blank" href="/zh-CN/docs/Web/XML/XML_Introduction">XML（Extensible Markup Language）</a>的，描述二维的，<a target="_blank" href="https://zh.wikipedia.org/wiki/%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%BD%A2">矢量图形</a>语言。</p>
+        SVG是一种图像文件格式，它的英文全称为<strong>可缩放矢量图形</strong>（<strong>Scalable Vector Graphics，SVG</strong>），意思为可缩放的矢量图形。可让你设计激动人心的、高分辨率的Web图形页面。 用户可以直接用代码来描绘图像，可以用任何文字处理工具打开SVG图像，通过改变部分代码来使图像具有交互功能，并可以随时插入到HTML中通过浏览器来观看。
+        <br>
+        <p>SVG能够优雅而简洁地渲染不同大小的图形，并和<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS">CSS</a>，<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model">DOM</a>，<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Learn/JavaScript">JavaScript</a>和<a target="_blank" href="/zh-CN/docs/Web/SVG/SVG_animation_with_SMIL">SMIL</a>等其他网络标准无缝衔接。</span>本质上，SVG 相对于图像，就好比 <a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML">HTML</a> 相对于文本。</p>
+        <p>SVG 图像及其相关行为被定义于&nbsp; 文本文件之中，这意味着可以对它们进行搜索、索引、编写脚本以及压缩。此外，这也意味着可以使用任何文本编辑器和绘图软件来创建和编辑它们。</p>
+        <p>和传统的点阵图像模式，像<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Glossary/jpeg">JPEG</a>和<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Glossary/png">PNG</a>不同，SVG格式提供的是矢量图，这意味着它的图像能够被无限放大而不失真或降低质量，并且可以方便地修改内容。</p>
+        
         <ul>
             <li>1、SVG 指可伸缩矢量图形 (Scalable Vector Graphics)；</li>
             <li>2、SVG 用来定义用于网络的基于矢量的图形；</li>
@@ -43,7 +47,7 @@
             <li>6、SVG 与诸如 DOM 和 XSL 之类的 W3C 标准是一个整体 ；</li>
         </ul>
 
-        <h3>SVG标签：&lt;svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" /&gt; 在这里绘制SVG图形 &lt;/svg&gt;</h3>
+        <h3>SVG标签：&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="150" viewBox="0 0 300 150" /&gt; 在这里绘制SVG图形 &lt;/svg&gt;</h3>
 
         <h4>* SVG命名空间声明是通过xmlns 属性提供的。</h4>
         <b style="color: red;">
@@ -51,12 +55,12 @@
             URI"普遍使用而不是”命名空间的名字“被使用。）
         </b>
 
-        <br>
-        <br>
+        <br><br>
+       
 
         <img src="img/位图与矢量图.jpg" />
 
-        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600" viewBox="-400 -300 800 600">
             <circle cx="100" cy="100" r="90" fill="#39F"></circle>
             <circle cx="70" cy="80" r="20" fill="white"></circle>
             <circle cx="130" cy="80" r="20" fill="white"></circle>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>打开方式2 在html文件中，直接编写svg源码</title>
+	<style type="text/css">
+		h1 {
+			text-align: center;
+		}
+
+		object {
+			display: block;
+			margin: auto;
+			width: 800px;
+			height: 600px;
+			box-shadow: blue 0 0 1px 2px;
+			border-radius: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>打开方式2 在html文件中，直接编写svg源码</h1>
+	<hr />
+	<pre>
+		&lt;svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+			&lt;circle cx="100" cy="100" r="90" fill="#39F" />
+			&lt;circle cx="70" cy="80" r="20" fill="white" />
+			&lt;circle cx="130" cy="80" r="20" fill="white" />
+			&lt;circle cx="65" cy="75" r="10" fill="black" />
+			&lt;circle cx="125" cy="75" r="10" fill="black" />
+			&lt;path d="M 50 140 A 60 60 0 0 0 150 140" stroke="white" stroke-width="3" fill="none" />
+		&lt;/svg>
+	</pre>
+
+	<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+		<circle cx="100" cy="100" r="90" fill="#39F" />
+		<circle cx="70" cy="80" r="20" fill="white" />
+		<circle cx="130" cy="80" r="20" fill="white" />
+		<circle cx="65" cy="75" r="10" fill="black" />
+		<circle cx="125" cy="75" r="10" fill="black" />
+		<path d="M 50 140 A 60 60 0 0 0 150 140" stroke="white" stroke-width="3" fill="none" />
+	</svg>
+
+</body>
+
+</html>

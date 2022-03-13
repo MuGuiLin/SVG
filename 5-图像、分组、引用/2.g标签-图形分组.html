@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG图形分组 - g标签</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .text {
+            margin: auto;
+            width: 80%;
+            height: 400px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 2px double rgb(99, 99, 99);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG图形分组 - g标签</h1>
+    <hr>
+    <div class="text">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br />
+
+        <h4>&lt;g>标签：是用来组合多个元素对象的容器。</h4>
+        <p>添加到g元素上的变换会应用到其所有的子元素上。添加到g元素的属性会被其所有的子元素继承。</p> 
+        <p> 此外，g元素也可以用来定义复杂的对象，之后可以通过&lt;use>元素来引用它们。</p>
+
+
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" fill="transparent">
+            <g id="chineseFlag">
+                <rect x="300" y="100" width="300" height="180" fill="inherit" stroke="none"></rect>
+                <path fill="yellow" stroke="none" transform="translate(310, 120)" d="M0.27001,22.05847L21.98191,22.05847L28.69106,1.43225L35.40021,22.05847L57.11211,22.05847L39.54684,34.80603L46.25634,55.43225L28.69106,42.68434L11.12579,55.43225C13.36229,48.55684 15.59878,41.68143 17.83528,34.80603L0.27001,22.05847z"></path>
+                <path fill="yellow" stroke="none" transform="translate(360, 110) rotate(27 19.6911 19.8822)" d="M4.761909496571565,6.579488672265944 L13.247034754033688,6.579488672265944 L15.869006028823184,-1.4813471038738868 L18.49097730361268,6.579488672265944 L26.976102561074804,6.579488672265944 L20.111502220655872,11.561302485290776 L22.733610277294957,19.622138261430607 L15.869006028823184,14.640187666556185 L9.004405688404255,19.622138261430607 C9.87844170728395,16.93519170003305 10.752473818110799,14.24824513863549 11.626509836990495,11.561302485290776 L4.761909496571565,6.579488672265944 z"></path>
+                <path fill="yellow" stroke="none" transform="translate(390, 130) rotate(27 19.6911 19.8822)" d="M4.761909496571565,6.579488672265944 L13.247034754033688,6.579488672265944 L15.869006028823184,-1.4813471038738868 L18.49097730361268,6.579488672265944 L26.976102561074804,6.579488672265944 L20.111502220655872,11.561302485290776 L22.733610277294957,19.622138261430607 L15.869006028823184,14.640187666556185 L9.004405688404255,19.622138261430607 C9.87844170728395,16.93519170003305 10.752473818110799,14.24824513863549 11.626509836990495,11.561302485290776 L4.761909496571565,6.579488672265944 z"></path>
+                <path fill="yellow" stroke="none" transform="translate(390, 160) rotate(27 19.6911 19.8822)" d="M4.761909496571565,6.579488672265944 L13.247034754033688,6.579488672265944 L15.869006028823184,-1.4813471038738868 L18.49097730361268,6.579488672265944 L26.976102561074804,6.579488672265944 L20.111502220655872,11.561302485290776 L22.733610277294957,19.622138261430607 L15.869006028823184,14.640187666556185 L9.004405688404255,19.622138261430607 C9.87844170728395,16.93519170003305 10.752473818110799,14.24824513863549 11.626509836990495,11.561302485290776 L4.761909496571565,6.579488672265944 z"></path>
+                <path fill="yellow" stroke="none" transform="translate(360, 180) rotate(27 19.6911 19.8822)" d="M4.761909496571565,6.579488672265944 L13.247034754033688,6.579488672265944 L15.869006028823184,-1.4813471038738868 L18.49097730361268,6.579488672265944 L26.976102561074804,6.579488672265944 L20.111502220655872,11.561302485290776 L22.733610277294957,19.622138261430607 L15.869006028823184,14.640187666556185 L9.004405688404255,19.622138261430607 C9.87844170728395,16.93519170003305 10.752473818110799,14.24824513863549 11.626509836990495,11.561302485290776 L4.761909496571565,6.579488672265944 z"></path>
+            </g>
+
+            <!-- 在这里引用id为chineseFlag元素，就可以把它里所有的元素引用过来啦！！ -->
+            <use href="#chineseFlag"x="350" y="0" fill="#ed006d" />
+            
+            <!-- 还可改变被引用元素里面的属性 -->
+            <use href="#chineseFlag"x="700" y="0" fill="red" />
+        </svg>
+
+        <br>
+        <br>
+
+        <h4>&lt;g>标签的其他用法：</h4>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%">
+            <style>
+                .fillRed {
+                    fill: #ff004c;
+                }
+            </style>
+
+            <g id="bigGroup" stroke="red">
+
+                <circle id="circle" style="fill: inherit;" r="10" />
+
+                <!-- 在分组中还可能包涵其他分组 -->
+                <g id="group" stroke="green">
+                    <text x="120" y="105">black黑色(默认)</text>
+                    <!-- 在这里引用id为circle元素 -->
+                    <use x="100" y="100" xlink:href="#circle" />
+
+                    <text x="120" y="155">red红色</text>
+                    <use x="100" y="150" href="#circle" class="fillRed" />
+
+                    <text x="120" y="205">blue蓝色</text>
+                    <use x="100" y="200" href="#circle" style="fill: #2196f3;" stroke="blue" />
+                </g>
+
+                <!-- 可在这里引用id为group元素组 -->
+                <use x="350" y="0" href="#group" fill="#2196f3" />
+
+                <!-- 注：不能在分组g 中 引用自己！！ -->
+                <!-- <use x="650" y="0" href="#bigGroup" fill="red" /> -->
+
+            </g>
+
+            <!-- 可在这里引用id为bigGroup元素组 -->
+            <use x="650" y="0" href="#bigGroup" fill="blue" />
+        </svg>
+
+    </div>
+</body>
+
+</html>

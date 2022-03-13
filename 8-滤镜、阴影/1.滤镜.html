@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SVG滤镜-filter</title>
+	<style>
+		h1 {
+			text-align: center;
+		}
+
+		.text {
+			margin: auto;
+			width: 80%;
+			line-height: 36px;
+			font-size: 18px;
+			min-height: 2000px;
+		}
+
+		svg {
+			border: 1px solid gray;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>SVG滤镜-filter</h1>
+	<hr>
+	<div class="text">
+		<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+
+		<h3>SVG滤镜</h3>
+		<p>SVG滤镜用来增加对SVG图形的特殊效果。通过&lt;filter>标签用来定义SVG滤镜。</p>
+		<h4>SVG可用的滤镜效果如下：</h4>
+		<li>&lt;feBlend> - 与图像相结合的滤镜</li>
+		<li>&lt;feColorMatrix> - 用于彩色滤光片转换</li>
+		<li>&lt;feComponentTransfer></li>
+		<li>&lt;feComposite></li>
+		<li>&lt;feConvolveMatrix></li>
+		<li>&lt;feDiffuseLighting></li>
+		<li>&lt;feDisplacementMap></li>
+		<li>&lt;feFlood></li>
+		<li>&lt;feGaussianBlur></li>
+		<li>&lt;feImage></li>
+		<li>&lt;feMerge></li>
+		<li>&lt;feMorphology></li>
+		<li>&lt;feOffset> - 过滤阴影</li>
+		<li>&lt;feSpecularLighting></li>
+		<li>&lt;feTile></li>
+		<li>&lt;feTurbulence></li>
+		<li>&lt;feDistantLight> - 用于照明过滤</li>
+		<li>&lt;fePointLight> - 用于照明过滤</li>
+		<li>&lt;feSpotLight> - 用于照明过滤</li>
+
+		<!-- <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="100vh" fill="transparent"> -->
+		<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="2000">
+
+
+			<defs>
+				<!-- 定义笔刷图案1 -->
+				<!--注：pattern中的 width="0到1之间" height="0到1之间" -->
+				<pattern id="pen1" x="0" y="0" width="0.2" height="0.3">
+					<!-- 圆形 -->
+					<circle cx="10" cy="10" r="5" fill="red"></circle>
+					<!-- 三角形 -->
+					<polygon points="30 10 60 50 0 50" fill="green"></polygon>
+				</pattern>
+
+				<!-- 定义笔刷图案2：
+					patternUnits属性：用于定义pattern自身的width和height的大小单位（指定pattern标签本身的属性单位基于世界坐标系）
+					patternContentUnits属性：用于定义pattern下面所包涵的图形的width和height的大小单位（指定pattern里面的每一个元素的单位都是基于绘制图形的一个八维盒）
+
+					笔刷使用单位：
+					userSpaceOnUse属性值：
+					objectBoundingBox属性值：
+				-->
+				<!-- <pattern id="pen2" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse" patternContentUnits="objectBoundingBox"> -->
+				<pattern id="pen2" x="0" y="0" width="0.25" height="0.25" patternUnits="objectBoundingBox"
+					patternContentUnits="objectBoundingBox">
+					<!-- 圆形 -->
+					<circle cx="0.10" cy="0.10" r="0.1" fill="red"></circle>
+					<!-- 三角形 -->
+					<!-- <polygon points="30 10 60 50 0 50" fill="green"></polygon> -->
+				</pattern>
+			</defs>
+
+			<text x="100" y="90">笔刷填充：fill</text>
+			<!-- <rect x="100" y="100" width="500" height="300" stroke="blue" fill="url(#pen1)"></rect> -->
+			<rect x="100" y="100" width="500" height="300" stroke="blue" fill="url(#pen2)"></rect>
+
+			<text x="100" y="460">笔刷填充：fill 填充内容(图形的数据量)不会因填充区域的大小而改变！！</text>
+			<rect x="100" y="470" width="800" height="500" stroke="blue" fill="url(#pen1)"></rect>
+
+			<text x="100" y="1040">笔刷描边：stroke</text>
+			<rect x="100" y="1050" width="500" height="300" stroke-width="30" stroke="url(#pen1)" fill="transparent"></rect>
+
+		</svg>
+
+	</div>
+</body>
+
+</html>

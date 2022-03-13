@@ -28,7 +28,7 @@
 </head>
 
 <body>
-	<h1>SVG的坐标系统</h1>
+	<h1>SVG的坐标系统 viewBox视口(可视区域)</h1>
 	<hr />
 	<div class="box">
 		<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
@@ -40,30 +40,51 @@
 		<ul>
 			<h3>viewBox属性：</h3>
 			<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/viewBox" target="_blank">viewBox</a>属性允许指定一个给定的一组图形伸展以适应特定的容器元素。</li>
-			<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/viewBox" target="_blank">viewBox</a>属性的值是一个包含4个参数的列表 min-x, min-y, width and height， 以空格或者逗号分隔开。</li> 
+			<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/viewBox" target="_blank">viewBox</a>属性的值是一个包含4个参数的列表 min-x, min-y, width, height， 以空格 或 逗号, 分隔开。</li>
 			<li>在用户空间中指定一个矩形区域映射到给定的元素，查看属性<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/preserveAspectRatio" target="_blank">preserveAspectRatio</a>。</li>
 			<li>不允许宽度和高度为负值，0则禁用元素的呈现。</li>
 		</ul>
 
-		<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+
+		1原图形
+		<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+			<circle cx="50" cy="50" r="50" fill="blue" />
+		</svg>
+
+		，2(放大4倍)
+		<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="50 50 50 50">
+			<circle cx="50" cy="50" r="50" fill="blue" />
+		</svg>
+
+		，3原图 和 放大 的对比
+		<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+			<circle cx="50" cy="50" r="50" fill="blue" />
+			<rect x="50" y="50" width="50" height="50" fill="none" stroke="yellow" />
+		</svg>
+
+
+		<hr>
+
+
+		<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 100 100">
 			<!--具有相对单位，例如百分比，视觉大小，无论viewBox如何，正方形看起来都没有变化-->
-			<rect x="0" y="0" width="100%" height="100%" />
+			<rect x="0" y="0" width="100%" height="100%" fill="red" />
 
 			<!--带有大 viewBox 的圆圈看起来很小，因为它为 r 属性使用用户单位：4 解决了 viewBox 中设置的 100-->
 			<circle cx="50%" cy="50%" r="4" fill="white" />
 		</svg>
 
-		<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+		<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 10 10">
 			<!--具有相对单位，例如百分比，视觉大小，无论viewBox如何，正方形看起来都没有变化-->
-			<rect x="0" y="0" width="100%" height="100%" />
+			<rect x="0" y="0" width="100%" height="100%" fill="green" />
 
 			<!--用一个小的 viewBox 圆圈看起来很大，因为它为 r 属性使用用户单位：4 解决了 viewBox 中设置的 10-->
 			<circle cx="50%" cy="50%" r="4" fill="white" />
 		</svg>
 
-		<svg viewBox="-5 -5 10 10" xmlns="http://www.w3.org/2000/svg">
+		<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="-5 -5 10 10">
 			<!--坐标 0,0 的点现在位于视口的中心，并且 100% 仍然解析为 10 个用户单位的宽度或高度，所以矩形看起来移动到视口的下/右角-->
-			<rect x="0" y="0" width="100%" height="100%" />
+			<rect x="0" y="0" width="100%" height="100%" fill="blue" />
 
 			<!--坐标点 0,0 在视口的中心值 50% 解析为 5，这意味着圆的中心是在视口的右下角。-->
 			<circle cx="50%" cy="50%" r="4" fill="white" />

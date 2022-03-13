@@ -34,6 +34,70 @@
 			<a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
 			<a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
 			<a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+
+			<h3>SVG的基本图形【SVG 意为可缩放矢量图形（不失真）。SVG 使用 XML 格式定义图像。】</h3>
+			<svg xmlns="http://www.w3.org/2000/svg">
+
+				<!--圆形-->
+				<circle cx="220" cy="150" r="100" opacity="0.8" fill="#00BC90" stroke="white" stroke-width="4"></circle>
+				<circle cx="180" cy="120" r="18" fill="white" stroke="white" stroke-width="4"></circle>
+				<circle cx="260" cy="120" r="18" fill="white" stroke="white" stroke-width="4"></circle>
+				<circle cx="175" cy="115" r="10" fill="rgba(0,188,255,0.5)" stroke="white" stroke-width="4"></circle>
+				<circle cx="255" cy="115" r="10" fill="hsla(0,25%,80%,0.8)" stroke="white" stroke-width="4"></circle>
+				<path d="M 160 180 A 80 80 0 0 0 280 180" stroke="white" stroke-width="3" fill="none"></path>
+				<text x="190" y="280" fill="#00BC90">圆形 circle</text>
+
+
+				<!--椭圆-->
+				<ellipse cx="600" cy="150" rx="150" ry="100" fill="orange" stroke="red" stroke-width="4"></ellipse>
+				<text x="600" y="280" fill="orange">椭圆 ellipse</text>
+
+
+				<!--直线-->
+				<line x1="50" y1="400" x2="400" y2="400" stroke="blue" stroke-width="5"></line>
+				<text x="200" y="420" fill="blue">直线 line</text>
+
+
+				<!--折线-->
+				<polyline points="1000 250
+						1100 50
+						900 150
+						900 50
+						1100 250
+						1100 150
+						900 250
+						1000 50
+						1000 250
+						" fill="none" stroke="blue" stroke-width="2"></polyline>
+				<text x="1000" y="280" fill="blue">折线 polyline</text>
+
+
+				<!--路径-->
+				<path d="M 60 450 A 90 60 0 0 0 400 450" stroke="green" stroke-width="3" fill="none"></path>
+				<text x="180" y="500" fill="green">路径 path</text>
+
+
+				<!--圆角矩形-->
+				<rect x="850" y="320" rx="10" ry="10" width="300" height="200" fill="cyan" stroke="red"></rect>
+				<text x="980" y="550" fill="black">矩形 rect</text>
+
+
+				<!--直角矩形-->
+				<rect x="900" y="370" width="200" height="100" fill="white" stroke="blue"></rect>
+
+
+				<!--多边形 自动合闭-->
+				<polygon points="450 350
+						550 300
+						650 300
+						750 350
+						750 450
+						650 500
+						550 500
+						450 450" fill="rgba(255,0,255,0.5)" stroke="blue" stroke-dasharray="10 2" stroke-width="2"></polygon>
+				<text x="580" y="520" fill="blue">多边形 polygon</text>
+
+			</svg>
 			
 			<h2>SVG标签:</h2>
 			<ul>
@@ -104,71 +168,6 @@
 				
 			</ul>
 			
-
-			<h3>SVG的基本图形【SVG 意为可缩放矢量图形（不失真）。SVG 使用 XML 格式定义图像。】</h3>
-			<svg xmlns="http://www.w3.org/2000/svg">
-
-				<!--圆形-->
-				<circle cx="220" cy="150" r="100" opacity="0.8" fill="#00BC90" stroke="white" stroke-width="4"></circle>
-				<circle cx="180" cy="120" r="18" fill="white" stroke="white" stroke-width="4"></circle>
-				<circle cx="260" cy="120" r="18" fill="white" stroke="white" stroke-width="4"></circle>
-				<circle cx="175" cy="115" r="10" fill="rgba(0,188,255,0.5)" stroke="white" stroke-width="4"></circle>
-				<circle cx="255" cy="115" r="10" fill="hsla(0,25%,80%,0.8)" stroke="white" stroke-width="4"></circle>
-				<path d="M 160 180 A 80 80 0 0 0 280 180" stroke="white" stroke-width="3" fill="none"></path>
-				<text x="190" y="280" fill="#00BC90">圆形 circle</text>
-
-
-				<!--椭圆-->
-				<ellipse cx="600" cy="150" rx="150" ry="100" fill="orange" stroke="red" stroke-width="4"></ellipse>
-				<text x="600" y="280" fill="orange">椭圆 ellipse</text>
-
-
-				<!--直线-->
-				<line x1="50" y1="400" x2="400" y2="400" stroke="blue" stroke-width="5"></line>
-				<text x="200" y="420" fill="blue">直线 line</text>
-
-
-				<!--折线-->
-				<polyline points="1000 250
-						1100 50
-						900 150
-						900 50
-						1100 250
-						1100 150
-						900 250
-						1000 50
-						1000 250
-						" fill="none" stroke="blue" stroke-width="2"></polyline>
-				<text x="1000" y="280" fill="blue">折线 polyline</text>
-
-
-				<!--路径-->
-				<path d="M 60 450 A 90 60 0 0 0 400 450" stroke="green" stroke-width="3" fill="none"></path>
-				<text x="180" y="500" fill="green">路径 path</text>
-
-
-				<!--圆角矩形-->
-				<rect x="850" y="320" rx="10" ry="10" width="300" height="200" fill="cyan" stroke="red"></rect>
-				<text x="980" y="550" fill="black">矩形 rect</text>
-
-
-				<!--直角矩形-->
-				<rect x="900" y="370" width="200" height="100" fill="white" stroke="blue"></rect>
-
-
-				<!--多边形 自动合闭-->
-				<polygon points="450 350
-						550 300
-						650 300
-						750 350
-						750 450
-						650 500
-						550 500
-						450 450" fill="rgba(255,0,255,0.5)" stroke="blue" stroke-dasharray="10 2" stroke-width="2"></polygon>
-				<text x="580" y="520" fill="blue">多边形 polygon</text>
-
-			</svg>
-
 			<p><img src="./img/1.矩形rect.jpg"></p>
 			<p><img src="./img/2.圆形cricle.jpg"></p>
 			<p><img src="./img/3.椭圆ellipse.jpg"></p>

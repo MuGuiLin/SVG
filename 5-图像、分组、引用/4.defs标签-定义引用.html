@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG图形引用 - defs标签</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .text {
+            margin: auto;
+            width: 80%;
+            height: 400px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 2px double rgb(99, 99, 99);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG图形引用 - defs标签</h1>
+    <hr>
+    <div class="text">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br />
+
+        <h4>&lt;defs>标签：SVG 允许我们定义以后需要重复使用的图形元素。</h4>
+        <p>建议把所有需要再次使用的引用元素定义在defs元素里面。这样做可以增加SVG内容的易读性和可访问性。 在defs元素中定义的图形元素不会直接呈现。 你可以在你的视口的任意地方利用 &lt;use>元素呈现这些元素。</p>
+
+        <h3>注：出于安全原因，一些浏览器可能在use元素上应用同源策略，还有可能拒绝载入xlink:href属性内的跨源URI(在SVG2中，已将该xlink:href=""属性弃用，可直接用href="")。</h3>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%">
+
+            <defs>
+                <!-- 在defs标签中声明的任何标签都是不可见的，但可以被引用 -->
+                <linearGradient id="Gradient01">
+                  <stop offset="0%" stop-color="red" />
+                  <stop offset="50%" stop-color="green" />
+                  <stop offset="100%" stop-color="blue" />
+                </linearGradient>
+              </defs>
+            
+              <rect x="100" y="100" width="800" height="200" fill="url(#Gradient01)"  />
+        </svg>
+
+    </div>
+</body>
+
+</html>
