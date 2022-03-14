@@ -2,35 +2,46 @@ h1 {
     text-align: center;
 }
 
-.text {
+
+.box {
     margin     : auto;
     width      : 80%;
-    height     : 800px;
+    min-height : 600px;
     line-height: 36px;
     font-size  : 18px;
 }
 
+li {
+    line-height: 50px;
+}
+
+
 .duang {
-    margin: 300px;
-    width : 360px;
-    height: 300px;
+    position: relative;
+    margin  : 300px;
+    width   : 360px;
+    height  : 300px;
 }
 
 .duang a {
     display: block;
+    cursor : pointer;
 }
 
 .duang a h5 {
     text-align: center;
 }
 
-.duang a:hover .duang svg {
+.duang a:hover+svg {
     opacity: 1;
-    color  : red;
+    transform: scale(1);
 }
 
 .duang svg {
+    position  : absolute;
+    top       : -220px;
+    left      : 280px;
     opacity   : 0;
-    border    : 2px double rgb(99, 99, 99);
-    transition: opacity 1s;
+    transform: scale(0);
+    transition: opacity 1s, transform 1s;
 }

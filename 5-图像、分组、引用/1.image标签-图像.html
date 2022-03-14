@@ -11,7 +11,7 @@
             text-align: center;
         }
 
-        .text {
+        .box {
             margin: auto;
             width: 80%;
             height: 400px;
@@ -28,7 +28,7 @@
 <body>
     <h1>SVG图像 - image标签</h1>
     <hr>
-    <div class="text">
+    <div class="box">
         <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
         <a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
         <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
@@ -38,7 +38,7 @@
         <h2>SVG图像标签<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/image" target="_blank">&lt;image></a>：</h2>
 
         <p>SVG文档中的SVG元素包含图像信息。它表现为图像文件或者其他SVG文件。</p> 
-        <p>SVG图像格式转换软件支持JPEG、PNG格式，是否支持动图GIF不明确。</p>
+        <p>SVG图像格式转换软件支持JPEG、PNG格式，是否支持动图GIF不明确，注：虽然SVG绘制的是矢量图形，但通过image标签引用过来的图像就不是矢量的了！！</p>
         <p>SVG文件是这样的一种图像：不被当做外部资源加载，不可以用:visited 样式，不能有交互。使用动态SVG元素，可以用&lt;use>引入外部的URL。使用SVG文件并添加scripts在里面，可以用&lt;object> 放在 &lt;foreignObject>中。</p>
         
         <h4>注意：HTML规范中定义&lt;image>和&lt;img>在解析时是等效的。这种规范只适用于SVG文件或SVG区块内。</h4>

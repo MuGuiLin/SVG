@@ -11,7 +11,7 @@
 			text-align: center;
 		}
 
-		.text {
+		.box {
 			margin: auto;
 			width: 80%;
 			line-height: 36px;
@@ -28,7 +28,7 @@
 <body>
 	<h1>SVG笔刷-笔刷</h1>
 	<hr>
-	<div class="text">
+	<div class="box">
 		<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
         <a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
         <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
@@ -38,11 +38,25 @@
 		<img src="./img/pattern.jpg" />
 
 		<h3>SVG笔刷</h3>
-		<p>&lt;pattern>元素定义模式。它用于以平铺方式填充图形元素。使用预定义的图形对一个对象进行填充或描边，就要用到pattern元素。pattern元素让预定义图形能够以固定间隔在x轴和y轴上重复（或平铺）从而覆盖要涂色的区域。先使用pattern元素定义图案，然后在给定的图形元素上用属性fill或属性stroke引用用来填充或描边的图案。
-		</p>
+		<p>&lt;pattern>元素定义模式。它用于以平铺方式填充图形元素。使用预定义的图形对一个对象进行填充或描边，就要用到pattern元素。pattern元素让预定义图形能够以固定间隔在x轴和y轴上重复（或平铺）从而覆盖要涂色的区域。先使用pattern元素定义图案，然后在给定的图形元素上用属性fill或属性stroke引用用来填充或描边的图案。</p>
 		<li>&lt;pattern> 的id属性定义了模式的唯一名称。</li>
 		<li>patternUnits用于定义x，y，宽度和高度属性。</li>
 		<li>cx和cy是图案边界框的x和y轴坐标。</li>
+
+		<ul>
+			<h4>专有属性：</h4>
+			<li>x：用户坐标系统中标识了一个x轴坐标</li>
+            <li>y：用户坐标系统中标识了一个y轴坐标</li>
+            <li>width：用户坐标系统中标识了一个水平长度，单位：number ("em" | "ex" | "px" | "in" | "cm" | "mm" | "pt" | "pc" | "%")</li>
+            <li>height：用户坐标系统中标识了一个垂直长度</li>
+            <li>xlink:href：图像的URL指向，可直接用 href</li>
+            <li>patternUnits：模式单元，用于<pattern>元素的几何属性的坐标系，属性值：userSpaceOnUse | objectBoundingBox(默认)</li>
+            <li>patternContentUnits：定义用于元素内容的坐标系，属性值：userSpaceOnUse(默认) | objectBoundingBox</li>
+            <li>patternTransform：定义应用于图案拼贴的转换定义(transform definitions)的列表</li>
+            <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/preserveAspectRatio" target="_blank">preserveAspectRatio：控制图像比例</a></li>
+
+            <h4>API：https://developer.mozilla.org/en-US/docs/Web/API/SVGImageElement</h4>
+		</ul>
 
 		<!-- <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="100vh" fill="transparent"> -->
 		<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="2000">

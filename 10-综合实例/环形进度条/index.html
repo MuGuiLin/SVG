@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG环形进度条</title>
+    <style type="text/css">
+        h1 {
+            text-align: center;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            min-height: 600px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        li {
+            line-height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG环形进度条</h1>
+    <hr>
+    <div class="box">
+        <h3>核心属性：<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/stroke-dasharray" target="_blank">stroke-dasharray</a></h3>
+        <h5>原理：主要用两个circle来绘制的环形进度条，通过修改circle标签的stroke-dasharray属性，再根据circle的周长计算出进度的百分比！！</h5>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="600"
+            viewBox="0, 0, 1000, 600" fill="transparent">
+
+            <!-- 进度条底环 -->
+            <circle cx="100" cy="300" r="200" fill="none" stroke="gray" stroke-width="30"></circle>
+
+            <!-- 进度条进度环 transform-origin="100 300" == rotate(-90 100 300)-->
+            <circle cx="100" cy="300" r="200" fill="none" stroke="blue" stroke-width="30" id="progessBar"
+                stroke-linecap="round" stroke-dasharray="0 1256" transform="rotate(-90 100 300)"></circle>
+
+            <!-- 进度条进度数 -->
+            <text x="70" y="310" fill="blue" font-size="50" font-weight="bold" id="progessNum">0%</text>
+
+
+            <g transform="translate(600)">
+                <!-- 进度条底环 -->
+                <circle cx="100" cy="300" r="200" fill="none" stroke="cyan" stroke-width="40"></circle>
+
+                <!-- 进度条进度环 transform-origin="100 300" == rotate(-90 100 300)-->
+                <circle cx="100" cy="300" r="200" fill="none" stroke="blue" stroke-width="30" id="progessBar2"
+                    stroke-linecap="round" stroke-dasharray="0 1256" transform="rotate(-90 100 300)"></circle>
+
+                <!-- 进度条进度数 -->
+                <text x="70" y="310" fill="blue" font-size="50" font-weight="bold" id="progessNum2">0%</text>
+            </g>
+        </svg>
+    </div>
+
+    <script>
+
+        {
+            const bar = document.querySelector('#progessBar');
+            const num = document.querySelector('#progessNum');
+
+            function circleProgess(progess) {
+                // 进度环周长
+                const dasharray = Math.floor(Math.PI * parseFloat(bar.getAttribute('r') * 2));
+                // console.log(dasharray);
+
+                // 百分比长度
+                let len = progess * dasharray / 100;
+
+                let red = 255 + parseInt((0 - 255) / 100 * progess);
+                let green = 0 + parseInt((191 - 0) / 100 * progess);
+                let blue = 0 + parseInt((255 - 0) / 100 * progess);
+
+                const rgb = `rgb(${red}, ${green}, ${blue})`;
+
+                bar.setAttribute('stroke', rgb);
+                bar.setAttribute('stroke-dasharray', `${len} ${dasharray}`);
+
+                num.innerHTML = progess + '%';
+                num.setAttribute('fill', rgb);
+            };
+
+            let progess = 0;
+            setInterval(() => {
+                progess++;
+                if (100 < progess) progess = 0;
+                circleProgess(progess);
+                // }, 17);
+            }, 60);
+        }
+
+        // 
+        const bar2 = document.querySelector('#progessBar2');
+        const num2 = document.querySelector('#progessNum2');
+        let progess = 0;
+
+        !(function render() {
+            const dasharray = Math.floor(Math.PI * parseFloat(bar2.getAttribute('r') * 2));
+            let len = progess * dasharray / 100;
+
+            num2.innerHTML = progess + '%';
+            bar2.setAttribute('stroke-dasharray', `${len} ${dasharray}`);
+
+            progess++;
+            if (100 < progess) progess = 0;
+            requestAnimationFrame(render);
+        })();
+
+    </script>
+</body>
+
+</html>
