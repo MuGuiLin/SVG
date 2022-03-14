@@ -39,8 +39,7 @@
 
         <h5>原理：根据数据生成x轴、y轴的刻度、文字数据、条形图。</h5>
 
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600"
-            viewBox="0 0 800 600" fill="transparent">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="600" viewBox="0 0 1000 600" fill="transparent">
             <defs>
                 <style type="text/css">
                     .sgray {
@@ -50,30 +49,32 @@
             </defs>
             <g id="coordinate">
                 <!-- x轴 -->
-                <line x1="25" y1="550" x2="750" y2="550" stroke="gray"></line>
-                <path d="M735 545 L750 550 L 735 555" stroke="gray" fill="blue"></path>
-                <text x="720" y="575" fill="blue">时间</text>
-                <g id="xScale">
-                    <!-- <line x1="100" y1="550" x2="100" y2="555" stroke="gray"></line> -->
-                    <!-- <text x="110" y="570" fill="gray">星期一</text> -->
-                </g>
+                <line x1="50" y1="550" x2="950" y2="550" stroke="gray"></line>
+                <path d="M935 545 L950 550 L 935 555" stroke="gray" fill="blue"></path>
+                <text x="920" y="575" fill="blue">时间</text>
+                <g id="xScale"></g>
 
                 <!-- y轴 -->
-                <line x1="50" y1="50" x2="50" y2="575" stroke="gray"></line>
-                <path d="M45 65 L50 50 L55 65" stroke="gray" fill="red"></path>
-                <text x="6" y="65" fill="red">数量</text>
-                <g id="yScale">
-                    <!-- <line x1="50" y1="550" x2="55" y2="550" stroke="red"></line> -->
-                </g>
+                <line x1="100" y1="50" x2="100" y2="575" stroke="gray"></line>
+                <path d="M95 65 L100 50 L105 65" stroke="gray" fill="red"></path>
+                <text x="56" y="65" fill="red">数量</text>
+                <g id="yScale"></g>
 
                 <!-- 条形图 -->
-                <g id="lineList">
-                    <!-- <rect x="100" y="250" width="50" height="300" fill="green"></rect> -->
-                </g>
+                <g id="barList"></g>
+
+                <!-- 折线点 -->
+                <g id="lineCircle"></g>
+
+                <!-- 折线 -->
+                <!-- <polyline id="polyline" stroke="cyan" stroke-width="2" stroke-dasharray="20, 10, 5, 5, 5, 10" stroke-linecap="round" fill="none"></polyline> -->
+                <path id="path" stroke="cyan" stroke-width="2" stroke-dasharray="20, 10, 5, 5, 5, 10" stroke-linecap="round" fill="none"></path>
+                <circle r="10" fill="red">
+                    <animateMotion id="animateCircle" dur="3s" begin="0s" repeatCount="indefinite" />
+                </circle>
+
             </g>
-
         </svg>
-
     </div>
 
     <script>
@@ -83,7 +84,7 @@
             { name: '星期二', value: 360 },
             { name: '星期三', value: 1210 },
             { name: '星期四', value: 820 },
-            { name: '星期五', value: 160 },
+            { name: '星期五', value: 1568 },
             { name: '星期六', value: 600 },
             { name: '星期天', value: 1080 },
         ];
@@ -92,12 +93,20 @@
         const dataMax = Math.max.apply(data, data.map((o) => o.value << 0));
         const yMax = Math.ceil(dataMax / 100) + 1;
 
-        const xScaleLen = 550 / data.length;
+        const xScaleLen = 750 / data.length;
         const yScaleLen = 500 / yMax;
 
         // x轴坐标系
         const xScale = document.querySelector('#xScale');
-        const lineList = document.querySelector('#lineList');
+        const barList = document.querySelector('#barList');
+
+        // 折线
+        const polyline = document.querySelector('#polyline');
+        // 折线点
+        const lineCircle = document.querySelector('#lineCircle');
+
+        let points = '';
+
         for (let i = 1; i < data.length + 1; i++) {
             const xLine = document.createElementNS(SVG_NS, 'line');
             xLine.setAttribute('x1', 80 + xScaleLen * i);
@@ -126,32 +135,49 @@
             xRect.setAttribute('width', 50);
             xRect.setAttribute('height', h);
             xRect.setAttribute('fill', fill);
-            lineList.appendChild(xRect);
+            barList.appendChild(xRect);
 
             // 条形数据
             const xTextNum = document.createElementNS(SVG_NS, 'text');
             xTextNum.setAttribute('x', 60 + xScaleLen * i);
-            xTextNum.setAttribute('y', 545 - h);
+            xTextNum.setAttribute('y', 540 - h);
             xTextNum.setAttribute('fill', fill);
             xTextNum.setAttribute('font-size', '18');
             xTextNum.innerHTML = data[i - 1].value;
-            lineList.appendChild(xTextNum);
+            barList.appendChild(xTextNum);
+
+
+            // 折线
+            points += `${78 + xScaleLen * i} ${550 - h} `;
+            // 折线点
+            const circle = document.createElementNS(SVG_NS, 'circle');
+            circle.setAttribute('cx', 79 + xScaleLen * i);
+            circle.setAttribute('cy', 550 - h);
+            circle.setAttribute('r', '5');
+            circle.setAttribute('fill', 'cyan');
+            circle.setAttribute('stroke', fill);
+            lineCircle.appendChild(circle);
+
         };
+        // 折线
+        // polyline.setAttribute('points', points);
+        path.setAttribute('d', 'M' + points);
+        animateCircle.setAttribute('path', 'M' + points);
 
         // y轴坐标系
         const yScale = document.querySelector('#yScale');
         for (let i = 1; i < yMax; i++) {
             const yLine = document.createElementNS(SVG_NS, 'line');
-            yLine.setAttribute('x1', 50);
+            yLine.setAttribute('x1', 100);
             yLine.setAttribute('y1', 550 - yScaleLen * i);
-            yLine.setAttribute('x2', 55);
+            yLine.setAttribute('x2', 105);
             // yLine.setAttribute('x2', 655);
             yLine.setAttribute('y2', 550 - yScaleLen * i);
             yLine.setAttribute('stroke', 'red');
             xScale.appendChild(yLine);
 
             const yText = document.createElementNS(SVG_NS, 'text');
-            yText.setAttribute('x', 20);
+            yText.setAttribute('x', 65);
             yText.setAttribute('y', 554 - yScaleLen * i);
             yText.setAttribute('fill', 'gray');
             yText.setAttribute('font-size', '12');
