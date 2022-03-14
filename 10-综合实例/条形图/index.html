@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG条形图</title>
+    <style type="text/css">
+        h1 {
+            text-align: center;
+        }
+
+        svg {
+            font-size: 16px;
+            border: 1px solid gray;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            min-height: 600px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        li {
+            line-height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG条形图</h1>
+    <hr>
+    <div class="box">
+
+        <h3>核心API：createElementNS()、setAttribute()</h3>
+
+        <h5>原理：根据数据生成x轴、y轴的刻度、文字数据、条形图。</h5>
+
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600"
+            viewBox="0 0 800 600" fill="transparent">
+            <defs>
+                <style type="text/css">
+                    .sgray {
+                        stroke: gray;
+                    }
+                </style>
+            </defs>
+            <g id="coordinate">
+                <!-- x轴 -->
+                <line x1="25" y1="550" x2="750" y2="550" stroke="gray"></line>
+                <path d="M735 545 L750 550 L 735 555" stroke="gray" fill="blue"></path>
+                <text x="720" y="575" fill="blue">时间</text>
+                <g id="xScale">
+                    <!-- <line x1="100" y1="550" x2="100" y2="555" stroke="gray"></line> -->
+                    <!-- <text x="110" y="570" fill="gray">星期一</text> -->
+                </g>
+
+                <!-- y轴 -->
+                <line x1="50" y1="50" x2="50" y2="575" stroke="gray"></line>
+                <path d="M45 65 L50 50 L55 65" stroke="gray" fill="red"></path>
+                <text x="6" y="65" fill="red">数量</text>
+                <g id="yScale">
+                    <!-- <line x1="50" y1="550" x2="55" y2="550" stroke="red"></line> -->
+                </g>
+
+                <!-- 条形图 -->
+                <g id="lineList">
+                    <!-- <rect x="100" y="250" width="50" height="300" fill="green"></rect> -->
+                </g>
+            </g>
+
+        </svg>
+
+    </div>
+
+    <script>
+        const SVG_NS = 'http://www.w3.org/2000/svg';
+        const data = [
+            { name: '星期一', value: 1510 },
+            { name: '星期二', value: 360 },
+            { name: '星期三', value: 1210 },
+            { name: '星期四', value: 820 },
+            { name: '星期五', value: 160 },
+            { name: '星期六', value: 600 },
+            { name: '星期天', value: 1080 },
+        ];
+
+        // y轴坐标数据大小计算
+        const dataMax = Math.max.apply(data, data.map((o) => o.value << 0));
+        const yMax = Math.ceil(dataMax / 100) + 1;
+
+        const xScaleLen = 550 / data.length;
+        const yScaleLen = 500 / yMax;
+
+        // x轴坐标系
+        const xScale = document.querySelector('#xScale');
+        const lineList = document.querySelector('#lineList');
+        for (let i = 1; i < data.length + 1; i++) {
+            const xLine = document.createElementNS(SVG_NS, 'line');
+            xLine.setAttribute('x1', 80 + xScaleLen * i);
+            xLine.setAttribute('y1', 550);
+            xLine.setAttribute('x2', 80 + xScaleLen * i);
+            xLine.setAttribute('y2', 545);
+            xLine.setAttribute('stroke', 'blue');
+            xScale.appendChild(xLine);
+
+            const xText = document.createElementNS(SVG_NS, 'text');
+            xText.setAttribute('x', 60 + xScaleLen * i);
+            xText.setAttribute('y', 568);
+            xText.setAttribute('fill', 'gray');
+            xText.setAttribute('font-size', '14');
+            xText.innerHTML = data[i - 1].name;
+            xScale.appendChild(xText);
+
+            // 文本颜色
+            let fill = `rgb(${parseInt(Math.random() * 255)}, ${parseInt(Math.random() * 255)}, ${parseInt(Math.random() * 255)})`;
+
+            // 条形框
+            const h = yScaleLen * (data[i - 1].value / 100)
+            const xRect = document.createElementNS(SVG_NS, 'rect');
+            xRect.setAttribute('x', 55 + xScaleLen * i);
+            xRect.setAttribute('y', 550 - h);
+            xRect.setAttribute('width', 50);
+            xRect.setAttribute('height', h);
+            xRect.setAttribute('fill', fill);
+            lineList.appendChild(xRect);
+
+            // 条形数据
+            const xTextNum = document.createElementNS(SVG_NS, 'text');
+            xTextNum.setAttribute('x', 60 + xScaleLen * i);
+            xTextNum.setAttribute('y', 545 - h);
+            xTextNum.setAttribute('fill', fill);
+            xTextNum.setAttribute('font-size', '18');
+            xTextNum.innerHTML = data[i - 1].value;
+            lineList.appendChild(xTextNum);
+        };
+
+        // y轴坐标系
+        const yScale = document.querySelector('#yScale');
+        for (let i = 1; i < yMax; i++) {
+            const yLine = document.createElementNS(SVG_NS, 'line');
+            yLine.setAttribute('x1', 50);
+            yLine.setAttribute('y1', 550 - yScaleLen * i);
+            yLine.setAttribute('x2', 55);
+            // yLine.setAttribute('x2', 655);
+            yLine.setAttribute('y2', 550 - yScaleLen * i);
+            yLine.setAttribute('stroke', 'red');
+            xScale.appendChild(yLine);
+
+            const yText = document.createElementNS(SVG_NS, 'text');
+            yText.setAttribute('x', 20);
+            yText.setAttribute('y', 554 - yScaleLen * i);
+            yText.setAttribute('fill', 'gray');
+            yText.setAttribute('font-size', '12');
+            // yText.setAttribute('text-anchor', 'start');
+            yText.innerHTML = i * 100;
+            yScale.appendChild(yText);
+        };
+
+    </script>
+</body>
+
+</html>
