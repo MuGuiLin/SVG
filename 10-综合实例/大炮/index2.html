@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG大炮2</title>
+    <style type="text/css">
+        h1 {
+            text-align: center;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            min-height: 600px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        li {
+            line-height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG大炮2</h1>
+    <hr>
+    <div class="box">
+
+        <h3>核心属性：transform</h3>
+
+        <h5>原理：将SVG图形分为炮身 和 炮弹2个组，在开炮时，炮身不动，然后通过修改transform属性的translate(x, y) x 和 y 坐标做位移动画！！</h5>
+
+        <iframe id="iframe" src="./svg/cannon.svg" width="450" height="200" scrolling="no" frameborder="0"></iframe>
+
+        <br>
+        <object id="object" data="./svg/cannon.svg" width="250" height="200"></object>
+        
+        <br>
+        <embed id="embed" src="./svg/cannon.svg" width="250" height="200"></embed>
+
+        <hr>
+        <button type="button" id="openGun">开 炮</button>
+    </div>
+
+    <script>
+
+        /*
+            通过引用的方式，操作SVG
+        */
+        const iframe = document.querySelector('#iframe');
+        let doc = null;
+
+        iframe.addEventListener('load', (event) => {
+            doc = iframe.contentDocument; // 注：如果获取不到 或 报错 或为 null时，请在服务器环境中运行应html文件！！
+
+            console.log(document.querySelector('iframe').contentDocument);
+ 
+            console.log(document.querySelector('object').contentDocument);
+
+            console.log(document.querySelector('embed').getSVGDocument());
+
+            console.log(doc);
+        });
+
+        const btn = document.querySelector('#openGun');
+        btn.addEventListener('click', (event) => {
+            const p15059 = doc.querySelector('[p-id="15059"]');
+            p15059.style.fill = 'yellow';
+        }, false);
+    </script>
+</body>
+
+</html>
