@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tree 树状图2</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            margin: auto;
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>tree 树状图2</h1>
+    <hr>
+
+    <article class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+    </article>
+
+    <section id="svg-box"></section>
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/d3@7"></script> -->
+
+    <script>
+        const svg = d3.select('#svg-box').insert('svg')
+            .attr('width', 1800)
+            .attr('height', 5600)
+            .attr('viewBox', [-100, 0, 1680, 5600]);
+
+        // const g = svg.append('g').attr('transform', 'translate(50, 0)');
+
+        // 生成树状布局（宽高大小）
+        const tree = d3.layout.tree().size([5600, 1400]);
+
+        // 生成对角线（从左 向 右）
+        const diagonal = d3.svg.diagonal().projection(o => [o.y, o.x]);
+
+        // 切换开关函数
+        const toggel = (o) => {
+            if (o.children) {
+                o._children = o.children;
+                o.children = null;
+            } else {
+                o.children = o._children;
+                o._children = null;
+            }
+        };
+
+
+        // 请求加载数据
+        d3.json('./data/china.json', (err, res) => {
+
+            const render = (source) => {
+
+                // 获取树状节点数组
+                let nodes = tree.nodes(res);
+                console.log('nodes', nodes);
+
+                // 获取树状连线数组
+                let links = tree.links(nodes);
+                console.log('links', links);
+
+                // 计算节点的y坐标，让过度平滑 和节点的深度正相关
+                nodes.forEach(o => o.y = o.depth * 450);
+
+                // 获取节点的3个选择集
+                let nodeUpdate = svg.selectAll('.node')
+                    .data(nodes, o => o.name)
+                let nodeEnter = nodeUpdate.enter();
+                let nodeExit = nodeUpdate.exit();
+
+                // 创建分组（将矩形、圆点、文本组合在内），并绑定点击事件、调用render()回调，重新添加矩形、圆点、文本
+                const enterNodes = nodeEnter.append('g')
+                    .attr('class', 'node')
+                    .attr('transform', (o) => {
+                        // console.log(o);
+                        // return `translate(${o.y}, ${o.x})`;
+                        return `translate(${source.y0}, ${source.x0})`;
+                    })
+                    .on('click', (o) => {
+                        toggel(o);
+                        render(o);
+                    });
+
+
+                // 创建矩形
+                enterNodes.append('rect')
+                    .attr('x', (o) => o.children || o._children ? -170 : -15)
+                    .attr('y', -15)
+                    .attr('rx', 15)
+                    .attr('width', 186).attr('height', 30)
+                    .attr('fill', 'cyan').attr('stroke', 'gray');
+
+                // 创建圆点
+                enterNodes.append('circle')
+                    .attr('r', 10)
+                    .attr('fill', (o) => o._children ? 'red' : 'yellow')
+                    .style('fill-opacity', 0);
+
+                // 创建文本
+                enterNodes.append('text')
+                    .text(o => o.name)
+                    .attr('dx', (o) => o.children || o._children ? -20 : 15)
+                    .attr('dy', 5)
+                    .attr('text-anchor', (o) => o.children || o._children ? 'end' : 'start')
+                    .style('fill-opacity', 0);
+
+
+                // g节点update部分处理(位移、过渡，显示圆点、文本)
+                const updateNodes = nodeUpdate.transition()
+                    .duration(600)
+                    .attr('transform', (o) => `translate(${o.y}, ${o.x})`);
+
+                // 显示圆点
+                updateNodes.select('circle')
+                    .attr('r', 10)
+                    .attr('fill', (o) => o.children ? 'red' : 'yellow')
+                    .style('fill-opacity', 1);
+
+                // 显示文本
+                updateNodes.select('text').style('fill-opacity', 1);
+
+
+                // g节点Exit 部分处理(删除位移、过渡，隐藏圆点、文本)
+                const exitNodes = nodeExit.transition()
+                    .duration(600)
+                    .attr('transform', `translate(${source.y}, ${source.x})`).remove();
+
+                // 隐藏圆点
+                exitNodes.select('circle').attr('r', 0);
+
+                // 隐藏文本
+                exitNodes.select('text').style('fill-opacity', 0);
+
+
+                // 创建连线节点
+                let linkUpdate = svg.selectAll('.link')
+                    .data(links, o => o.target.name);
+                let linkEnter = linkUpdate.enter();
+                let linkExit = linkUpdate.exit();
+
+                // 连线 Enter部分的处理
+                linkEnter.insert('path', '.link')
+                    .attr('class', 'link')
+
+                    //绘制线
+                    .attr('d', (o) => {
+                        let obj = {
+                            x: source.x0,
+                            y: source.y0
+                        };
+                        return diagonal({
+                            source: obj,
+                            target: obj
+                        })
+                    })
+                    .transition()
+                    .duration(600)
+                    // 使用对角线生成器
+                    .attr('d', diagonal)
+                    .attr('fill', 'none')
+                    .attr('stroke', 'gray');
+
+                // 连线 update部分的处理
+                linkUpdate.transition()
+                    .duration(600)
+                    .attr('d', diagonal)
+                    .attr('fill', 'none')
+                    .attr('stroke', 'gray');
+
+
+                // 连线 Exit部分的处理
+                linkExit.transition()
+                    .duration(600)
+                    .attr('d', (o) => {
+                        let obj = {
+                            x: source.x,
+                            y: source.y
+                        };
+                        return diagonal({
+                            source: obj,
+                            target: obj
+                        })
+                    })
+                    .remove();
+
+                // 保存当前节点坐标（在更新时使用）
+                nodes.forEach(o => {
+                    o.x0 = o.x;
+                    o.y0 = o.y;
+                });
+
+            };
+
+            render(res);
+
+        });
+
+    </script>
+</body>
+
+</html>

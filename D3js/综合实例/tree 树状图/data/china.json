@@ -1,0 +1,1750 @@
+{
+    "adcode": "110000",
+    "people_count_2010": 18934592,
+    "lat": 39.904989,
+    "lng": 116.405285,
+    "name": "中华人民共和国",
+    "level": "country",
+    "parent": "",
+    "children": [
+        {
+            "adcode": "360000",
+            "people_count_2010": 43976312,
+            "lat": 28.676493,
+            "lng": 115.892151,
+            "name": "江西省",
+            "level": "province",
+            "parent": "中华人民共和国",
+            "children": [
+                {
+                    "adcode": "361124",
+                    "people_count_2010": 426998,
+                    "lat": 28.310892,
+                    "lng": 117.711906,
+                    "name": "铅山县",
+                    "level": "district",
+                    "parent": "上饶市"
+                },
+                {
+                    "adcode": "360521",
+                    "people_count_2010": 299386,
+                    "lat": 27.811301,
+                    "lng": 114.675262,
+                    "name": "分宜县",
+                    "level": "district",
+                    "parent": "新余市"
+                },
+                {
+                    "adcode": "360112",
+                    "people_count_2010": null,
+                    "lat": 28.690788,
+                    "lng": 115.820806,
+                    "name": "新建区",
+                    "level": "district",
+                    "parent": "南昌市"
+                },
+                {
+                    "adcode": "360402",
+                    "people_count_2010": 302228,
+                    "lat": 29.676175,
+                    "lng": 115.99012,
+                    "name": "庐山区",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "360427",
+                    "people_count_2010": 245526,
+                    "lat": 29.456169,
+                    "lng": 116.043743,
+                    "name": "星子县",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "360922",
+                    "people_count_2010": 476856,
+                    "lat": 28.104528,
+                    "lng": 114.449012,
+                    "name": "万载县",
+                    "level": "district",
+                    "parent": "宜春市"
+                },
+                {
+                    "adcode": "360424",
+                    "people_count_2010": 739986,
+                    "lat": 29.032729,
+                    "lng": 114.573428,
+                    "name": "修水县",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "360203",
+                    "people_count_2010": 281358,
+                    "lat": 29.292812,
+                    "lng": 117.214814,
+                    "name": "珠山区",
+                    "level": "district",
+                    "parent": "景德镇市"
+                },
+                {
+                    "adcode": "360681",
+                    "people_count_2010": 558451,
+                    "lat": 28.283693,
+                    "lng": 117.212103,
+                    "name": "贵溪市",
+                    "level": "district",
+                    "parent": "鹰潭市"
+                },
+                {
+                    "adcode": "360802",
+                    "people_count_2010": 338523,
+                    "lat": 27.112367,
+                    "lng": 114.987331,
+                    "name": "吉州区",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "360724",
+                    "people_count_2010": 257464,
+                    "lat": 25.794284,
+                    "lng": 114.540537,
+                    "name": "上犹县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360722",
+                    "people_count_2010": 664047,
+                    "lat": 25.38023,
+                    "lng": 114.930893,
+                    "name": "信丰县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360702",
+                    "people_count_2010": 642653,
+                    "lat": 25.851367,
+                    "lng": 114.93872,
+                    "name": "章贡区",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360502",
+                    "people_count_2010": 839488,
+                    "lat": 27.819171,
+                    "lng": 114.923923,
+                    "name": "渝水区",
+                    "level": "district",
+                    "parent": "新余市"
+                },
+                {
+                    "adcode": "360104",
+                    "people_count_2010": 316723,
+                    "lat": 28.635724,
+                    "lng": 115.907292,
+                    "name": "青云谱区",
+                    "level": "district",
+                    "parent": "南昌市"
+                },
+                {
+                    "adcode": "360983",
+                    "people_count_2010": 811633,
+                    "lat": 28.420951,
+                    "lng": 115.381527,
+                    "name": "高安市",
+                    "level": "district",
+                    "parent": "宜春市"
+                },
+                {
+                    "adcode": "360423",
+                    "people_count_2010": 360269,
+                    "lat": 29.260182,
+                    "lng": 115.105646,
+                    "name": "武宁县",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "360323",
+                    "people_count_2010": 257423,
+                    "lat": 27.633633,
+                    "lng": 114.041206,
+                    "name": "芦溪县",
+                    "level": "district",
+                    "parent": "萍乡市"
+                },
+                {
+                    "adcode": "360425",
+                    "people_count_2010": 376107,
+                    "lat": 29.018212,
+                    "lng": 115.809055,
+                    "name": "永修县",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "360730",
+                    "people_count_2010": 794806,
+                    "lat": 26.472054,
+                    "lng": 116.018782,
+                    "name": "宁都县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360803",
+                    "people_count_2010": 200176,
+                    "lat": 27.105879,
+                    "lng": 115.016306,
+                    "name": "青原区",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "360824",
+                    "people_count_2010": 329830,
+                    "lat": 27.755758,
+                    "lng": 115.399294,
+                    "name": "新干县",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "361022",
+                    "people_count_2010": 230086,
+                    "lat": 27.292561,
+                    "lng": 116.91457,
+                    "name": "黎川县",
+                    "level": "district",
+                    "parent": "抚州市"
+                },
+                {
+                    "adcode": "361028",
+                    "people_count_2010": 111983,
+                    "lat": 27.70653,
+                    "lng": 117.066095,
+                    "name": "资溪县",
+                    "level": "district",
+                    "parent": "抚州市"
+                },
+                {
+                    "adcode": "361025",
+                    "people_count_2010": 345766,
+                    "lat": 27.420101,
+                    "lng": 115.838432,
+                    "name": "乐安县",
+                    "level": "district",
+                    "parent": "抚州市"
+                },
+                {
+                    "adcode": "361103",
+                    "people_count_2010": null,
+                    "lat": 28.440285,
+                    "lng": 118.189852,
+                    "name": "广丰区",
+                    "level": "district",
+                    "parent": "上饶市"
+                },
+                {
+                    "adcode": "361029",
+                    "people_count_2010": 438319,
+                    "lat": 28.2325,
+                    "lng": 116.605341,
+                    "name": "东乡县",
+                    "level": "district",
+                    "parent": "抚州市"
+                },
+                {
+                    "adcode": "360313",
+                    "people_count_2010": 358990,
+                    "lat": 27.639319,
+                    "lng": 113.7456,
+                    "name": "湘东区",
+                    "level": "district",
+                    "parent": "萍乡市"
+                },
+                {
+                    "adcode": "360733",
+                    "people_count_2010": 445137,
+                    "lat": 25.599125,
+                    "lng": 115.791158,
+                    "name": "会昌县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360726",
+                    "people_count_2010": 340740,
+                    "lat": 25.134591,
+                    "lng": 115.392328,
+                    "name": "安远县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360781",
+                    "people_count_2010": 618885,
+                    "lat": 25.875278,
+                    "lng": 116.034854,
+                    "name": "瑞金市",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360123",
+                    "people_count_2010": 180194,
+                    "lat": 28.841334,
+                    "lng": 115.553109,
+                    "name": "安义县",
+                    "level": "district",
+                    "parent": "南昌市"
+                },
+                {
+                    "adcode": "360729",
+                    "people_count_2010": 180691,
+                    "lat": 24.742651,
+                    "lng": 114.531589,
+                    "name": "全南县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360121",
+                    "people_count_2010": 1000000,
+                    "lat": 28.543781,
+                    "lng": 115.942465,
+                    "name": "南昌县",
+                    "level": "district",
+                    "parent": "南昌市"
+                },
+                {
+                    "adcode": "360105",
+                    "people_count_2010": 63963,
+                    "lat": 28.714803,
+                    "lng": 115.731324,
+                    "name": "湾里区",
+                    "level": "district",
+                    "parent": "南昌市"
+                },
+                {
+                    "adcode": "360881",
+                    "people_count_2010": 152310,
+                    "lat": 26.745919,
+                    "lng": 114.284421,
+                    "name": "井冈山市",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "360827",
+                    "people_count_2010": 535974,
+                    "lat": 26.323705,
+                    "lng": 114.51689,
+                    "name": "遂川县",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "360926",
+                    "people_count_2010": 135139,
+                    "lat": 28.520956,
+                    "lng": 114.37014,
+                    "name": "铜鼓县",
+                    "level": "district",
+                    "parent": "宜春市"
+                },
+                {
+                    "adcode": "361128",
+                    "people_count_2010": 1300000,
+                    "lat": 28.993374,
+                    "lng": 116.673748,
+                    "name": "鄱阳县",
+                    "level": "district",
+                    "parent": "上饶市"
+                },
+                {
+                    "adcode": "361027",
+                    "people_count_2010": 294826,
+                    "lat": 27.907387,
+                    "lng": 116.778751,
+                    "name": "金溪县",
+                    "level": "district",
+                    "parent": "抚州市"
+                },
+                {
+                    "adcode": "360732",
+                    "people_count_2010": 719830,
+                    "lat": 26.330489,
+                    "lng": 115.351896,
+                    "name": "兴国县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360725",
+                    "people_count_2010": 187234,
+                    "lat": 25.687911,
+                    "lng": 114.307348,
+                    "name": "崇义县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360281",
+                    "people_count_2010": 810353,
+                    "lat": 28.967361,
+                    "lng": 117.129376,
+                    "name": "乐平市",
+                    "level": "district",
+                    "parent": "景德镇市"
+                },
+                {
+                    "adcode": "360222",
+                    "people_count_2010": 303563,
+                    "lat": 29.352251,
+                    "lng": 117.217611,
+                    "name": "浮梁县",
+                    "level": "district",
+                    "parent": "景德镇市"
+                },
+                {
+                    "adcode": "360728",
+                    "people_count_2010": 172771,
+                    "lat": 24.774277,
+                    "lng": 115.03267,
+                    "name": "定南县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360727",
+                    "people_count_2010": 300301,
+                    "lat": 24.90476,
+                    "lng": 114.792657,
+                    "name": "龙南县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360923",
+                    "people_count_2010": 326697,
+                    "lat": 28.234789,
+                    "lng": 114.932653,
+                    "name": "上高县",
+                    "level": "district",
+                    "parent": "宜春市"
+                },
+                {
+                    "adcode": "360721",
+                    "people_count_2010": 546964,
+                    "lat": 25.865432,
+                    "lng": 115.018461,
+                    "name": "赣县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360731",
+                    "people_count_2010": 853457,
+                    "lat": 25.955033,
+                    "lng": 115.411198,
+                    "name": "于都县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360981",
+                    "people_count_2010": 1300000,
+                    "lat": 28.191584,
+                    "lng": 115.786005,
+                    "name": "丰城市",
+                    "level": "district",
+                    "parent": "宜春市"
+                },
+                {
+                    "adcode": "360982",
+                    "people_count_2010": 555120,
+                    "lat": 28.055898,
+                    "lng": 115.543388,
+                    "name": "樟树市",
+                    "level": "district",
+                    "parent": "宜春市"
+                },
+                {
+                    "adcode": "360924",
+                    "people_count_2010": 274046,
+                    "lat": 28.388289,
+                    "lng": 114.787381,
+                    "name": "宜丰县",
+                    "level": "district",
+                    "parent": "宜春市"
+                },
+                {
+                    "adcode": "361123",
+                    "people_count_2010": 574369,
+                    "lat": 28.673479,
+                    "lng": 118.244408,
+                    "name": "玉山县",
+                    "level": "district",
+                    "parent": "上饶市"
+                },
+                {
+                    "adcode": "361130",
+                    "people_count_2010": 334020,
+                    "lat": 29.254015,
+                    "lng": 117.86219,
+                    "name": "婺源县",
+                    "level": "district",
+                    "parent": "上饶市"
+                },
+                {
+                    "adcode": "361181",
+                    "people_count_2010": 293201,
+                    "lat": 28.945034,
+                    "lng": 117.578732,
+                    "name": "德兴市",
+                    "level": "district",
+                    "parent": "上饶市"
+                },
+                {
+                    "adcode": "360622",
+                    "people_count_2010": 352476,
+                    "lat": 28.206177,
+                    "lng": 116.822763,
+                    "name": "余江县",
+                    "level": "district",
+                    "parent": "鹰潭市"
+                },
+                {
+                    "adcode": "360124",
+                    "people_count_2010": 690446,
+                    "lat": 28.365681,
+                    "lng": 116.267671,
+                    "name": "进贤县",
+                    "level": "district",
+                    "parent": "南昌市"
+                },
+                {
+                    "adcode": "361102",
+                    "people_count_2010": 416219,
+                    "lat": 28.445378,
+                    "lng": 117.970522,
+                    "name": "信州区",
+                    "level": "district",
+                    "parent": "上饶市"
+                },
+                {
+                    "adcode": "360429",
+                    "people_count_2010": 275797,
+                    "lat": 29.7263,
+                    "lng": 116.244313,
+                    "name": "湖口县",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "360830",
+                    "people_count_2010": 475580,
+                    "lat": 26.944721,
+                    "lng": 114.242534,
+                    "name": "永新县",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "360921",
+                    "people_count_2010": 312956,
+                    "lat": 28.700672,
+                    "lng": 115.389899,
+                    "name": "奉新县",
+                    "level": "district",
+                    "parent": "宜春市"
+                },
+                {
+                    "adcode": "360302",
+                    "people_count_2010": 534560,
+                    "lat": 27.625826,
+                    "lng": 113.855044,
+                    "name": "安源区",
+                    "level": "district",
+                    "parent": "萍乡市"
+                },
+                {
+                    "adcode": "361026",
+                    "people_count_2010": 224039,
+                    "lat": 27.546512,
+                    "lng": 116.223023,
+                    "name": "宜黄县",
+                    "level": "district",
+                    "parent": "抚州市"
+                },
+                {
+                    "adcode": "360823",
+                    "people_count_2010": 184483,
+                    "lat": 27.580862,
+                    "lng": 115.319331,
+                    "name": "峡江县",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "360321",
+                    "people_count_2010": 236328,
+                    "lat": 27.127807,
+                    "lng": 113.955582,
+                    "name": "莲花县",
+                    "level": "district",
+                    "parent": "萍乡市"
+                },
+                {
+                    "adcode": "360421",
+                    "people_count_2010": 315219,
+                    "lat": 29.610264,
+                    "lng": 115.892977,
+                    "name": "九江县",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "360430",
+                    "people_count_2010": 353149,
+                    "lat": 29.898865,
+                    "lng": 116.55584,
+                    "name": "彭泽县",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "360428",
+                    "people_count_2010": 716370,
+                    "lat": 29.275105,
+                    "lng": 116.205114,
+                    "name": "都昌县",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "360826",
+                    "people_count_2010": 512225,
+                    "lat": 26.790164,
+                    "lng": 114.901393,
+                    "name": "泰和县",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "360829",
+                    "people_count_2010": 385631,
+                    "lat": 27.382746,
+                    "lng": 114.61384,
+                    "name": "安福县",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "360828",
+                    "people_count_2010": 301699,
+                    "lat": 26.462085,
+                    "lng": 114.784694,
+                    "name": "万安县",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "360822",
+                    "people_count_2010": 501337,
+                    "lat": 27.213445,
+                    "lng": 115.134569,
+                    "name": "吉水县",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "360602",
+                    "people_count_2010": 214229,
+                    "lat": 28.239076,
+                    "lng": 117.034112,
+                    "name": "月湖区",
+                    "level": "district",
+                    "parent": "鹰潭市"
+                },
+                {
+                    "adcode": "361127",
+                    "people_count_2010": 887616,
+                    "lat": 28.69173,
+                    "lng": 116.691072,
+                    "name": "余干县",
+                    "level": "district",
+                    "parent": "上饶市"
+                },
+                {
+                    "adcode": "361129",
+                    "people_count_2010": 359098,
+                    "lat": 28.692589,
+                    "lng": 117.07015,
+                    "name": "万年县",
+                    "level": "district",
+                    "parent": "上饶市"
+                },
+                {
+                    "adcode": "360902",
+                    "people_count_2010": 1000000,
+                    "lat": 27.800117,
+                    "lng": 114.387379,
+                    "name": "袁州区",
+                    "level": "district",
+                    "parent": "宜春市"
+                },
+                {
+                    "adcode": "360703",
+                    "people_count_2010": null,
+                    "lat": 25.661721,
+                    "lng": 114.756933,
+                    "name": "南康区",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360403",
+                    "people_count_2010": 402758,
+                    "lat": 29.72465,
+                    "lng": 115.995947,
+                    "name": "浔阳区",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "360322",
+                    "people_count_2010": 467214,
+                    "lat": 27.877041,
+                    "lng": 113.800525,
+                    "name": "上栗县",
+                    "level": "district",
+                    "parent": "萍乡市"
+                },
+                {
+                    "adcode": "360111",
+                    "people_count_2010": 897843,
+                    "lat": 28.689292,
+                    "lng": 115.949044,
+                    "name": "青山湖区",
+                    "level": "district",
+                    "parent": "南昌市"
+                },
+                {
+                    "adcode": "360821",
+                    "people_count_2010": 464295,
+                    "lat": 27.040042,
+                    "lng": 114.905117,
+                    "name": "吉安县",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "361024",
+                    "people_count_2010": 347837,
+                    "lat": 27.760907,
+                    "lng": 116.059109,
+                    "name": "崇仁县",
+                    "level": "district",
+                    "parent": "抚州市"
+                },
+                {
+                    "adcode": "360102",
+                    "people_count_2010": 575489,
+                    "lat": 28.682988,
+                    "lng": 115.889675,
+                    "name": "东湖区",
+                    "level": "district",
+                    "parent": "南昌市"
+                },
+                {
+                    "adcode": "360103",
+                    "people_count_2010": null,
+                    "lat": 28.662901,
+                    "lng": 115.91065,
+                    "name": "西湖区",
+                    "level": "district",
+                    "parent": "南昌市"
+                },
+                {
+                    "adcode": "361021",
+                    "people_count_2010": 306236,
+                    "lat": 27.55531,
+                    "lng": 116.63945,
+                    "name": "南城县",
+                    "level": "district",
+                    "parent": "抚州市"
+                },
+                {
+                    "adcode": "360482",
+                    "people_count_2010": null,
+                    "lat": 29.247884,
+                    "lng": 115.805712,
+                    "name": "共青城市",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "361125",
+                    "people_count_2010": 184870,
+                    "lat": 28.415103,
+                    "lng": 117.608247,
+                    "name": "横峰县",
+                    "level": "district",
+                    "parent": "上饶市"
+                },
+                {
+                    "adcode": "361030",
+                    "people_count_2010": 235395,
+                    "lat": 26.838426,
+                    "lng": 116.327291,
+                    "name": "广昌县",
+                    "level": "district",
+                    "parent": "抚州市"
+                },
+                {
+                    "adcode": "360723",
+                    "people_count_2010": 289378,
+                    "lat": 25.395937,
+                    "lng": 114.362243,
+                    "name": "大余县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360734",
+                    "people_count_2010": 288207,
+                    "lat": 24.954136,
+                    "lng": 115.651399,
+                    "name": "寻乌县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360825",
+                    "people_count_2010": 428276,
+                    "lat": 27.321087,
+                    "lng": 115.435559,
+                    "name": "永丰县",
+                    "level": "district",
+                    "parent": "吉安市"
+                },
+                {
+                    "adcode": "361002",
+                    "people_count_2010": 1100000,
+                    "lat": 27.981919,
+                    "lng": 116.361404,
+                    "name": "临川区",
+                    "level": "district",
+                    "parent": "抚州市"
+                },
+                {
+                    "adcode": "361023",
+                    "people_count_2010": 287932,
+                    "lat": 27.210132,
+                    "lng": 116.532994,
+                    "name": "南丰县",
+                    "level": "district",
+                    "parent": "抚州市"
+                },
+                {
+                    "adcode": "360735",
+                    "people_count_2010": 278246,
+                    "lat": 26.326582,
+                    "lng": 116.342249,
+                    "name": "石城县",
+                    "level": "district",
+                    "parent": "赣州市"
+                },
+                {
+                    "adcode": "360925",
+                    "people_count_2010": 144800,
+                    "lat": 28.86054,
+                    "lng": 115.361744,
+                    "name": "靖安县",
+                    "level": "district",
+                    "parent": "宜春市"
+                },
+                {
+                    "adcode": "360426",
+                    "people_count_2010": 222322,
+                    "lat": 29.327474,
+                    "lng": 115.762611,
+                    "name": "德安县",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "360202",
+                    "people_count_2010": 192203,
+                    "lat": 29.288465,
+                    "lng": 117.195023,
+                    "name": "昌江区",
+                    "level": "district",
+                    "parent": "景德镇市"
+                },
+                {
+                    "adcode": "360481",
+                    "people_count_2010": 419047,
+                    "lat": 29.676599,
+                    "lng": 115.669081,
+                    "name": "瑞昌市",
+                    "level": "district",
+                    "parent": "九江市"
+                },
+                {
+                    "adcode": "361121",
+                    "people_count_2010": 700267,
+                    "lat": 28.453897,
+                    "lng": 117.90612,
+                    "name": "上饶县",
+                    "level": "district",
+                    "parent": "上饶市"
+                },
+                {
+                    "adcode": "361126",
+                    "people_count_2010": 353379,
+                    "lat": 28.402391,
+                    "lng": 117.435002,
+                    "name": "弋阳县",
+                    "level": "district",
+                    "parent": "上饶市"
+                }
+            ]
+        },
+        {
+            "adcode": "410000",
+            "people_count_2010": 96486884,
+            "lat": 34.757975,
+            "lng": 113.665412,
+            "name": "河南省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "510000",
+            "people_count_2010": 85974759,
+            "lat": 30.659462,
+            "lng": 104.065735,
+            "name": "四川省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "500000",
+            "people_count_2010": 28458101,
+            "lat": 29.533155,
+            "lng": 106.504962,
+            "name": "重庆市",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "540000",
+            "people_count_2010": 2554907,
+            "lat": 29.660361,
+            "lng": 91.132212,
+            "name": "西藏自治区",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "520000",
+            "people_count_2010": 25119376,
+            "lat": 26.578343,
+            "lng": 106.713478,
+            "name": "贵州省",
+            "level": "province",
+            "parent": "中华人民共和国",
+            "children": [
+                {
+                    "adcode": "520300",
+                    "people_count_2010": 6127082,
+                    "lat": 27.706626,
+                    "lng": 106.937265,
+                    "name": "遵义市",
+                    "level": "city",
+                    "parent": "贵州省",
+                    "children": [
+                        {
+                            "adcode": "520321",
+                            "people_count_2010": 942904,
+                            "lat": 27.535288,
+                            "lng": 106.831668,
+                            "name": "遵义县",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520382",
+                            "people_count_2010": 546477,
+                            "lat": 27.803377,
+                            "lng": 106.412476,
+                            "name": "仁怀市",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520324",
+                            "people_count_2010": 389634,
+                            "lat": 28.550337,
+                            "lng": 107.441872,
+                            "name": "正安县",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520330",
+                            "people_count_2010": 523180,
+                            "lat": 28.327826,
+                            "lng": 106.200954,
+                            "name": "习水县",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520302",
+                            "people_count_2010": 656592,
+                            "lat": 27.694395,
+                            "lng": 106.943784,
+                            "name": "红花岗区",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520323",
+                            "people_count_2010": 380083,
+                            "lat": 27.951342,
+                            "lng": 107.191024,
+                            "name": "绥阳县",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520325",
+                            "people_count_2010": 244159,
+                            "lat": 28.880088,
+                            "lng": 107.605342,
+                            "name": "道真仡佬族苗族自治县",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520322",
+                            "people_count_2010": 521840,
+                            "lat": 28.131559,
+                            "lng": 106.826591,
+                            "name": "桐梓县",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520327",
+                            "people_count_2010": 313128,
+                            "lat": 27.960858,
+                            "lng": 107.722021,
+                            "name": "凤冈县",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520303",
+                            "people_count_2010": 438279,
+                            "lat": 27.706626,
+                            "lng": 106.937265,
+                            "name": "汇川区",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520328",
+                            "people_count_2010": 377358,
+                            "lat": 27.765839,
+                            "lng": 107.485723,
+                            "name": "湄潭县",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520381",
+                            "people_count_2010": 237052,
+                            "lat": 28.587057,
+                            "lng": 105.698116,
+                            "name": "赤水市",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520326",
+                            "people_count_2010": 321657,
+                            "lat": 28.521567,
+                            "lng": 107.887857,
+                            "name": "务川仡佬族苗族自治县",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520329",
+                            "people_count_2010": 234739,
+                            "lat": 27.221552,
+                            "lng": 107.892566,
+                            "name": "余庆县",
+                            "level": "district",
+                            "parent": "遵义市"
+                        },
+                        {
+                            "adcode": "520304",
+                            "people_count_2010": 520304,
+                            "lat": 27.535288,
+                            "lng": 106.831668,
+                            "name": "播州区",
+                            "level": "district",
+                            "parent": "遵义市"
+                        }
+                    ]
+                },
+                {
+                    "adcode": "520200",
+                    "people_count_2010": 2815987,
+                    "lat": 26.584643,
+                    "lng": 104.846743,
+                    "name": "六盘水市",
+                    "level": "city",
+                    "parent": "贵州省"
+                },
+                {
+                    "adcode": "522600",
+                    "people_count_2010": 3481891,
+                    "lat": 26.583352,
+                    "lng": 107.977488,
+                    "name": "黔东南苗族侗族自治州",
+                    "level": "city",
+                    "parent": "贵州省"
+                },
+                {
+                    "adcode": "520600",
+                    "people_count_2010": null,
+                    "lat": 27.718346,
+                    "lng": 109.191555,
+                    "name": "铜仁市",
+                    "level": "city",
+                    "parent": "贵州省"
+                },
+                {
+                    "adcode": "522300",
+                    "people_count_2010": 2804612,
+                    "lat": 25.08812,
+                    "lng": 104.897971,
+                    "name": "黔西南布依族苗族自治州",
+                    "level": "city",
+                    "parent": "贵州省"
+                },
+                {
+                    "adcode": "520100",
+                    "people_count_2010": 4058115,
+                    "lat": 26.578343,
+                    "lng": 106.713478,
+                    "name": "贵阳市",
+                    "level": "city",
+                    "parent": "贵州省"
+                },
+                {
+                    "adcode": "522700",
+                    "people_count_2010": 3232714,
+                    "lat": 26.258219,
+                    "lng": 107.517156,
+                    "name": "黔南布依族苗族自治州",
+                    "level": "city",
+                    "parent": "贵州省"
+                },
+                {
+                    "adcode": "520500",
+                    "people_count_2010": null,
+                    "lat": 27.301693,
+                    "lng": 105.28501,
+                    "name": "毕节市",
+                    "level": "city",
+                    "parent": "贵州省"
+                },
+                {
+                    "adcode": "520400",
+                    "people_count_2010": 2598975,
+                    "lat": 26.245544,
+                    "lng": 105.932188,
+                    "name": "安顺市",
+                    "level": "city",
+                    "parent": "贵州省"
+                }
+            ]
+        },
+        {
+            "adcode": "210000",
+            "people_count_2010": 43149614,
+            "lat": 41.796767,
+            "lng": 123.429096,
+            "name": "辽宁省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "650000",
+            "people_count_2010": 29070614,
+            "lat": 43.792818,
+            "lng": 87.617733,
+            "name": "新疆维吾尔自治区",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "370000",
+            "people_count_2010": 94646230,
+            "lat": 36.675807,
+            "lng": 117.000923,
+            "name": "山东省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "310000",
+            "people_count_2010": 21135161,
+            "lat": 31.231706,
+            "lng": 121.472644,
+            "name": "上海市",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "820000",
+            "people_count_2010": null,
+            "lat": 22.198951,
+            "lng": 113.54909,
+            "name": "澳門特別行政區",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "140000",
+            "people_count_2010": 34364492,
+            "lat": 37.857014,
+            "lng": 112.549248,
+            "name": "山西省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "330000",
+            "people_count_2010": 53807755,
+            "lat": 30.287459,
+            "lng": 120.153576,
+            "name": "浙江省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "460000",
+            "people_count_2010": 42028870,
+            "lat": 20.031971,
+            "lng": 110.33119,
+            "name": "海南省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "350000",
+            "people_count_2010": 39026582,
+            "lat": 26.075302,
+            "lng": 119.306239,
+            "name": "福建省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "630000",
+            "people_count_2010": 5619543,
+            "lat": 36.623178,
+            "lng": 101.778916,
+            "name": "青海省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "640000",
+            "people_count_2010": 6466366,
+            "lat": 38.46637,
+            "lng": 106.278179,
+            "name": "宁夏回族自治区",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "420000",
+            "people_count_2010": 62160766,
+            "lat": 30.584355,
+            "lng": 114.298572,
+            "name": "湖北省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "620000",
+            "people_count_2010": 27957557,
+            "lat": 36.058039,
+            "lng": 103.823557,
+            "name": "甘肃省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "340000",
+            "people_count_2010": 57217014,
+            "lat": 31.86119,
+            "lng": 117.283042,
+            "name": "安徽省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "710000",
+            "people_count_2010": null,
+            "lat": 25.044332,
+            "lng": 121.509062,
+            "name": "台湾省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "610000",
+            "people_count_2010": 35876998,
+            "lat": 34.263161,
+            "lng": 108.948024,
+            "name": "陕西省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "450000",
+            "people_count_2010": 47082115,
+            "lat": 22.82402,
+            "lng": 108.320004,
+            "name": "广西壮族自治区",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "120000",
+            "people_count_2010": 15298136,
+            "lat": 39.125596,
+            "lng": 117.190182,
+            "name": "天津市",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "530000",
+            "people_count_2010": 72840959,
+            "lat": 25.040609,
+            "lng": 102.712251,
+            "name": "云南省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "230000",
+            "people_count_2010": 40734477,
+            "lat": 45.756967,
+            "lng": 126.642464,
+            "name": "黑龙江省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "440000",
+            "people_count_2010": 107131199,
+            "lat": 23.125178,
+            "lng": 113.280637,
+            "name": "广东省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "430000",
+            "people_count_2010": 67158313,
+            "lat": 28.19409,
+            "lng": 112.982279,
+            "name": "湖南省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "130000",
+            "people_count_2010": 106816280,
+            "lat": 38.045474,
+            "lng": 114.502461,
+            "name": "河北省",
+            "level": "province",
+            "parent": "中华人民共和国",
+            "children": []
+        },
+        {
+            "adcode": "150000",
+            "people_count_2010": 26353789,
+            "lat": 40.818311,
+            "lng": 111.670801,
+            "name": "内蒙古自治区",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "220000",
+            "people_count_2010": 26423220,
+            "lat": 43.886841,
+            "lng": 125.3245,
+            "name": "吉林省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "320000",
+            "people_count_2010": 79104628,
+            "lat": 32.041544,
+            "lng": 118.767413,
+            "name": "江苏省",
+            "level": "province",
+            "parent": "中华人民共和国"
+        },
+        {
+            "adcode": "110000",
+            "people_count_2010": 18934592,
+            "lat": 39.904989,
+            "lng": 116.405285,
+            "name": "北京市",
+            "level": "province",
+            "parent": "中华人民共和国",
+            "children": [
+                {
+                    "adcode": "110105",
+                    "people_count_2010": 3500000,
+                    "lat": 39.921489,
+                    "lng": 116.486409,
+                    "name": "朝阳区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110128",
+                    "people_count_2010": null,
+                    "lat": 40.377362,
+                    "lng": 116.843352,
+                    "name": "密云区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110116",
+                    "people_count_2010": 372887,
+                    "lat": 40.324272,
+                    "lng": 116.637122,
+                    "name": "怀柔区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110129",
+                    "people_count_2010": null,
+                    "lat": 40.465325,
+                    "lng": 115.985006,
+                    "name": "延庆区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110108",
+                    "people_count_2010": 3300000,
+                    "lat": 39.956074,
+                    "lng": 116.310316,
+                    "name": "海淀区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110117",
+                    "people_count_2010": 415958,
+                    "lat": 40.144783,
+                    "lng": 117.112335,
+                    "name": "平谷区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110109",
+                    "people_count_2010": 290476,
+                    "lat": 39.937183,
+                    "lng": 116.105381,
+                    "name": "门头沟区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110114",
+                    "people_count_2010": 1700000,
+                    "lat": 40.218085,
+                    "lng": 116.235906,
+                    "name": "昌平区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110115",
+                    "people_count_2010": 1400000,
+                    "lat": 39.728908,
+                    "lng": 116.338033,
+                    "name": "大兴区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110102",
+                    "people_count_2010": 674531,
+                    "lat": 39.915309,
+                    "lng": 116.366794,
+                    "name": "西城区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110106",
+                    "people_count_2010": 2100000,
+                    "lat": 39.863642,
+                    "lng": 116.286968,
+                    "name": "丰台区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110112",
+                    "people_count_2010": 1200000,
+                    "lat": 39.902486,
+                    "lng": 116.658603,
+                    "name": "通州区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110107",
+                    "people_count_2010": 616083,
+                    "lat": 39.914601,
+                    "lng": 116.195445,
+                    "name": "石景山区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110101",
+                    "people_count_2010": 573180,
+                    "lat": 39.917544,
+                    "lng": 116.418757,
+                    "name": "东城区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110113",
+                    "people_count_2010": 876620,
+                    "lat": 40.128936,
+                    "lng": 116.653525,
+                    "name": "顺义区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                },
+                {
+                    "adcode": "110111",
+                    "people_count_2010": 1000000,
+                    "lat": 39.735535,
+                    "lng": 116.139157,
+                    "name": "房山区",
+                    "level": "district",
+                    "parent": "北京市市辖区"
+                }
+            ]
+        },
+        {
+            "adcode": "810000",
+            "people_count_2010": null,
+            "lat": 22.320048,
+            "lng": 114.173355,
+            "name": "香港特別行政區",
+            "level": "province",
+            "parent": "中华人民共和国",
+            "children": [
+                {
+                    "adcode": "810015",
+                    "people_count_2010": null,
+                    "lat": 22.314203,
+                    "lng": 114.264813,
+                    "name": "西貢區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810018",
+                    "people_count_2010": null,
+                    "lat": 22.286371,
+                    "lng": 113.946059,
+                    "name": "離島區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810017",
+                    "people_count_2010": null,
+                    "lat": 22.363908,
+                    "lng": 114.13918,
+                    "name": "葵青區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810013",
+                    "people_count_2010": null,
+                    "lat": 22.496143,
+                    "lng": 114.147404,
+                    "name": "北區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810008",
+                    "people_count_2010": null,
+                    "lat": 22.336112,
+                    "lng": 114.203985,
+                    "name": "黃大仙區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810001",
+                    "people_count_2010": null,
+                    "lat": 22.281931,
+                    "lng": 114.154334,
+                    "name": "中西區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810005",
+                    "people_count_2010": null,
+                    "lat": 22.311632,
+                    "lng": 114.173347,
+                    "name": "油尖旺區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810006",
+                    "people_count_2010": null,
+                    "lat": 22.333775,
+                    "lng": 114.163349,
+                    "name": "深水埗區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810011",
+                    "people_count_2010": null,
+                    "lat": 22.393896,
+                    "lng": 113.976308,
+                    "name": "屯門區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810004",
+                    "people_count_2010": null,
+                    "lat": 22.245811,
+                    "lng": 114.160023,
+                    "name": "南區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810012",
+                    "people_count_2010": null,
+                    "lat": 22.44132,
+                    "lng": 114.032528,
+                    "name": "元朗區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810010",
+                    "people_count_2010": null,
+                    "lat": 22.368458,
+                    "lng": 114.121234,
+                    "name": "荃灣區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810016",
+                    "people_count_2010": null,
+                    "lat": 22.379715,
+                    "lng": 114.195126,
+                    "name": "沙田區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810002",
+                    "people_count_2010": null,
+                    "lat": 22.276345,
+                    "lng": 114.18299,
+                    "name": "灣仔區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810009",
+                    "people_count_2010": null,
+                    "lat": 22.320679,
+                    "lng": 114.214083,
+                    "name": "觀塘區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810014",
+                    "people_count_2010": null,
+                    "lat": 22.44573,
+                    "lng": 114.171713,
+                    "name": "大埔區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810007",
+                    "people_count_2010": null,
+                    "lat": 22.312373,
+                    "lng": 114.193047,
+                    "name": "九龍城區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                },
+                {
+                    "adcode": "810003",
+                    "people_count_2010": null,
+                    "lat": 22.279779,
+                    "lng": 114.225965,
+                    "name": "東區",
+                    "level": "district",
+                    "parent": "香港特別行政區"
+                }
+            ]
+        }
+    ]
+}

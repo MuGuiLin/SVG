@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tree 树状图3</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            margin: auto;
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>tree 树状图3</h1>
+    <hr>
+
+    <article class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+    </article>
+
+    <section id="svg-box"></section>
+
+    <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+    <script>
+        // const svg = d3.create("svg")
+        //     .attr("width", 1800)
+        //     .attr("height", 1600)
+        //     .attr('viewBox', [-100, 0, 1680, 1600])
+        //     .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
+        //     .attr("font-family", "sans-serif")
+        //     .attr("font-size", 12);
+
+        const svg = d3.select('#svg-box').insert('svg')
+            .attr('width', 1800)
+            .attr('height', 1600)
+            .attr('viewBox', [-100, 0, 1680, 1600]);
+
+        const g = svg.append('g')
+            .attr('transform', 'translate(50, 0)');
+
+        // 生成树状布局（宽高大小）
+        // const tree = d3.layout.tree().size([1600, 1400]);
+        const tree = d3.tree().size([1600, 1400]);
+
+        // 生成对角线（从左 向 右）
+        // const diagonal = d3.svg.diagonal().projection(o => [o.y, o.x]);
+        const diagonal = d3.geoProjection(o => [o.y, o.x]);
+        console.dir(diagonal);
+
+        // 请求加载数据
+        d3.json('./data/china.json').then((res) => {
+            // 获取树状节点数组
+            // let nodes = tree.nodes(res);
+            let nodes = tree(d3.hierarchy(res));
+            console.log('nodes', nodes);
+
+            // 获取树状连线数组
+            // let links = tree.links();
+            let links = nodes.links(nodes);
+            console.log('links', links);
+
+            // 创建分组（将矩形、圆点、文本组合在内）
+            let node = svg.selectAll('.node').data(nodes).enter().append('g')
+                .attr('transform', (o) => {
+                    // console.log(o);
+                    return `translate(${o.y}, ${o.x})`;
+                });
+
+            // 创建矩形
+            let rect = node.append('rect')
+                .attr('x', (o) => o.children ? -128 : 5)
+                .attr('y', -15)
+                .attr('width', 128).attr('height', 30)
+                .attr('fill', 'cyan').attr('stroke', 'gray');
+
+            // 创建圆点
+            let circle = node.append('circle')
+                .attr('r', 10)
+                .attr('fill', 'red');
+
+            // 创建文本
+            let text = node.append('text').text(({ data }) => {
+                // console.log(data);
+                return data.name;
+            })
+                .attr('dx', (o) => o.children ? -20 : 15)
+                .attr('dy', 5)
+                .attr('text-anchor', (o) => o.children ? 'end' : 'start')
+
+            // 创建连线
+            let link = svg.selectAll('.link').data((links)).enter().append('path')
+                // .attr('d', diagonal)
+                .attr('d', (o) => {
+                    console.log(o)
+                })
+                .attr('fill', 'none')
+                .attr('stroke', 'gray');
+
+            console.log('link', link);
+
+        });
+
+    </script>
+</body>
+
+</html>
