@@ -88,7 +88,16 @@
 					<!-- 三角形 -->
 					<!-- <polygon points="30 10 60 50 0 50" fill="green"></polygon> -->
 				</pattern>
+
+				<!-- PSD透明背景图 -->
+				<pattern id="transparent" patternUnits="userSpaceOnUse" x="0" y="0" width="20" height="20" viewBox="0 0 10 10">
+					<rect x="0" y="0" width="10" height="10" fill="#fff"></rect>
+					<rect x="0" y="0" width="5" height="5" fill="#eee"></rect>
+					<rect x="5" y="5" width="5" height="5" fill="#eee"></rect>
+				</pattern>
 			</defs>
+
+			
 
 			<text x="100" y="90">笔刷填充：fill</text>
 			<!-- <rect x="100" y="100" width="500" height="300" stroke="blue" fill="url(#pen1)"></rect> -->
@@ -99,6 +108,9 @@
 
 			<text x="100" y="1040">笔刷描边：stroke</text>
 			<rect x="100" y="1050" width="500" height="300" stroke-width="30" stroke="url(#pen1)" fill="transparent"></rect>
+
+			<text x="100" y="1440">PSD透明背景图：transparent</text>
+			<rect x="100" y="1450"  width="500" height="300"stroke="gray" fill="url(#transparent)" style="pointer-events:none"></rect>
 
 		</svg>
 

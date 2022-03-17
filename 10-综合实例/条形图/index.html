@@ -39,7 +39,8 @@
 
         <h5>原理：根据数据生成x轴、y轴的刻度、文字数据、条形图。</h5>
 
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="600" viewBox="0 0 1000 600" fill="transparent">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="600"
+            viewBox="0 0 1000 600" fill="transparent">
             <defs>
                 <style type="text/css">
                     .sgray {
@@ -68,7 +69,8 @@
 
                 <!-- 折线 -->
                 <!-- <polyline id="polyline" stroke="cyan" stroke-width="2" stroke-dasharray="20, 10, 5, 5, 5, 10" stroke-linecap="round" fill="none"></polyline> -->
-                <path id="path" stroke="cyan" stroke-width="2" stroke-dasharray="20, 10, 5, 5, 5, 10" stroke-linecap="round" fill="none"></path>
+                <path id="path" stroke="cyan" stroke-width="2" stroke-dasharray="20, 10, 5, 5, 5, 10"
+                    stroke-linecap="round" fill="none"></path>
                 <circle r="10" fill="red">
                     <animateMotion id="animateCircle" dur="3s" begin="0s" repeatCount="indefinite" />
                 </circle>
@@ -184,6 +186,52 @@
             // yText.setAttribute('text-anchor', 'start');
             yText.innerHTML = i * 100;
             yScale.appendChild(yText);
+        };
+
+        // 折线转曲线
+        function smoothControlPoints(ct1, pt, ct2) {
+            // each point must not be the origin
+            var x1 = ct1.x - pt.x,
+                y1 = ct1.y - pt.y,
+                x2 = ct2.x - pt.x,
+                y2 = ct2.y - pt.y;
+            if ((x1 != 0 || y1 != 0) && (x2 != 0 || y2 != 0)) {
+                var anglea = Math.atan2(y1, x1),
+                    angleb = Math.atan2(y2, x2),
+                    r1 = Math.sqrt(x1 * x1 + y1 * y1),
+                    r2 = Math.sqrt(x2 * x2 + y2 * y2),
+                    nct1 = {
+                        x: 0,
+                        y: 0
+                    },
+                    nct2 = {
+                        x: 0,
+                        y: 0
+                    };
+                if (anglea < 0) {
+                    anglea += 2 * Math.PI;
+                }
+                if (angleb < 0) {
+                    angleb += 2 * Math.PI;
+                }
+                var angleBetween = Math.abs(anglea - angleb),
+                    angleDiff = Math.abs(Math.PI - angleBetween) / 2;
+                var new_anglea, new_angleb;
+                if (anglea - angleb > 0) {
+                    new_anglea = angleBetween < Math.PI ? (anglea + angleDiff) : (anglea - angleDiff);
+                    new_angleb = angleBetween < Math.PI ? (angleb - angleDiff) : (angleb + angleDiff);
+                } else {
+                    new_anglea = angleBetween < Math.PI ? (anglea - angleDiff) : (anglea + angleDiff);
+                    new_angleb = angleBetween < Math.PI ? (angleb + angleDiff) : (angleb - angleDiff);
+                }
+                // rotate the points
+                nct1.x = r1 * Math.cos(new_anglea) / 3 + pt.x;
+                nct1.y = r1 * Math.sin(new_anglea) / 3 + pt.y;
+                nct2.x = r2 * Math.cos(new_angleb) / 3 + pt.x;
+                nct2.y = r2 * Math.sin(new_angleb) / 3 + pt.y;
+                return [nct1, nct2];
+            }
+            return undefined;
         };
 
     </script>
