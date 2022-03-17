@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js-柱状图</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js-柱状图</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <ul>
+            <li>D3js 是一个可以基于数据来操作文档的 JavaScript 库。可以帮助你使用 HTML, CSS, SVG 以及 Canvas 来展示数据。</li>
+            <li>D3 遵循现有的 Web 标准，可以不需要其他任何框架独立运行在现代浏览器中，它结合强大的可视化组件来驱动 DOM 操作。</li>
+            <li> D3 可以将数据绑定到 DOM 上，然后根据数据来计算对应 DOM 的属性值。例如你可以根据一组数据生成一个表格。或者也可以生成一个可以过渡和交互的 SVG 图形。</li>
+            <li>D3 不是一个框架，因此也没有操作上的限制。没有框架的限制带来的好处就是你可以完全按照自己的意愿来表达数据，而不是受限于条条框框，非常灵活。D3 的运行速度很快，支持大数据集和动态交互以及动画。</li>
+        </ul>
+
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600" viewBox="0 0 800 600"></svg>
+
+    </div>
+    <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+    <script>
+        console.log('d3：', d3);
+
+        const data = [95, 75, 12, 36, 54, 88, 24, 66];
+        var margin = 30;//svg 上下左右边距
+
+        var svg = d3.select('svg');
+        var width = svg.attr('width');
+        var height = svg.attr('height');
+
+        //创建分组
+        var g = svg.append('g').attr('transform', 'translate(' + margin + ',' + margin + ')');
+
+        //定义 x y 轴比例尺
+        var scaleX = d3.scaleBand()
+            .domain(d3.range(data.length))
+            .range([0, width - margin * 2]);
+            
+        var scaleY = d3.scaleLinear()
+            .domain([0, d3.max(data)])
+            .range([height - margin * 2, 0]);
+
+        //绘画 x y  轴
+        var axisX = d3.axisBottom(scaleX);
+        var axisY = d3.axisLeft(scaleY);
+
+        g.append('g').attr('transform', 'translate(0,' + (height - margin * 2) + ')').call(axisX);
+        g.append('g').attr('transform', 'translate(0,0)').call(axisY);
+
+        // 创建矩形分组
+        var gs = g.selectAll('rect').data(data).enter().append('g');
+
+        //绘 柱状图  +  过度效果
+        var rectP = 40;//柱状图间距
+        gs.append('rect')
+            .attr('x', function (d, i) {
+                return scaleX(i) + rectP / 2;
+            })
+            .attr('y', function (d, i) {
+                // return scaleY(d);
+                // return 0;//动画的初始状态为0  如果是这样的话  就像下雨的效果  柱状图从上往下生长
+                var min = scaleY.domain()[0];//[0,90]
+                console.log(min) // 输出 0
+                return scaleY(min); // scaleY(0) y轴比例尺 映射出来的是最大值；   这个效果 等同于return height - 2*margin;的效果
+            })
+            .attr('width', function (d, i) {
+                return scaleX.step() - rectP;
+            })
+            .attr('height', function (d, i) {
+                // return height - margin*2 - scaleY(d);
+                return 0; // 动画的初始状态为0
+            })
+            .attr('fill', (d, i) => {
+                return `rgb(${parseInt(Math.random() * 255)}, ${parseInt(Math.random() * 255)}, ${parseInt(Math.random() * 255)})`;
+            })
+            .transition() // 添加过度
+            .duration(2000) // 动画的持续时间  毫秒
+            .delay(function (d, i) { // 延迟执行
+                return i * 300; // 每个柱子逐渐开始的效果
+            })
+            .attr('y', function (d, i) {
+                return scaleY(d);
+            })
+            .attr('height', function (d, i) {
+                return height - margin * 2 - scaleY(d);
+            });
+
+
+        //绘 文字  +  过度效果
+        gs.append('text')
+            .attr('x', function (d, i) {
+                return scaleX(i) + rectP / 2;
+            })
+            .attr('y', function (d, i) {
+                //            return scaleY(d);
+                return height - 2 * margin; //这里的初始化效果 同上面的矩形初始化效果一样
+            })
+            .attr('dx', function (d, i) {
+                return 15;
+            })
+            .attr('dy', function (d, i) {
+                return -10;
+            })
+            .text(function (d, i) {
+                return d;
+            })
+            .transition()
+            .duration(2000)
+            .delay(function (d, i) {
+                return i * 300;//300毫秒
+            })
+            .attr('y', function (d, i) {
+                return scaleY(d);
+            });
+    </script>
+</body>
+
+</html>

@@ -33,13 +33,14 @@
         <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
         <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
         <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
-        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
     </article>
 
     <section id="svg-box"></section>
 
-    <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/d3@7"></script> -->
+
 
     <script>
         // const svg = d3.create("svg")
@@ -52,15 +53,13 @@
 
         const svg = d3.select('#svg-box').insert('svg')
             .attr('width', 1800)
-            .attr('height', 1600)
-            .attr('viewBox', [-100, 0, 1680, 1600]);
+            .attr('height', 5600)
+            .attr('viewBox', [-100, 0, 1680, 5600]);
 
-        const g = svg.append('g')
-            .attr('transform', 'translate(50, 0)');
 
         // 生成树状布局（宽高大小）
         // const tree = d3.layout.tree().size([1600, 1400]);
-        const tree = d3.tree().size([1600, 1400]);
+        const tree = d3.tree().size([5600, 1400]);
 
         // 生成对角线（从左 向 右）
         // const diagonal = d3.svg.diagonal().projection(o => [o.y, o.x]);
@@ -71,32 +70,37 @@
         d3.json('./data/china.json').then((res) => {
             // 获取树状节点数组
             // let nodes = tree.nodes(res);
-            let nodes = tree(d3.hierarchy(res));
+            let nodes = tree(d3.hierarchy(res)); // 对数据进行分层标记加工
             console.log('nodes', nodes);
 
             // 获取树状连线数组
             // let links = tree.links();
-            let links = nodes.links(nodes);
+            // let links = nodes.links(nodes);
+            let links = nodes.descendants();
             console.log('links', links);
 
             // 创建分组（将矩形、圆点、文本组合在内）
             let node = svg.selectAll('.node').data(nodes).enter().append('g')
+                .attr('cursor', (o) => o.children ? 'pointer' : 'default')
                 .attr('transform', (o) => {
                     // console.log(o);
                     return `translate(${o.y}, ${o.x})`;
+                }).on('click', (event, pd) => {
+                    console.log(event, pd)
                 });
 
             // 创建矩形
             let rect = node.append('rect')
-                .attr('x', (o) => o.children ? -128 : 5)
+                .attr('x', (o) => o.children ? -170 : -15)
                 .attr('y', -15)
-                .attr('width', 128).attr('height', 30)
+                .attr('rx', 15)
+                .attr('width', 218).attr('height', 30)
                 .attr('fill', 'cyan').attr('stroke', 'gray');
 
             // 创建圆点
             let circle = node.append('circle')
                 .attr('r', 10)
-                .attr('fill', 'red');
+                .attr('fill', (o) => o.children ? 'red' : 'yellow');
 
             // 创建文本
             let text = node.append('text').text(({ data }) => {
@@ -109,9 +113,12 @@
 
             // 创建连线
             let link = svg.selectAll('.link').data((links)).enter().append('path')
-                // .attr('d', diagonal)
+                .attr('class', 'link')
                 .attr('d', (o) => {
-                    console.log(o)
+                    if (o.depth) {
+                        // console.log('link', o);
+                        return `M ${o.y},${o.x}L ${o.parent.y}, ${o.parent.x}`; // 这里根据需求可以画贝塞尔曲线或折线
+                    }
                 })
                 .attr('fill', 'none')
                 .attr('stroke', 'gray');

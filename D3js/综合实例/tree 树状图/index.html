@@ -33,7 +33,7 @@
         <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
         <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
         <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
-        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
     </article>
 
     <section id="svg-box"></section>
@@ -45,14 +45,14 @@
     <script>
         const svg = d3.select('#svg-box').insert('svg')
             .attr('width', 1800)
-            .attr('height', 1600)
-            .attr('viewBox', [-100, 0, 1680, 1600]);
+            .attr('height', 5600)
+            .attr('viewBox', [-100, 0, 1680, 5600]);
 
         const g = svg.append('g')
             .attr('transform', 'translate(50, 0)');
 
         // 生成树状布局（宽高大小）
-        const tree = d3.layout.tree().size([1600, 1400]);
+        const tree = d3.layout.tree().size([5600, 1400]);
 
         // 生成对角线（从左 向 右）
         const diagonal = d3.svg.diagonal().projection(o => [o.y, o.x]);
@@ -73,15 +73,16 @@
 
             // 创建矩形
             let rect = node.append('rect')
-                .attr('x', (o) => o.children ? -128 : 5)
+                .attr('x', (o) => o.children || o._children ? -170 : -15)
                 .attr('y', -15)
-                .attr('width', 128).attr('height', 30)
+                .attr('rx', 15)
+                .attr('width', 218).attr('height', 30)
                 .attr('fill', 'cyan').attr('stroke', 'gray');
 
             // 创建圆点
             let circle = node.append('circle')
                 .attr('r', 10)
-                .attr('fill', 'none').attr('fill', 'red');
+                .attr('fill', (o) => o.children ? 'red' : 'yellow');
 
             // 创建文本
             let text = node.append('text').text(o => o.name)
