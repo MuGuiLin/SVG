@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - DOM操作</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        .title {
+            color: blue;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - DOM操作 Elements</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <hr />
+
+        <h3>在选中元素之后，使用选择集的转换方法来修改文档的内容。例如设置 a 标签的 name 属性和 color 样式</h3>
+
+        <ul id="method">
+            <h4>selection.attr(name[, value]) 设置节点属性</h4>
+            <li>如果指定了 value 则将指定 name 的属性值设置为指定的 value 并返回当前选择集。</li>
+
+            <h4>selection.classed(names[, value]) 设置节点类名（多个 中间用 空格 隔开）</h4>
+            <li>如果指定了 value 则通过设置 class 属性或者修改 classList 来为选择集中的元素指定或取消指定名称为 names 的类名。</li>
+
+            <h4>selection.style(name[, value[, priority]]) 设置节点样式</h4>
+            <li>如果指定了 value 则将指定 name 的样式设置为指定的 value 并返回当前选择集。如果 value 为常量则会将选择集中的每个元素的 name 样式设置为该值。如果 value
+                为函数则会为选择集中的每个元素进行调用，并传递当前绑定的数据 d , 索引 i 以及当前组 nodes，函数内部 this 指向当前 DOM 元素(nodes[i]). 函数的返回值将会被设置为对应样式的值。
+            </li>
+
+            <h4>selection.property(name[, value]) 设置特殊节点属性</h4>
+            <li>有些 HTML 元素的属性比较特殊，不能直接使用 attr 和 style 操作，比如文本域的 value 属性以及 checkbox 的 checked 属性。使用property()方法可以操作这些属性。
+            </li>
+
+            <h4>selection.text([value]) 设置节点文本 即 textContent (注：会破坏之前已存在的节点、文本！！)</h4>
+            <li>如果指定了 value 则将选中的元素的 text content设置为指定的值，会替代任何现有的子元素。如果 value
+                为常量则将当前选择集中的所有元素都设置为相同的文本内容。</li>
+
+            <h4>selection.html([value]) 设置节点 即 innerHTML (注：会破坏之前已存在的节点、文本！！)</h4>
+            <li>如果指定了 value 则将选中的元素的 inner HTML设置为指定的值，会替代任何现有的子元素。</li>
+
+            <h4>selection.append(type) 追加节点 即 appendChild()</h4>
+            <li>如果指定的 type 为字符串则创建一个以此字符串为标签名的元素，并将其追加到选择集元素列表中。</li>
+
+            <h4>selection.insert(type[, before]) 插入节点 (注：会破坏之前已存在的节点、文本！！)</h4>
+            <li>如果 type 为字符串则为选择集中每个选中的插入一个指定类型(标签名)的元素，插入的位置为第一个匹配 before 选择条件的元素。</li>
+
+            <h4>selection.remove() 删除节点</h4>
+            <li>从当前文档中移除选中的元素。返回的选择集(被移除的元素)已经与文档脱离。目前还没有专门的 API 将删除的元素重新填加到文档中，但是你可以通过 selection.append 或
+                selection.insert 将其重新加回文档。</li>
+
+            <h4>selection.clone([deep])</h4>
+            <li>在所选元素之后插入所选元素的克隆，并返回包含新添加的克隆元素的选择集。如果 deep 为真则选中元素的后代元素也会被克隆(深度克隆)。否则仅仅克隆所选元素自身。</li>
+
+            <h4>selection.sort(compare) </h4>
+            <li>返回一个新选择集，其中包含了当前选择集中所有元素的经过 compare 函数排序之后的副本。在排序后，将排序后的元素重新插入原来的文档中替换未排序的元素。</li>
+
+            <h4>selection.order()</h4>
+            <li>重新将元素插入到文档中以使得文档中每个分组的次序与选择集的次序匹配。如果数据已经有序的话，这个方法与 selection.sort 等效，但是要更快。</li>
+
+            <h4>selection.raise()</h4>
+            <li>按序重新插入每个选中的元素，每次插入的元素都作为其父元素的最后一个子元素。</li>
+
+            <h4>selection.lower()</h4>
+            <li>按序重新插入每个选中的元素，每次插入的元素都作为其父元素的第一个子元素。</li>
+
+            <h4>d3.create(name)</h4>
+            <li>根据指定的元素 name 返回一个与当前文档分离的单元素选择集，这个选择集中包含的元素名为指定的 name。</li>
+
+            <h4>d3.creator(name)</h4>
+            <li>根据指定元素的 name 返回一个创建该 name 元素的函数，假定 this 是其父元素。这个方法内部通过 selection.append 和 selection.insert 来创建新元素。</li>
+
+        </ul>
+
+        <hr />
+
+        <form id="form">
+            <label><input type="checkbox" value="CSS" />CSS，</label>
+            <label><input type="checkbox" value="SVG" />SVG，</label>
+            <label><input type="checkbox" value="Canvas" />Canvas，</label>
+            <label><input type="checkbox" value="WebGL" />WebGL，</label>
+            <label><input type="checkbox" value="WebGUP" />WebGUP</label>
+        </form>
+
+        <p id="b-box">
+            <b>A</b>
+            <b>B</b>
+            <b>C</b>
+            <b>D</b>
+            <b>E</b>
+        </p>
+
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        console.dir(d3);
+
+
+        const ul = d3.select('#method');
+        // 设置属性
+        ul.attr('title', '我是一个ui标签！');
+        ul.attr('data-no', '1024');
+
+        const h4 = d3.select('#method').selectAll('h4');
+        // 设置类名 （多个 中间用 空格 隔开）
+        h4.classed('title h4', true);
+        h4.classed("blob", function () { return Math.random() > 0.5; });
+
+        // 设置样式
+        h4.style('font-size', '16px');
+        h4.style('background', 'rgba(0, 0, 0, 0.2)');
+
+
+        const input = d3.select('#form').selectAll('input');
+        // 设置特殊属性
+        input.property('checked', () => Math.random() < 0.5);
+
+
+        const b = d3.select('#b-box').selectAll('b');
+        // 设置文本内容
+        b.text((item, index, array) => Math.random().toFixed(2) + '，')
+
+
+
+        /** 链式调用设置
+         * 
+         * 按照惯例，返回当前选择集的方法前设置 4 个空格缩进，返回新的选择集的则使用 2 个空格缩进。这种写法有助于在链式调用中发现选择集的变化
+         * 选择集是不可变的。影响被选中的元素 (或顺序) 的方法都会返回一个新的选择集，而不是在当前选择集上进行修改然后返回。但是请注意，元素必然是可变的！！
+         * 
+        */
+        d3.select(".box")
+            .append("svg")
+                .attr("width", 960)
+                .attr("height", 500)
+            .append("g")
+            .   attr("transform", "translate(20, 20)")
+            .append("rect")
+                .attr("width", 920)
+                .attr("height", 460);
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - 流程控制</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - 流程控制 Control Flow</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <hr />
+
+        <h3>为了给DOM添加更友好的行为和交互，选择集允许监听和分派事件。</h3>
+
+        <ul>
+            <h4>selection.on(typenames[, listener[, capture]]) 事件绑定</h4>
+            <li>为每个选中的元素添加或者移除一个指定typenames 事件的 listener. typenames 是一个字符串表示的事件类型, 比如 click, mouseover, 或者 submit; 浏览器支持的 DOM event type都可以使用。</li>
+            
+            <h4>selection.dispatch(type[, parameters]) 事件派发</h4>
+            <li>如果没有元素被选中则返回空选择集。如果有多个元素都符合条件则返回包含第一个 (文档顺序) 匹配的元素的选择集。</li>
+            
+            <h4> d3.event</h4>
+            <li>当前 event(如果存在的话). 这个值在调用事件监听器时设置的，并且在监听器执行结束之后重置。使用这个属性可以访问标准的事件字段。</li>
+
+            <h4>d3.customEvent(event, listener[, that[, arguments]]) </h4>
+            <li>调用指定的 listener, 使用指定的 that 作为 this 上下文并传递指定的 arguments(如果有的话). 在调用期间，d3.event 被设置为指定的 event; 当事件监听器返回(或抛出错), d3.event 被重置为之前的值。</li>
+
+            <h4>d3.mouse(container)</h4>
+            <li>返回 current event 相对于指定 container 的 x 和 y 坐标。container 可以是一个 HTML 或 SVG 容器元素，比如 G element或者 SVG element。坐标以二元数组的形式返回: [x, y].</li>
+
+            <h4>返回与 current event 相关的指定标识符的触摸事件相对于指定 container 的 x 和 y 坐标。container 可以是一个 HTML 或 SVG 容器元素，比如 G element或者 SVG element。</h4>
+            <li>返回与 current event 相关的指定标识符的触摸事件相对于指定 container 的 x 和 y 坐标。container 可以是一个 HTML 或 SVG 容器元素，比如 G element或者 SVG element。</li>
+
+            <h4> d3.touches(container[, touches])</h4>
+            <li>返回 current event(当前触摸事件) 相对于指定 container 的 x 和 y 坐标。container 可以是一个 HTML 或 SVG 容器元素，比如 G element或者 SVG element。返回的坐标以二维数组的形式返回: [[x1, y1], [x2, y2], …]. 如果 touches 没有被指定则默认为当前事件的 touches属性。</li>
+
+            <h4>d3.clientPoint(container, event)</h4>
+            <li>返回指定 event 相对于指定 container 的 x 和 y 坐标。container 可以是一个 HTML 或 SVG 容器元素，比如 G element或者 SVG element。坐标以二元数组的形式返回: [x, y]。</li>
+        </ul>
+
+        <hr />
+
+        <form>
+            <label><input type="checkbox" value="CSS" />CSS，</label>
+            <label><input type="checkbox" value="SVG" />SVG，</label>
+            <label><input type="checkbox" value="Canvas" />Canvas，</label>
+            <label><input type="checkbox" value="WebGL" />WebGL，</label>
+            <label><input type="checkbox" value="WebGUP" />WebGUP</label>
+            <input type="button" value="全选/不全选" />
+            <br>
+            <h4>on() 事件绑定、this指向</h4>
+            <label><input type="radio" name="grade" value="入门" />入门，</label>
+            <label><input type="radio" name="grade" value="初级" />初级，</label>
+            <label><input type="radio" name="grade" value="中级" />中级，</label>
+            <label><input type="radio" name="grade" value="高级" />高级，</label>
+            <label><input type="radio" name="grade" value="资深" />资深，</label>
+            <label><input type="radio" name="grade" value="专家" />专家，</label>
+            <label><input type="radio" name="grade" value="首席" />首席</label>
+        </form>
+
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        console.dir(d3);
+
+
+        // 选择1个dom
+        const a = d3.select('a');
+        console.log('选择1个dom', a);
+
+
+        // 根据ID名 选择1个dom
+        const id_a = d3.select('#a');
+        console.log('根据ID名 选择1个dom', id_a);
+
+
+        // 选择多个dom
+        const all = d3.selectAll('a');
+        console.log('选择多个dom', all);
+        console.log('选择多个dom的个数据', all.size());
+        
+
+
+        // 根据类名 选择多个dom
+        const class_a = d3.selectAll('.a');
+        console.log('根据类名, 选择多个dom', class_a);
+
+
+        // 选择多个元素下指定符合条件的元素
+        const b_all = d3.select("p").selectAll("b");
+        b_all.style('color', 'blue');
+
+
+        // 选择多个元素下指定符合条件的元素
+        const b = d3.selectAll("p").select("b");
+        b.style('color', 'red');
+
+
+        // 选择所有下面的所有
+        const p_b_app = d3.selectAll("p").selectAll("b");
+        console.log(p_b_app);
+
+        // 属性条件选择
+        const radio = d3.select("form").selectAll("input[type=radio]");
+        radio.style('border-color', 'red');
+        radio.style('width', '22px');
+        radio.style('height', '22px');
+        console.log(radio);
+
+
+        // 选择器 参数函数
+        //如果选择器的参数是一个函数，则会在选择前执行对应的函数，并且会传递当前元素的关联数据 (d)，当前的索引 (i) 以及当前分组 (nodes)，在函数中 this 指向当前 DOM 元素(nodes[i]). 为函数时必须返回一个元素，或者 null。例如选择每个 p 元素的前一个同胞节点:
+        var prevDom = d3.selectAll("li").select(function () {
+            // 选择每个li元素的前一个同胞节点:
+            return this.previousElementSibling;
+        });
+
+        prevDom.style('color', 'green');
+
+        console.log('选择每个li元素的前一个同胞节点：h4', prevDom)
+
+        // 事件
+        radio.on('click', (event) => {
+            alert(event.target.value);
+        })
+        d3.selectAll("li").on("click", function (event) {
+            // 在函数中 this 指向当前 DOM 元素
+            console.log(d3.select(this), event.target);
+            d3.select(this).style("color", "red");
+        });
+
+
+        // 其他实例
+        console.log('根元素（即html）选择器', d3.selection());
+        // 用d3.selection为 checkbox 添加一个 check 方法，方便实现全选功能
+        d3.selection.prototype.checked = function (value) {
+            return arguments.length < 1
+                ? this.property("checked")
+                : this.property("checked", !!value);
+        };
+
+        let checked = false;
+        d3.select('input[type=button]').on('click', (event) => {
+            checked = !checked;
+            d3.selectAll("input[type=checkbox]").checked(checked);
+        });
+
+        /**
+         * 按照惯例，返回当前选择集的方法前设置 4 个空格缩进，返回新的选择集的则使用 2 个空格缩进。这种写法有助于在链式调用中发现选择集的变化
+         * 选择集是不可变的。影响被选中的元素 (或顺序) 的方法都会返回一个新的选择集，而不是在当前选择集上进行修改然后返回。但是请注意，元素必然是可变的！！
+         * 
+        */
+        d3.select(".box")
+          .append("svg")
+            .attr("width", 960)
+            .attr("height", 500)
+          .append("g")
+            .attr("transform", "translate(20, 20)")
+          .append("rect")
+            .attr("width", 920)
+            .attr("height", 460);
+
+
+    </script>
+</body>
+
+</html>

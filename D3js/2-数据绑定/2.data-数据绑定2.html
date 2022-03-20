@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js 数据绑定</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - 数据绑定2 d3.selection.data()</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <p>
+            <a href="https://www.d3js.org.cn/document/d3-selection/" target="_blank">d3-selection API</a> 允许强大的数据驱动文档对象模型 (DOM): 设置 attributes, styles, properties, HTML 或 text 内容等等。<br> 使用 
+            <a href="https://www.d3js.org.cn/document/d3-selection/#joining-data" target="_blank">data join</a> 的 
+            <a href="https://www.d3js.org.cn/document/d3-selection/#selection_enter" target="_blank">enter</a> 和 
+            <a href="https://www.d3js.org.cn/document/d3-selection/#selection_exit" target="_blank">exit</a> 选择集可以用来根据具体的数据 add 或 remove 元素。<br> 选择集的方法通常选择<b>当前的</b>选择集或者<b>新的</b>选择集，因此允许进行<b>链式调用</b>。
+        </p>
+
+        <h3>d3.selection.data()方法可以给能够将数组的各项分别绑定到选择集的各元素上。</h3>
+
+        <ul>
+            <h4>data([data[, key]]) 数据绑定方法</h4>
+            <li>data参数可以是<b>任意数据类型的数组</b>(e.g., 数值或对象), 可以是一个<b>返回数组的方法</b>(比如为每个分组继续绑定数组时[多维数组]). 当数据分配给元素时，会被存储在元素的
+                <code>__data__</code> 属性上(可用console.log()输出在控制台查看), 因此可以在重新选中元素时继续使用与元素对应的数据。
+            </li>
+            <h4>data(data, function(item, index, arr) { return item }) 数据绑定方法 函数参数</h4>
+            <li>
+                data参数会被指定给选择集中的 each group<b>(每个分组)</b>。如果选择集中包含多个分组(比如 d3.selectAll 后跟随 selection.selectAll)，则 data
+                应该应该被指定为一个函数。这个函数会为每个分组进行调用, 并依次传递当前分组的数据(d, 可能没有定义), 分组的索引 (index), 以及选择集的父节点 (nodes), 函数中 this
+                指向当前分组的父元素。
+            </li>
+        </ul>
+
+        <hr>
+        <div id="b-box">
+            <b></b>
+            <b></b>
+            <b></b>
+            <b></b>
+            <b></b>
+        </div>
+
+        <div id="p-box"></div>
+
+        <form id="form">
+            <!-- <label><input type="checkbox" value="CSS" />CSS，</label>
+            <label><input type="checkbox" value="SVG" />SVG，</label>
+            <label><input type="checkbox" value="Canvas" />Canvas，</label>
+            <label><input type="checkbox" value="WebGL" />WebGL，</label>
+            <label><input type="checkbox" value="WebGUP" />WebGUP</label>
+            <input type="button" value="全选/不全选" />
+            <br>
+            <h4>事件、this指向</h4>
+            <label><input type="radio" name="grade" value="入门" />入门，</label>
+            <label><input type="radio" name="grade" value="初级" />初级，</label>
+            <label><input type="radio" name="grade" value="中级" />中级，</label>
+            <label><input type="radio" name="grade" value="高级" />高级，</label>
+            <label><input type="radio" name="grade" value="资深" />资深，</label>
+            <label><input type="radio" name="grade" value="专家" />专家，</label>
+            <label><input type="radio" name="grade" value="首席" />首席</label> -->
+        </form>
+
+        <div id="table-box"></div>
+
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        console.dir(d3);
+
+        const data = ['CSS', 'SVG', 'Canvas', 'WebGL', 'WebGUP'];
+
+        {
+            const b = d3.select('#b-box').selectAll('b');
+
+            // 数据绑定方法1：data([data[, key]]) 
+            const update = b.data(data);
+
+            // 数据绑定方法2：data(data, function(item, index, arr) { return item })
+            // const update = b.data(data, function (item, index, arr) {
+            // const update = b.data(data, function (item, index, arr) {
+            //     console.log('\n data----->', item, index, arr,);
+            //     // console.log('\n this----->', this);
+            //     // 在这里可以对数据进得各种操作(过滤、去重等)
+            //     return item ? item : '';
+            // });
+
+            console.log('update', update);
+            update.text((item, index, arr) => item + '，');
+        }
+
+
+        {
+
+            const label = d3.select('#form').selectAll("label");
+            const update = label.data(data);
+
+            const enter = update.enter();
+            enter.append('label')
+                .text((item, index, arr) => {
+                    console.log(item, index, arr);
+                    return item + '，';
+                })
+                .append('input')
+                .attr('type', 'checkbox')
+                .attr('name', 'grade');
+        }
+
+
+        {
+            const matrix = [
+                [11975, 5871, 8916, 2868],
+                [1951, 10048, 2060, 6171],
+                [8010, 16145, 8090, 8045],
+                [1013, 990, 940, 6907]
+            ];
+
+            const tr = d3.select("#table-box")
+                .append("table")
+                .style('border', '1px solid gray')
+                .selectAll("tr")
+                .data(matrix)
+                .enter()
+                .append("tr");
+
+            const td = tr.selectAll("td")
+                .data(function (d) { return d; })
+                .enter()
+                .append("td")
+                .style('border', '1px solid gray')
+                .text(function (d) { return d; });
+        }
+
+    </script>
+</body>
+
+</html>

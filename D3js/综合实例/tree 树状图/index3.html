@@ -120,6 +120,15 @@
                         return `M ${o.y},${o.x}L ${o.parent.y}, ${o.parent.x}`; // 这里根据需求可以画贝塞尔曲线或折线
                     }
                 })
+                // .attr('d', (o) => {
+                //     if (o.depth) {
+                //         // console.log('link', o);
+                //         // return `M ${o.y},${o.x}L ${o.parent.y}, ${o.parent.x}`; // 这里根据需求可以画贝塞尔曲线或折线
+                //         return d3.linkHorizontal()
+                //         .x(function(o) { return o.y; })
+                //         .y(function(o) { return o.x; })
+                //     }
+                // })
                 .attr('fill', 'none')
                 .attr('stroke', 'gray');
 

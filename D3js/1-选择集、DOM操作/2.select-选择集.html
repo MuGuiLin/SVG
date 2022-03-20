@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - 选择集</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        ul li {
+            margin-left: 50px;
+        }
+        
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - 选择集 d3-selection</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <hr />
+        
+        <h3>d3.select() 和 d3.selectAll()返回的对象就是选择集，可对这些选择集进行添加、删除、修改等DOM操作，所以选择集
+            是数据绑定的基本受体！！这两个方法的选择器与jQuery的元素、属性、css选择器使用方法基本一样</h3>
+
+        <ul>
+            <h4>d3.selection() 根元素（即html）选择器</h4>
+            <li>选择器根元素: document.documentElement. 整个方法可以用来测试是否为选择集实例 (instanceof d3.selection) 也可以用来扩展选择集原型链。</li>
+
+            <h4>d3.select() 选中符合条件的第一个元素</h4>
+            <li>如果没有元素被选中则返回空选择集。如果有多个元素都符合条件则返回包含第一个 (文档顺序) 匹配的元素的选择集。</li>
+
+            <h4>d3.selectAll() 选中符合条件的所有元素</h4>
+            <li>被选中的元素顺序会按其在文档中的顺序排列(从上到下)</li>
+
+            <h4>d3.select().selectAll()、d3.select().select()、d3.selectAll().selectAll() 。。。 各种组合链式选择</h4>
+
+            <h4>dom.filter() 过滤选择集并返回一个新的过滤后的选择集。</h4>
+            <li>filter 可以是一个选择字符串也可以是一个函数。</li>
+            
+            <h4>selection.merge(other) 返回一个将当前选择集和指定的 other 选择集合并之后的新的选择集。</h4>
+            <li>返回的选择集与当前选择集有相同数量的分组以及相同的父元素。</li>
+            
+            <h4>d3.matcher(selector)</h4>
+            <li>根据指定的 selector 返回一个用来判断 this 元素是否匹配此选择器的方法，这个方法在 selection.filter 内部使用。</li>
+
+            <h4>d3.selector(selector) </h4>
+            <li>根据指定的 selector 返回一个函数，这个函数返回 this 元素的第一个符合条件的后代元素。</li>
+
+            <h4>d3.selectorAll(selector)</h4>
+            <li>根据指定的 selector 返回一个函数，这个函数返回 this 元素的所有符合条件的后代元素。内部通过 selection.selectAll 实现。</li>
+
+            <h4>d3.window(node)</h4>
+            <li>返回指定的 node 所属的 window。如果 node 为 Node 则返回所属文档的默认视图,如果 node 为 document 则返回其默认视图, 其他情况返回 node。</li>
+
+            <h4>d3.style(node, name)</h4>
+            <li>根据指定的 selector 返回一个用来判断 this 元素是否匹配此选择器的方法，这个方法在 selection.filter 内部使用</li>
+        </ul>
+
+        <hr />
+
+        <form>
+            <label><input type="checkbox" value="CSS" />CSS，</label> <br>
+            <label><input type="checkbox" value="SVG" />SVG，</label> <br>
+            <label><input type="checkbox" value="Canvas" />Canvas，</label> <br>
+            <label><input type="checkbox" value="WebGL" />WebGL，</label> <br>
+            <label><input type="checkbox" value="WebGUP" />WebGUP</label>
+        </form>
+
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        console.dir(d3);
+
+
+        // 选择1个dom
+        const a = d3.select('a');
+        console.log('选择1个dom', a);
+
+
+        // 根据ID名 选择1个dom
+        const id_a = d3.select('#a');
+        console.log('根据ID名 选择1个dom', id_a);
+
+
+        // 选择多个dom
+        const all = d3.selectAll('a');
+        console.log('选择多个dom', all);
+        console.log('选择多个dom的个数据', all.size());
+
+
+
+        // 根据类名 选择多个dom
+        const class_a = d3.selectAll('.a');
+        console.log('根据类名, 选择多个dom', class_a);
+
+
+        // 选择多个元素下指定符合条件的元素
+        const b_all = d3.select("p").selectAll("b");
+        b_all.style('color', 'blue');
+
+
+        // 选择多个元素下指定符合条件的元素
+        const b = d3.selectAll("p").select("b");
+        b.style('color', 'red');
+
+
+        // 选择所有下面的所有
+        const p_b_app = d3.selectAll("p").selectAll("b");
+        console.log(p_b_app);
+
+        // 属性条件选择
+        const radio = d3.select("form").selectAll("input[type=radio]");
+        radio.style('border-color', 'red');
+        radio.style('width', '22px');
+        radio.style('height', '22px');
+        console.log(radio);
+
+
+        // 选择器 参数函数
+        //如果选择器的参数是一个函数，则会在选择前执行对应的函数，并且会传递当前元素的关联数据 (d)，当前的索引 (i) 以及当前分组 (nodes)，在函数中 this 指向当前 DOM 元素(nodes[i]). 为函数时必须返回一个元素，或者 null。例如选择每个 p 元素的前一个同胞节点:
+        var prevDom = d3.selectAll("li").select(function () {
+            // 选择每个li元素的前一个同胞节点:
+            return this.previousElementSibling;
+        });
+
+        prevDom.style('color', 'green');
+
+        console.log('选择每个li元素的前一个同胞节点：h4', prevDom)
+
+
+        // 根元素 选择器
+        console.log('根元素（即html）选择器', d3.selection());
+        // 用d3.selection为 checkbox 添加一个 check 方法，方便实现全选功能
+        d3.selection.prototype.checked = function (value) {
+            return arguments.length < 1
+                ? this.property("checked")
+                : this.property("checked", !!value);
+        };
+
+        // 选择过滤 filter
+        {
+            // 过滤1 奇数
+            const filter1 = d3.select('form').selectAll('label:nth-child(odd)');
+            filter1.style('color', 'red');
+            console.log(filter1);
+
+            // 过滤2 偶数
+            const filter2 = d3.select('form').selectAll('label').filter(':nth-child(even)');
+            filter2.style('color', 'green');
+            console.log(filter2);
+
+            // 注意的是 :nth-child 伪类基于 1 的索引而不是基于 0 开始。
+            var even = d3.selectAll("label").filter(function(d, i) { return i & 1; });
+            even.style('color', 'blue');
+            console.log(even)
+        }
+
+
+    </script>
+</body>
+
+</html>

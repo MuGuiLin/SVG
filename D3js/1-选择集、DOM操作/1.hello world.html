@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - 选择集</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - 选择集 d3-selection</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <br><br>
+
+        <h3></h3>
+        <h3></h3>
+        <h3></h3>
+        <h3></h3>
+        <h3></h3>
+        <h3></h3>
+        <h3></h3>
+
+
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        console.dir(d3);
+
+        // 选择body下面的所有h3元素
+        const h3 = d3.select('body').selectAll('h3');
+
+        // 给选择的每个h3项设置文本内容
+        h3.text((elem, index, eleArr) => {
+            console.log(elem, index, eleArr);
+            return index + 1 + '，Hello World';
+
+        });
+
+        // 给选择的每个h3项设置样式(统一样式)
+        h3.style("color", `hsl(${Math.random() * 360}, 100%, 50%`);
+
+        // 注：如果给相同的元素设置了相同的样式时，后面的覆盖前面的！！！，如：这里就是：h3.style("color", xxx);
+
+        // 给选择的每个h3项设置样式(不同样式)
+        h3.style("color", (elem, index, eleArr) => {
+            const h = d3.randomUniform(0, 360)();
+            console.log(h);
+            return `hsl(${h}, 100%, 50%`;
+        });
+
+    </script>
+</body>
+
+</html>
