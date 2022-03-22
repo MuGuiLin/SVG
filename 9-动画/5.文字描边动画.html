@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG动画 - 文字描边动画</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            height: 800px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 2px double rgb(99, 99, 99);
+            animation: FillMove 1s ease forwards 2.8s;
+        }
+
+        svg path:nth-child(1) {
+            stroke: blue;
+            stroke-width: 5; 
+            /*虚线*/
+            stroke-dasharray: 5060.97314453125;
+            /*偏移起点*/
+            stroke-dashoffset: 5060.97314453125;
+            animation: StrokeMove 20s ease forwards 0s;
+        }
+
+        svg path:nth-child(2) {
+            stroke: blue;
+            stroke-width: 5; 
+            /*虚线*/
+            stroke-dasharray: 5060.97314453125;
+            /*偏移起点*/
+            stroke-dashoffset: 5060.97314453125;
+            animation: StrokeMove 20s ease forwards 1s;
+        }
+
+        svg path:nth-child(3) {
+            stroke: blue;
+            stroke-width: 5; 
+            /*虚线*/
+            stroke-dasharray: 5060.97314453125;
+            /*偏移起点*/
+            stroke-dashoffset: 5060.97314453125;
+            animation: StrokeMove 20s ease forwards 2s;
+        }
+
+        @keyframes StrokeMove {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes FillMove {
+            from {
+                /* transparent 透明 */
+                fill: transparent;
+            }
+
+            to {
+                fill: yellow;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG动画 - CSS文字描边动画</h1>
+    <hr>
+    <div class="box">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br />
+
+        <img src="./img/动画原理.jpg" alt="" />
+
+        <h3>SVG动画元素：animate基本动画、animateTransform变换动画、animateMotion轨迹移动动画 </h3>
+        
+        <a href="https://mastergo.com/files/home" target="_blank" rel="noopener noreferrer">SVG 文字路径生成器</a><br />
+
+        <ul>
+            <li>&lt;animate></li>
+            <li>&lt;animateMotion></li>
+            <li>&lt;animateTransform></li>
+        </ul>
+
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1" width="100%" height="300" viewBox="0 0 800 200" fill="gray">
+            <g transform="translate(0, 36)">
+                <path
+                    d="M74.0781,100.484L77.6562,79.4844L5.45312,79.4844L14.4844,15.4844L120.891,15.4844L117.312,46.5156L81.2188,46.5156L83.1094,33.6094L48.7031,33.6094L43.25,61.3594L115.438,61.3594L108.297,109.672Q108.297,112.359,107.062,114.75Q105.844,117.141,103.781,118.859Q101.719,120.578,99.1719,121.531Q96.6406,122.484,93.8125,122.484L0,122.484L3.57812,93.3594L9.03125,100.484L74.0781,100.484ZM160.312,122.484L140.391,20.7656L136.812,15.4844L174.797,15.4844L189.078,89.7812L225.172,15.4844L261.266,15.4844L210.891,122.484L160.312,122.484ZM400.891,46.2812L364.797,46.2812L366.5,33.6094L323.25,33.6094L314.234,104.359L357.469,104.359L359.344,82.5938L348.438,64.4375L397.141,64.4375L390,122.484L288.844,122.484Q286.219,122.484,283.953,121.547Q281.703,120.594,280.109,118.906Q278.516,117.203,277.938,114.844Q277.375,112.469,278.141,109.812L290.734,15.4844L404.469,15.4844L400.891,46.2812ZM625.391,42.125L591.359,42.125L593.797,24.4375L627.828,24.4375L630.281,7.15625L624.266,0L665.438,0L662.047,24.4375L697.391,24.4375L694.953,42.125L659.422,42.125L646.438,135.109L612.422,135.109L625.391,42.125ZM686.859,46.0625L685.922,131.344L661.672,131.344L660.922,46.0625L686.859,46.0625ZM622.75,45.1094L600.766,131.344L576.328,131.344L598.312,45.1094L622.75,45.1094ZM528.188,135.484L546.422,82.2812L578.578,82.2812L560.344,135.484L528.188,135.484ZM547.562,74.625L544.922,42.4844L577.078,42.4844L579.703,74.625L547.562,74.625ZM553.016,35.5312L550.375,3.39062L582.531,3.39062L585.156,35.5312L553.016,35.5312ZM857.969,134.609L828.453,134.609L830.328,120.375L815.672,120.375L811.906,100.516L803.641,120.188L787.469,120.188L805.891,77.0938L801.375,46.75L784.656,134.609L762.469,134.609L787.094,4.1875L868.875,4.1875L853.453,113.438L854.953,113.438L861.922,106.328L857.969,134.609ZM731.062,41.4844L714.531,41.4844L716.969,23.625L733.516,23.625L736.141,5.875L732.203,0.125L763.406,0.125L760.016,23.625L775.812,23.625L773.375,41.4844L757.391,41.4844L744.234,135.484L717.906,135.484L731.062,41.4844ZM702.688,128.422L717.344,46.1875L729.188,46.1875L714.531,128.422L702.688,128.422ZM751.562,117.75L758.516,46.1875L770.359,46.1875L763.406,117.75L751.562,117.75ZM843.109,30.2656L844.438,21.4844L806.266,21.4844L804.391,30.4531L816.234,30.4531L819.047,50.3125L827.516,30.2656L843.109,30.2656ZM831.453,112.578L842.734,33.4375L825.25,74.4219L831.453,112.578Z">
+                </path>
+            </g>
+        </svg>
+    </div>
+
+    <script>
+        // 获取路径长度：stroke-dashoffset
+        const len = document.querySelector('path').getTotalLength();
+        console.log('路径长度：', len); 
+    </script>
+</body>
+
+</html>
