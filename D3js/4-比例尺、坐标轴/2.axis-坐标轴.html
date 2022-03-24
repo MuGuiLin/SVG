@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - 比例尺 与 坐标轴</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - 比例尺scale 与 坐标轴axis</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <hr />
+
+        <h3>
+            <a href="https://www.d3js.org.cn/document/d3-axis" target="_blank" rel="noopener noreferrer">d3-axis</a>
+            坐标轴，是可视化图表中很常见的图形之一，由轴线、刻度、标签组成，可以分为水平方向的x轴 和 垂直方向的y轴，一般坐标轴 和 比例尺 一起配合使用。
+            <br> D3.js支持以下4种绘制坐标轴的函数：
+        </h3>
+
+        <ul>
+            <h4>d3.axisTop(scale) </h4>
+            <li>使用给定的 scale 构建一个刻度在上的坐标轴生成器。</li>
+
+            <h4>d3.axisRight(scale)</h4>
+            <li>使用给定的 scale 构建一个刻度在右的坐标轴生成器。</li>
+
+            <h4>d3.axisBottom(scale)</h4>
+            <li>使用给定的 scale 构建一个刻度在下的坐标轴生成器。</li>
+
+            <h4>d3.axisLeft(scale)</h4>
+            <li>使用给定的 scale 构建一个刻度在左的坐标轴生成器。</li>
+        </ul>
+
+        <hr />
+
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        const NS = 'http://www.w3.org/2000/svg';
+        const width = 800;
+        const height = 600;
+
+        const data = [102, 352, 156, 585, 321, 546, 213, 562];
+
+        // 生成SVG画布
+        const svg = d3.select('.box')
+            .append('svg')
+            .attr('xmlns', NS)
+            .attr('width', width)
+            .attr('height', height);
+
+        // 创建线性比例尺
+        const linear = d3.scaleLinear()
+            .domain([0, width])
+            .range([0, height]);
+
+        console.log(linear(0));
+        console.log(linear(1));
+
+        // 创建横向底部的x轴，并向x轴添加比例尺
+        // const x_axis = d3.axisTop().scale(linear);
+        // const x_axis = d3.axisRight().scale(linear);
+        const x_axis = d3.axisBottom().scale(linear);
+        // const x_axis = d3.axisLeft().scale(linear);
+
+        svg.append('g').attr("transform", `translate(50, ${height - 50})`).call(x_axis);
+
+        // 在画布中生成矩形
+        const rect = svg.append('g').selectAll('rect').data(data);
+        rect.enter().append('rect')
+            .attr('x', (d, i) => 50 + i * 70)
+            .attr('y', height - 50)
+            .attr('width', 50)
+            .attr('height', d => {
+                return linear(d);
+            })
+            .attr("transform", (d, i) => {
+                // 矩形长向例立
+                return `translate(0, ${linear(-d)})`;
+            })
+            .attr('fill', d => `hsl(${Math.random() * 360}, 100%, 50%)`);
+
+    </script>
+</body>
+
+</html>

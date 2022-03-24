@@ -85,8 +85,7 @@
                 nodes.forEach(o => o.y = o.depth * 450);
 
                 // 获取节点的3个选择集
-                let nodeUpdate = svg.selectAll('.node')
-                    .data(nodes, o => o.name)
+                let nodeUpdate = svg.selectAll('.node').data(nodes, o => o.name)
                 let nodeEnter = nodeUpdate.enter();
                 let nodeExit = nodeUpdate.exit();
 
@@ -155,9 +154,12 @@
                 exitNodes.select('text').style('fill-opacity', 0);
 
 
+
+
+
+
                 // 创建连线节点
-                let linkUpdate = svg.selectAll('.link')
-                    .data(links, o => o.target.name);
+                let linkUpdate = svg.selectAll('.link').data(links, o => o.target.name);
                 let linkEnter = linkUpdate.enter();
                 let linkExit = linkUpdate.exit();
 

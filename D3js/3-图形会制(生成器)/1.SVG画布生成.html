@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js SVG画布生成</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - SVG画布生成</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <br />
+
+
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+
+
+    <script>
+        console.dir(d3);
+
+        const NS = 'http://www.w3.org/2000/svg';
+        const width = 800;
+        const height = 600;
+
+        const data = [102, 352, 156, 585, 321, 546, 213, 562];
+
+        // 生成SVG画布
+        const svg = d3.select('.box')
+            .append('svg')
+            .attr('xmlns', NS)
+            .attr('width', width)
+            .attr('height', height);
+
+
+        // 在画布中生成矩形
+        const rect = svg.append('g').selectAll('rect').data(data);
+        rect.enter().append('rect')
+            .attr('x', 1)
+            .attr('y', (d, i) => 20 + i * 70 )
+            .attr('width', d => d)
+            .attr('height', 50)
+            .attr('fill', d => `hsl(${Math.random() * 360}, 100%, 50%)`);
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js 数据更新</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        .h6-box h6 {
+            display: inline-block;
+            padding: 10px;
+            border: 1px solid gray;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - 数据更新 d3.selection.data().enter().exit().remove()</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <p>
+            <a href="https://www.d3js.org.cn/document/d3-selection/" target="_blank">d3-selection API</a>
+            允许强大的数据驱动文档对象模型 (DOM): 设置 attributes, styles, properties, HTML 或 text 内容等等。<br> 使用
+            <a href="https://www.d3js.org.cn/document/d3-selection/#joining-data" target="_blank">data join</a> 的
+            <a href="https://www.d3js.org.cn/document/d3-selection/#selection_enter" target="_blank">enter</a> 和
+            <a href="https://www.d3js.org.cn/document/d3-selection/#selection_exit" target="_blank">exit</a>
+            选择集可以用来根据具体的数据 add 或 remove 元素。<br> 选择集的方法通常选择<b>当前的</b>选择集或者<b>新的</b>选择集，因此允许进行<b>链式调用</b>。
+        </p>
+
+
+        <ul>
+            <h4>selection.enter()选择集 通常在数据比节点多时用来创建缺失的节点，（也就是创建那些 有对应数据还没有 DOM 节点）。</h4>
+            <li>
+                从概念上来讲，enter 选择集的占位符是一个指向父元素的指针(上述例子中为 body)。enter 选择集通常仅仅用来添加元素，并且在添加完元素之后与 update 选择集进行 merged, 这样的话数据的修改可以同时应用于 enter 的元素和 update 的元素。
+            </li>
+            
+            <h4>selection.exit()选择集 通常用来移除多余的元素,（也就是删除那些 没有对应数据的已经存在的 DOM 节点）</h4>
+            <li>
+                元素的顺序与数据的顺序一致，因为旧数据的顺序和新数据的顺序是一致的( enter 选择集长度与数据长度一致，只不过中间会有 empty 表示不需要插入元素, 因此能保证次序)。
+            </li>
+        </ul>
+
+        <hr>
+        <h4>数据绑定的2个重要选择集：<a href="https://bost.ocks.org/mike/join/">enter、exit</a>，这里类似于Vue.js中的diff算法</h4>
+
+        <hr>
+        <div class="h6-box" id="h6-box1"></div>
+        <div class="h6-box" id="h6-box2"></div>
+        <div class="h6-box" id="h6-box3"></div>
+
+        <h5 id="h5-box">
+            <b>蓝色为：新创建的节点，</b>
+            <b>绿色为：更新的节点，</b>
+            <b>红色为：被删除节点！！</b>
+        </h5>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1200" height="600"
+            viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice"></svg>
+
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script>
+            console.log('d3：', d3);
+
+            d3.select('#h5-box').selectAll('b').data(['blue', 'green', 'red']).style('color', d => d);
+
+            const upDom = (data) => {
+                d3.select('#h6-box1').selectAll("h6").remove();
+                d3.select('#h6-box1').selectAll("h6").data(data)
+                    .enter().append("h6").text(function (d) { return d; })
+
+
+            };
+
+            const upDom2 = (data) => {
+                var h6 = d3.select('#h6-box2').selectAll("h6").data(data).text(function (d) { return d; })
+                h6.enter().append("h6").text(function (d) { return d; })
+                h6.exit().remove();
+            };
+
+            const upDom3 = (data) => {
+                const svg = d3.select('svg');
+
+                // const rect = svg.selectAll("rect").data(data);
+                // const enterRect = rect.enter();
+                // const exitRect = rect.exit();
+
+                // // 创建
+                // enterRect.append("rect")
+                //     .transition()
+                //     .duration(1000)
+                //     .delay(function (d, i) {
+                //         return i * 00;
+                //     })
+                //     .attr("x", 0)
+                //     .attr("y", (d, i) => i * 60)
+                //     .attr("width", (d, i) => d)
+                //     .attr("height", 30)
+                //     .attr("fill", 'blue');
+
+                // // 更新
+                // const updateRect = rect.transition()
+                //     .duration(600)
+                //     .attr("width", (d, i) => d)
+                //     .attr('fill', 'green');
+
+                // // 删除
+                // exitRect.transition().duration(1000)
+                //     .attr("width", 0)
+                //     .attr("fill", 'red')
+                //     .remove();
+
+
+                const rect = svg.selectAll("rect").data(data);
+                // 创建
+                rect.enter().append("rect")
+                    .transition()
+                    .duration(1000)
+                    .delay(function (d, i) {
+                        return i * 00;
+                    })
+                    .attr("x", 0)
+                    .attr("y", (d, i) => i * 80)
+                    .attr("width", (d, i) => d)
+                    .attr("height", 50)
+                    .attr("fill", 'blue');
+
+                // 更新
+                rect.transition().duration(1000)
+                    .attr("width", (d, i) => d)
+                    .attr('fill', 'green');
+
+                // 删除
+                rect.exit().transition().duration(1000)
+                    .attr("width", 0)
+                    .attr("fill", 'red')
+                    .remove();
+
+
+
+
+
+                const text = svg.selectAll("text").data(data);
+                text.enter().append("text")
+                    .transition()   // 添加过度
+                    .duration(1000) // 动画的持续时间  毫秒
+                    .delay(function (d, i) {    //延迟执行
+                        return i * 100; //每个柱子逐渐开始的效果
+                    })
+                    .text((t) => t)
+                    .attr("x", d => d + 8)
+                    .attr("y", (d, i) => i * 80)
+                    .attr("dy", 32)
+                    .attr("fill", 'red');
+
+                text.transition().duration(1000)
+                    .text((t) => t)
+                    .attr("x", d => d + 8);
+
+                text.exit()
+                    .transition().duration(800)
+                    .attr("x", 0)
+                    .remove();
+            };
+
+
+            const random = () => {
+                return (Math.random() * 1150).toFixed(2);
+            };
+
+
+            const setData = () => {
+                const arr = [
+                    [],
+                    [random()],
+                    [random(), random()],
+                    [random(), random(), random()],
+                    [random(), random(), random(), random()],
+                    [random(), random(), random(), random(), random()],
+                    [random(), random(), random(), random(), random(), random()],
+                    [random(), random(), random(), random(), random(), random(), random()],
+                    [random(), random(), random(), random(), random(), random(), random(), random()]
+                ];
+                let data = arr[parseInt(d3.randomUniform(0, 9)())];
+                console.log(data);
+
+                upDom(data);
+                upDom2(data);
+                upDom3(data);
+            };
+
+            setData();
+            setInterval(setData, 2000);
+
+        </script>
+</body>
+
+</html>

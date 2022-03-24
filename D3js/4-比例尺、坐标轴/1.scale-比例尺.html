@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - 比例尺</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - scaleLinear-比例尺</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <hr />
+
+        <h3> <a href="https://www.d3js.org.cn/document/d3-scale/" target="_blank" rel="noopener noreferrer">d3-scale</a>
+            例尺是一个很方便的工具：将抽象的维度数据映射为可视化表示。例尺是一个很方便的工具：将抽象的维度数据映射为可视化表示。</h3>
+
+        <ul>
+            <h4>d3.scaleLinear() 线性比例尺</h4>
+            <li>将一组线性的定义域映射到一组线性的值域当中。</li>
+
+            <h4>d3.scaleBand() 序数比例尺</h4>
+            <li>会将一组离散的定义域映射到一组线性的定义域中,根据定义域中的值将值域分割为几个均匀的分段，并返回分段中的第一个值。</li>
+
+            <h4>d3.scaleOrdinal() 序数比例尺</h4>
+
+            <h4>d3.scaleQuantize() 量化比例尺</h4>
+            <li>将一组连续的定义域映射到一组离散的值域中，根据值域中的值数，将连续的定义域域划分为几个均匀的分段。</li>
+
+            <h4>d3.scaleTime() 时间比例尺</h4>
+
+            <hr>
+            <h4>continuous.domain([domain]) 定义域</h4>
+            <li>比例尺的 domain 设置为指定的数值数组。数组比例包含两个或者两个以上元素。如果给定的数组中的元素不是数值类型，则会被强制转为数值类型。如果没有指定 domain
+                则会返回当前比例尺的 domain 的拷贝。</li>
+
+            <h4>continuous.range([range]) 定义域值</h4>
+            <li>比例尺的 range 设置为指定的数组。数组必须包含两个或两个以上元素。</li>
+
+        </ul>
+        <hr />
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        {
+            const NS = 'http://www.w3.org/2000/svg';
+            const width = 800;
+            const height = 600;
+
+            const data = [102, 352, 156, 385, 321, 56, 213, 352];
+
+            // 生成SVG画布
+            const svg = d3.select('.box')
+                .append('svg')
+                .attr('xmlns', NS)
+                .attr('width', width)
+                .attr('height', height);
+
+            //定义比例尺
+            const linear = d3.scaleLinear()
+                // .domain([d3.min(data), d3.max(data)])
+                // .domain([0, d3.max(data, (d) => d)])
+                .domain([0, width])
+                .range([0, height]);
+
+            console.log(linear(0))
+            console.log(linear(1))
+            console.log(linear(2))
+
+            // 在画布中生成矩形
+            const rect = svg.append('g').selectAll('rect').data(data);
+            rect.enter().append('rect')
+                .attr('x', (d, i) => 20 + i * 70)
+                .attr('y', height - 1)
+                .attr('width', 50)
+                .attr('height', d => {
+                    return linear(d);
+                })
+                .attr("transform", (d, i) => {
+                    // 矩形长向例立
+                    return `translate(0, ${linear(-d)})`;
+                })
+                .attr('fill', d => `hsl(${Math.random() * 360}, 100%, 50%)`);
+
+            // 在画布中生成文本
+            const text = svg.append('g').selectAll('text').data(data);
+            text.enter().append('text')
+                .attr('x', (d, i) => 20 + i * 70)
+                .attr('y', d => height + -d)
+                .text(d => {
+                    return d;
+                })
+                .attr("transform", (d, i) => {
+                    // 矩形长向例立
+                    return `translate(0, ${linear(-d)})`;
+                })
+                .attr('fill', d => `hsl(${Math.random() * 360}, 100%, 50%)`);
+        }
+
+    </script>
+</body>
+
+</html>

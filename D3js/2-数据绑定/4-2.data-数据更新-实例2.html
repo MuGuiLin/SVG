@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js 数据更新</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - 数据更新 d3.selection.data().enter().exit().remove()</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <p>
+            <a href="https://www.d3js.org.cn/document/d3-selection/" target="_blank">d3-selection API</a>
+            允许强大的数据驱动文档对象模型 (DOM): 设置 attributes, styles, properties, HTML 或 text 内容等等。<br> 使用
+            <a href="https://www.d3js.org.cn/document/d3-selection/#joining-data" target="_blank">data join</a> 的
+            <a href="https://www.d3js.org.cn/document/d3-selection/#selection_enter" target="_blank">enter</a> 和
+            <a href="https://www.d3js.org.cn/document/d3-selection/#selection_exit" target="_blank">exit</a>
+            选择集可以用来根据具体的数据 add 或 remove 元素。<br> 选择集的方法通常选择<b>当前的</b>选择集或者<b>新的</b>选择集，因此允许进行<b>链式调用</b>。
+        </p>
+
+
+        <ul>
+            <h4>selection.enter()选择集 通常在数据比节点多时用来创建缺失的节点，（也就是创建那些 有对应数据还没有 DOM 节点）。</h4>
+            <li>
+                从概念上来讲，enter 选择集的占位符是一个指向父元素的指针(上述例子中为 body)。enter 选择集通常仅仅用来添加元素，并且在添加完元素之后与 update 选择集进行 merged, 这样的话数据的修改可以同时应用于 enter 的元素和 update 的元素。
+            </li>
+            
+            <h4>selection.exit()选择集 通常用来移除多余的元素,（也就是删除那些 没有对应数据的已经存在的 DOM 节点）</h4>
+            <li>
+                元素的顺序与数据的顺序一致，因为旧数据的顺序和新数据的顺序是一致的( enter 选择集长度与数据长度一致，只不过中间会有 empty 表示不需要插入元素, 因此能保证次序)。
+            </li>
+        </ul>
+
+        <hr>
+        <h4>数据绑定的2个重要选择集：<a href="https://bost.ocks.org/mike/join/">enter、exit</a>，这里类似于Vue.js中的diff算法</h4>
+
+        
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600"
+            viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice"></svg>
+
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script>
+
+            const data = [
+                { year: 2011, entities: [{ name: "A", value: 100 }, { name: "B", value: 50 }, { name: "C", value: 60 }, { name: "D", value: 20 }, { name: "E", value: 10 }] },
+                { year: 2012, entities: [{ name: "A", value: 110 }, { name: "B", value: 56 }, { name: "C", value: 80 }, { name: "D", value: 18 }, { name: "E", value: 20 }] },
+                { year: 2013, entities: [{ name: "A", value: 105 }, { name: "B", value: 78 }, { name: "C", value: 60 }, { name: "D", value: 21 }, { name: "E", value: 10 }] },
+                { year: 2014, entities: [{ name: "A", value: 120 }, { name: "B", value: 80 }, { name: "C", value: 60 }, { name: "D", value: 21 }, { name: "E", value: 5 }] },
+                { year: 2015, entities: [{ name: "A", value: 115 }, { name: "B", value: 62 }, { name: "C", value: 60 }, { name: "D", value: 19 }, { name: "E", value: 30 }] },
+                { year: 2016, entities: [{ name: "A", value: 90 }, { name: "B", value: 93 }, { name: "C", value: 60 }, { name: "D", value: 16 }, { name: "E", value: 50 }] },
+                { year: 2017, entities: [{ name: "A", value: 110 }, { name: "B", value: 71 }, { name: "C", value: 60 }, { name: "D", value: 20 }, { name: "E", value: 90 }] },
+                { year: 2018, entities: [{ name: "A", value: 105 }, { name: "B", value: 45 }, { name: "C", value: 60 }, { name: "D", value: 20 }, { name: "E", value: 120 }] }
+            ];
+
+            // 设定与矩形和字体相关的样式
+            const rect = { height: 50, marginV: 50, marginH: 10, marginT: 40 };
+            const font = { height: 20, margin: 35 };
+
+            const svg = d3.select("svg").append("g");
+            const scale = d3.scaleLinear().domain([10, 120]).range([40, 750]);
+
+            // 每次取出一个元素 依数值大小将 entities 进行排序
+            let index = 0;
+            let dataEntry = data[index];
+            let dataValue = dataEntry["entities"].sort((x, y) => y.value - x.value);
+
+            // 最大长度，即最后一个矩形的底边 y 值
+            const maxHeight = (rect.marginV + rect.height) * (dataValue.length - 1) + rect.marginT
+            // 右下角年份
+            let comment = svg.append("text").attr("x", 300).attr("y", maxHeight)
+                .attr("fill", "grey").text(dataEntry.year).style("font-size", "40");
+            //绑定该年数据
+            const groups = svg
+                .selectAll("g")
+                .data(dataValue).enter()
+                .append("g")
+                .style("cursor", "pointer")
+                .on("click", () => update((++index) % data.length));
+
+            // 名称标签 以及矩形
+            let labels = groups.append("text").text(d => d.name)
+                .attr("x", rect.marginH)
+                .style("font-size", `${font.height}px`);
+
+            let rects = groups.append("rect")
+                .attr("x", rect.marginH + font.margin)
+                .attr("height", rect.height)
+                .attr("fill", d => d.name == "E" ? "blue" : "grey");
+
+
+            svg.append("g").attr("transform", `translate(${rect.marginH}, ${maxHeight + rect.height + rect.marginV})`).call(d3.axisBottom(scale));
+
+            function updateElements() {
+                labels.data(dataValue, d => d.name).transition().duration(600)
+                    .attr("y", (_, i) => (rect.marginV + rect.height) * i + rect.marginT + rect.height / 2);
+
+                rects.data(dataValue, d => d.name).transition().duration(600)
+                    .attr("y", (_, i) => (rect.marginV + rect.height) * i + rect.marginT)
+                    .attr("width", d => scale(d.value))
+            }
+
+            updateElements()
+
+            function update(i) {
+
+                dataEntry = data[i];
+                dataValue = dataEntry["entities"].sort((x, y) => y.value - x.value);
+
+                comment.text(dataEntry.year);
+                updateElements()
+            }
+
+            setInterval(() => update((++index) % data.length), 1000);
+
+        </script>
+</body>
+
+</html>
