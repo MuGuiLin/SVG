@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js 数据绑定</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - 数据绑定 d3.selection.data()</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <p>
+            <a href="https://www.d3js.org.cn/document/d3-selection/" target="_blank">d3-selection API</a>
+            允许强大的数据驱动文档对象模型 (DOM): 设置 attributes, styles, properties, HTML 或 text 内容等等。<br> 使用
+            <a href="https://www.d3js.org.cn/document/d3-selection/#joining-data" target="_blank">data join</a> 的
+            <a href="https://www.d3js.org.cn/document/d3-selection/#selection_enter" target="_blank">enter</a> 和
+            <a href="https://www.d3js.org.cn/document/d3-selection/#selection_exit" target="_blank">exit</a>
+            选择集可以用来根据具体的数据 add 或 remove 元素。<br> 选择集的方法通常选择<b>当前的</b>选择集或者<b>新的</b>选择集，因此允许进行<b>链式调用</b>。
+        </p>
+
+
+        <h3>d3.selection.datum()方法将一个数据到选择集的元素上。</h3>
+        <b class="datum"></b><b class="datum"></b><b class="datum"></b><b class="datum"></b><b class="datum"></b>
+
+
+        <h3>d3.selection.data()方法将一个数组的各项分别绑定到选择集的各元素上(数组的各项值分别与选择集的各元素)。</h3>
+        <b class="data"></b><b class="data"></b><b class="data"></b><b class="data"></b><b class="data"></b>
+
+
+        <ul>
+            <h4>data([data[, key]]) 数据绑定方法</h4>
+            <li>data参数可以是<b>任意数据类型的数组</b>(e.g., 数值或对象), 可以是一个<b>返回数组的方法</b>(比如为每个分组继续绑定数组时[多维数组]). 当数据分配给元素时，会被存储在元素的
+                <code>__data__</code> 属性上(可用console.log()输出在控制台查看), 因此可以在重新选中元素时继续使用与元素对应的数据。
+            </li>
+            <h4>data(data, function(item, index, arr) { return item }) 数据绑定方法
+                函数参数（即data()的第二个可选参数以一个数据点作为输入，并返回date属性作为每个数据点的选定键。）</h4>
+            <li>
+                data参数会被指定给选择集中的 each group<b>(每个分组)</b>。如果选择集中包含多个分组(比如 d3.selectAll 后跟随 selection.selectAll)，则 data
+                应该应该被指定为一个函数。这个函数会为每个分组进行调用, 并依次传递当前分组的数据(d, 可能没有定义), 分组的索引 (index), 以及选择集的父节点 (nodes), 函数中 this
+                指向当前分组的父元素。
+            </li>
+
+            <h4>datum()方法和data()方法 不同的是，不会进行数据链接计算并且不影响索引, 不影响 enter 和 exit 选择集</h4>
+        </ul>
+
+
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        console.dir(d3);
+
+        // 获取图片
+        d3.image("./img/data().png", { crossOrigin: "anonymous" }).then(function (img) {
+            console.log(img);
+            document.querySelector('#img-box').appendChild(img);
+        });
+
+        {
+            const data = '我是一个字符串数据';
+            const b = d3.selectAll('.datum');
+            b.datum(data);
+            b.style('display', 'block');
+            b.text((item, index, array) => {
+                console.log(item, index, array);
+                return '我是第' + index + '个b标签，内容是：' + item + '，';
+            });
+            b.style('font-size', '15px');
+            b.style('color', 'blue');
+        }
+
+        {
+            // const data = '我是一个字符串数据';
+            // const b = d3.selectAll('.data');
+            // b.data(data);
+            // b.style('display', 'block');
+            // b.text((item, index, array) => {
+            //     console.log(item, index, array);
+            //     return '我是第' + index + '个b标签，内容是：' + item + '，';
+            // });
+            // b.style('font-size', '15px');
+            // b.style('color', 'blue');
+
+
+            const data = [{ name: '小明' }, { name: '小花' }, { name: '小强' }, { name: '小红' }, { name: '小会' }]
+            const b = d3.selectAll('.data');
+            b.data(data);
+            b.style('display', 'block');
+            b.text((item, index, array) => {
+                console.log(item, index, array);
+                return '我是第' + index + '个b标签，内容是：' + item.name + '，我是数组中的第' + index + '项数据，';
+            });
+            b.style('font-size', '15px');
+            b.style('color', 'red');
+        }
+
+
+    </script>
+</body>
+
+</html>

@@ -57,14 +57,22 @@
         </h3>
 
         <ul>
-            <h4>selection.enter()选择集 通常在数据比节点多时用来创建缺失的节点，（也就是创建那些 有对应数据还没有 DOM 节点）。</h4>
+            <h4>selection.enter()选择集 通常在数据比节点多时用来创建缺失的节点，（也就是创建那些 有对应数据还没有 DOM 节点）<b
+                    style="color: red">【特别是在没有任何dom元素，只有数据的情况下，通过数据来生成dom元素，就是靠enter()来生成的，因为将生成的数据是在enter()中的！！】。</b>
+            </h4>
             <li>
-                从概念上来讲，enter 选择集的占位符是一个指向父元素的指针(上述例子中为 body)。enter 选择集通常仅仅用来添加元素，并且在添加完元素之后与 update 选择集进行 merged, 这样的话数据的修改可以同时应用于 enter 的元素和 update 的元素。
+                从概念上来讲，enter 选择集的占位符是一个指向父元素的指针(上述例子中为 body)。enter 选择集通常仅仅用来添加元素，并且在添加完元素之后与 update 选择集进行 merged,
+                这样的话数据的修改可以同时应用于 enter 的元素和 update 的元素。
             </li>
-            
+
             <h4>selection.exit()选择集 通常用来移除多余的元素,（也就是删除那些 没有对应数据的已经存在的 DOM 节点）</h4>
             <li>
                 元素的顺序与数据的顺序一致，因为旧数据的顺序和新数据的顺序是一致的( enter 选择集长度与数据长度一致，只不过中间会有 empty 表示不需要插入元素, 因此能保证次序)。
+            </li>
+
+            <h4>data().join() 相当于 enter() 和 exit() 的组合</h4>
+            <li>
+                <img src="./img/data().join().png" alt="" />
             </li>
         </ul>
 
@@ -130,6 +138,21 @@
                     <b>肆、</b>
                     <b>伍</b>
                 </div>
+                <h4>update、enter、exit 组合操作DOM的最简流程</h4>
+                <div id="b-box"> </div>
+            </li>
+
+
+            <br>
+            <h3>data().join() 相当于 update、enter、exit 的组合，但不推荐使用</h3>
+            <li>
+                <div id="join">
+                    <b>壹、</b>
+                    <b>贰、</b>
+                    <b>叁、</b>
+                    <b>肆、</b>
+                    <b>伍</b>
+                </div>
             </li>
 
         </ul>
@@ -138,7 +161,8 @@
         <h4>注： update 和 enter 选择集根据数据的顺序返回, exit 选择集保留数据绑定之前的顺序。如果 key 函数被指定, 则选择集中的元素顺序与文档中的顺序可能不匹配, 此时需要使用
             selection.order() 或 selection.sort()等方法</h4>
 
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="960" height="500" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="960" height="500"
+            viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
             <!-- <defs>
                 <style>
                     text {
@@ -156,214 +180,235 @@
             </defs> -->
         </svg>
 
+
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script>
-           
-        /*
-        上面的数据绑定是需要元素 与 数据一一对应的关系(长度相等)，
 
-        那么如果元素个数与数据个数 对不上了怎么办？  有可能存在 元素多了 或者数据多了的情况，
+            /*
+            上面的数据绑定是需要元素 与 数据一一对应的关系(长度相等)，
+    
+            那么如果元素个数与数据个数 对不上了怎么办？  有可能存在 元素多了 或者数据多了的情况，
+    
+            对于这种情况，就需要用到下面这三个方法来一起完成数据绑定啦！！
+            */
 
-        对于这种情况，就需要用到下面这三个方法来一起完成数据绑定啦！！
-        */
+            // update 更新 修改DOM
+            {
+                const data = ['A', 'B', 'C', 'D', 'E'];
+                const b = d3.select('#update').selectAll('b');
 
-        // update 更新 修改DOM
-        {
-            const data = ['A', 'B', 'C', 'D', 'E'];
-            const b = d3.select('#update').selectAll('b');
+                // data数组长度 = dom元素个数
+                console.log(data.length === b._groups[0].length);
 
-            // data数组长度 = dom元素个数
-            console.log(data.length === b._groups[0].length);
-
-            const update = b.data(data);
-            console.log('update', update);
-
-            update.text((item, index, arr) => {
-                console.log(item, index, arr);
-                return item + '，';
-            });
-        };
-
-        // enter 进度 添加DOM
-        {
-            const data = ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Vue.js', 'React.js', 'Angular.js', 'D3.js', 'SVG', 'Canvas', 'WebGL', 'WebGUP'];
-            const b = d3.select('#enter').selectAll('b');
-
-            // data数组长度 > dom元素个数
-            console.log(data.length === b._groups[0].length);
-            const enter = b.data(data).enter();
-            console.log('enter 添加', enter);
-            enter.append('b')
-                .text(o => '、' + o);
-        };
-
-        // exit 退出 删除DOM
-        {
-            const data = [1, 2];
-            const b = d3.select('#exit').selectAll('b');
-            console.log('b', b);
-
-            const exit = b.data(data).exit();
-            console.log('exit 删除', exit);
-
-            // 删除dom元素内容（注：dom元素是还在的哦）
-            exit.text((item, index, arr) => {
-                console.log(item, index, arr);
-                return item + '，';
-            });
-
-            // 删除dom元素
-            exit.remove();
-        }
-
-        d3.select('ul#DemoCode')
-            .selectAll('b')
-            .style('font-size', '15px')
-            .style('color', 'red')
-
-
-
-        // update更新、enter添加、exit删除 组合操作DOM
-        {
-
-            const render = (data) => {
-
-                // console.log(data);
-                const b = d3.select('#group').selectAll('b');
-
-                // 更新DOM 当DOM和数据相等就更新
                 const update = b.data(data);
-                console.log(update);
+                console.log('update', update);
 
+                update.text((item, index, arr) => {
+                    console.log(item, index, arr);
+                    return item + '，';
+                });
+            };
 
-                // 更新相关处理方法
-                update.style('color', 'red')
-                    .text((item, index, arr) => {
-                        return item + '，';
-                    });
+            // enter 进度 添加DOM
+            {
+                const data = ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Vue.js', 'React.js', 'Angular.js', 'D3.js', 'SVG', 'Canvas', 'WebGL', 'WebGUP'];
+                const b = d3.select('#enter').selectAll('b');
 
-
-                // 添加DOM 当DOM少了就添加
-                const enter = update.enter();
-                // 添加相关处理方法
+                // data数组长度 > dom元素个数
+                console.log(data.length === b._groups[0].length);
+                const enter = b.data(data).enter();
+                console.log('enter 添加', enter);
                 enter.append('b')
-                    .style('color', 'green')
-                    // .style('color', `hsl(${Math.random() * 360}, 100%, 50%`)
-                    .style('color', o => `hsl(${d3.randomUniform(0, 360)}, 100%, 50%`)
-                    .style('font-size', '18px')
-                    .text(d => d + '、');
+                    .text(o => '、' + o);
+            };
 
+            // exit 退出 删除DOM
+            {
+                const data = [1, 2];
+                const b = d3.select('#exit').selectAll('b');
+                console.log('b', b);
 
-                // 删除DOM 当DOM多了就删除
-                const exit = update.exit();
-                // 删除方法
+                const exit = b.data(data).exit();
+                console.log('exit 删除', exit);
+
+                // 删除dom元素内容（注：dom元素是还在的哦）
+                exit.text((item, index, arr) => {
+                    console.log(item, index, arr);
+                    return item + '，';
+                });
+
+                // 删除dom元素
                 exit.remove();
-
-
-                // 最简流程
-                // Update…
-                var h6 = d3.select("body")
-                    .selectAll("h6")
-                    .data(data)
-                // .text(function (d) { return d; });
-
-                // Enter…
-                h6.enter().append("h6")
-                    .text(function (d) { return d; });
-
-                // Exit…
-                h6.exit().remove();
             }
 
+            d3.select('ul#DemoCode')
+                .selectAll('b')
+                .style('font-size', '15px')
+                .style('color', 'red')
 
-            // setInterval(() => {
-            d3.interval(() => {
-                let data = [];
 
-                //d3.randomUniform(6)(); // 返回一个大于等于 0 且小于 6 的随机数.
-                let len = d3.randomUniform(1, 99)(); // 返回一个大于等于 1 且小于 5 的随机数.
 
-                console.log(d3.randomBates(3))
+            // data().join()操作DOM；update更新、enter添加、exit删除 组合操作DOM
+            {
 
-                // for (let i = 0; i < parseInt(Math.random() * 99); i++) {
-                for (let i = 0; i < len; i++) {
-                    data.push(i);
+                const render = (data) => {
+                    // console.log(data);
+                    
+
+
+                    /**
+                     * 方式一、update更新、enter添加、exit删除 组合操作DOM
+                    */
+                    const b = d3.select('#group').selectAll('b');
+                    // Update 更新DOM 当DOM和数据相等就更新
+                    const update = b.data(data);
+                    // console.log(update);
+
+                    // 更新相关处理方法
+                    update.style('color', 'red')
+                        .text((item, index, arr) => {
+                            return item + '，';
+                        });
+
+                    // Enter 添加DOM 当DOM少了就添加
+                    const enter = update.enter();
+                    // 添加相关处理方法
+                    enter.append('b')
+                        .style('color', 'green')
+                        // .style('color', `hsl(${Math.random() * 360}, 100%, 50%)`)
+                        // .style('color', o => `hsl(${d3.randomUniform(0, 360)()}, 100%, 50%)`)
+                        .style('font-size', '18px')
+                        .text(d => d + '、');
+
+
+                    // Exit 删除DOM 当DOM多了就删除
+                    const exit = update.exit();
+                    // 删除方法
+                    exit.remove();
+
+
+
+
+                    /**
+                     * 方式二、update、enter、exit 组合的 最简流程
+                    */
+                    // Update
+                    var jb = d3.select("#b-box").selectAll("b")
+                        .data(data)
+                        .text(d => d + '、');
+
+                    // Enter
+                    jb.enter().append("b")
+                        .text(d => d + '、');
+
+                    // Exit
+                    jb.exit().remove();
+
+
+
+
+                    /**
+                     * 方式三、更简结的
+                     * data().join() 相当于 update、enter、exit 的组合，但不推荐使用 data().join()
+                    */
+                    d3.select('#join').selectAll('b').data(data).join('b')
+                        .style('color', o => `hsla(${d3.randomUniform(0, 360)()}, 100%, 50%, 08)`)
+                        .style('font-size', '18px')
+                        .text(d => d + '、');
                 }
-                render(data)
-            }, 1000);
-        }
 
 
-        // update更新、enter添加、exit删除 组合操作DOM 加排序
-        {
-            const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-
-            const svg = d3.select("svg"),
-                width = +svg.attr("width"),
-                height = +svg.attr("height");
 
 
-            const defs = svg.append('svg:defs');
-            defs.append('style').text(`
-                text {
-                    font: bold 48px monospace;
-                }
-                .enter {
-                    fill: green;
-                }
-                    .update {
-                    fill: #333;
-                }
-            `);
 
-            const g = svg.append("g").attr("transform", "translate(32," + (height / 2) + ")");
 
-            d3.image("./img/data().png", { crossOrigin: "anonymous" }).then(function (img) {
-                console.log(img);
-                // svg.append(img);
-            });
+                // setInterval(() => {
+                d3.interval(() => {
+                    let data = [];
 
-            function update(data) {
+                    //d3.randomUniform(6)(); // 返回一个大于等于 0 且小于 6 的随机数.
+                    let len = d3.randomUniform(1, 99)(); // 返回一个大于等于 1 且小于 5 的随机数.
 
-                // 数据连接
-                // 如果有的话，将新数据与旧元素连接起来。 
-                var text = g.selectAll("text")
-                    .data(data);
+                    console.log(d3.randomBates(3)())
 
-                // 更新
-                // 根据需要更新旧元素。 
-                text.attr("class", "update");
-
-                // 进入
-                // 根据需要创建新元素。
-
-                // 输入 + 更新
-                // 将输入的元素与更新选择合并后， 
-                // apply operations to both.
-                text.enter().append("text")
-                    .attr("class", "enter")
-                    .attr("x", function (d, i) { return i * 32; })
-                    .attr("dy", ".35em")
-                    .merge(text)
-                    .text(function (d) { return d; });
-
-                // 出口
-                // 根据需要删除旧元素。
-                text.exit().remove();
+                    // for (let i = 0; i < parseInt(Math.random() * 99); i++) {
+                    for (let i = 0; i < len; i++) {
+                        data.push(i);
+                    }
+                    render(data)
+                }, 1000);
             }
 
-            // 初始显示。 
-            update(alphabet);
+            // update更新、enter添加、exit删除 组合操作DOM 加排序
+            {
+                const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+
+                const svg = d3.select("svg"),
+                    width = +svg.attr("width"),
+                    height = +svg.attr("height");
 
 
-            // 从字母表中按字母顺序随机抽取字母样本。 
-            d3.interval(function () {
-                update(d3.shuffle(alphabet)
-                    .slice(0, Math.floor(Math.random() * 26))
-                    .sort()
-                );
-            }, 1500);
-        }
+                const defs = svg.append('svg:defs');
+                defs.append('style').text(`
+                    text {
+                        font: bold 48px monospace;
+                    }
+                    .enter {
+                        fill: green;
+                    }
+                        .update {
+                        fill: #333;
+                    }
+                `);
+
+                const g = svg.append("g").attr("transform", "translate(32," + (height / 2) + ")");
+
+                d3.image("./img/data().png", { crossOrigin: "anonymous" }).then(function (img) {
+                    console.log(img);
+                    // svg.append(img);
+                });
+
+                function update(data) {
+
+                    // 数据连接
+                    // 如果有的话，将新数据与旧元素连接起来。 
+                    var text = g.selectAll("text")
+                        .data(data);
+
+                    // 更新
+                    // 根据需要更新旧元素。 
+                    text.attr("class", "update");
+
+                    // 进入
+                    // 根据需要创建新元素。
+
+                    // 输入 + 更新
+                    // 将输入的元素与更新选择合并后， 
+                    // apply operations to both.
+                    text.enter().append("text")
+                        .attr("class", "enter")
+                        .attr("x", function (d, i) { return i * 32; })
+                        .attr("dy", ".35em")
+                        .merge(text)
+                        .text(function (d) { return d; });
+
+                    // 出口
+                    // 根据需要删除旧元素。
+                    text.exit().remove();
+                }
+
+                // 初始显示。 
+                update(alphabet);
+
+
+                // 从字母表中按字母顺序随机抽取字母样本。 
+                d3.interval(function () {
+                    update(d3.shuffle(alphabet)
+                        .slice(0, Math.floor(Math.random() * 26))
+                        .sort()
+                    );
+                }, 1500);
+            }
         </script>
 </body>
 

@@ -25,7 +25,7 @@
 </head>
 
 <body>
-    <h1>D3js - scaleLinear-比例尺</h1>
+    <h1>D3js - scale-比例尺</h1>
     <hr>
     <div class="box">
         <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
@@ -36,8 +36,8 @@
         <hr />
 
         <h3> <a href="https://www.d3js.org.cn/document/d3-scale/" target="_blank" rel="noopener noreferrer">d3-scale</a>
-            例尺是一个很方便的工具：将抽象的维度数据映射为可视化表示。例尺是一个很方便的工具：将抽象的维度数据映射为可视化表示。</h3>
-
+            例尺是一个很方便的工具：将抽象的维度数据映射为可视化表示。可以将实际的数据空间映射到屏幕空间。通常 比例尺scale 与 坐标轴axis 一起使用。</h3>
+        <div id="svg-box"></div>
         <ul>
             <h4>d3.scaleLinear() 线性比例尺</h4>
             <li>将一组线性的定义域映射到一组线性的值域当中。</li>
@@ -66,12 +66,58 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
 
     <script>
+        const NS = 'http://www.w3.org/2000/svg';
         {
-            const NS = 'http://www.w3.org/2000/svg';
+            const x = [1, 2, 3, 4, 5, 6, 7];
+            const y = [1, 2, 3, 4, 5];
+            const svg = d3.select('#svg-box')
+                .append('svg')
+                .attr('xmlns', NS)
+                .attr('width', 800)
+                .attr('height', 600);
+            const x_line = svg.selectAll('.x').data(x);
+            x_line.enter().append('line').attr('class', 'x')
+                .attr('x1', (d) => d * 100)
+                .attr('y1', 0)
+                .attr('x2', (d) => d * 100)
+                .attr('y2', 600)
+                .attr('stroke', '#666');
+
+            const y_line = svg.selectAll('.y').data(y);
+            y_line.enter().append('line').attr('class', 'y')
+                .attr('x1', 0)
+                .attr('y1', (d) => d * 100)
+                .attr('x2', 800)
+                .attr('y2', (d) => d * 100)
+                .attr('stroke', '#666');
+
+            const rect = svg.selectAll('.rect').data([1, 2, 3]);
+            rect.enter().append('rect').attr('class', 'rect')
+                .attr('x', (d) => d * 100)
+                .attr('y', (d) => d * 100)
+                .attr('width', 100)
+                .attr('height', 100)
+                .attr('fill', (d) => `hsl(${Math.random() * 360}, 100%, 50%)`);
+
+            const text = svg.selectAll('.text').data([1, 2, 3, 4, 5, 6, 7, 8]);
+            text.enter().append('text')
+                .attr('x', (d) => d * 100)
+                .attr('y', 600)
+                .attr('dx', -50)
+                .attr('dy', -50)
+                .text(d => d) 
+                .attr('text-anchor', 'middle')
+                .attr('dominant-baseline', 'mathematical')
+                .attr('fill', '#666');
+        }
+
+
+        {
+
             const width = 800;
             const height = 600;
 
-            const data = [102, 352, 156, 385, 321, 56, 213, 352];
+            const data = [102, 352, 156, 685, 321, 56, 213, 352];
 
             // 生成SVG画布
             const svg = d3.select('.box')
@@ -94,7 +140,7 @@
             // 在画布中生成矩形
             const rect = svg.append('g').selectAll('rect').data(data);
             rect.enter().append('rect')
-                .attr('x', (d, i) => 20 + i * 70)
+                .attr('x', (d, i) => 10 + i * 80)
                 .attr('y', height - 1)
                 .attr('width', 50)
                 .attr('height', d => {
@@ -109,8 +155,9 @@
             // 在画布中生成文本
             const text = svg.append('g').selectAll('text').data(data);
             text.enter().append('text')
-                .attr('x', (d, i) => 20 + i * 70)
-                .attr('y', d => height + -d)
+                .attr('x', (d, i) => 10 + i * 80)
+                .attr('y', d => height - 10)
+                .attr('dx', 10)
                 .text(d => {
                     return d;
                 })

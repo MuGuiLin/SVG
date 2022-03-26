@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - 比例尺 实例</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - scaleLinear-比例尺 实例</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <hr />
+
+        <h3> <a href="https://www.d3js.org.cn/document/d3-scale/" target="_blank" rel="noopener noreferrer">d3-scale</a>
+            例尺是一个很方便的工具：将抽象的维度数据映射为可视化表示。可以将实际的数据空间映射到屏幕空间。它通常与坐标轴一起使用。</h3>
+        <div id="svg-box"></div>
+        <ul>
+            <h4>d3.scaleLinear() 线性比例尺</h4>
+            <li>将一组线性的定义域映射到一组线性的值域当中。</li>
+
+            <h4>d3.scaleBand() 序数比例尺</h4>
+            <li>会将一组离散的定义域映射到一组线性的定义域中,根据定义域中的值将值域分割为几个均匀的分段，并返回分段中的第一个值。</li>
+
+            <h4>d3.scaleOrdinal() 序数比例尺</h4>
+
+            <h4>d3.scaleQuantize() 量化比例尺</h4>
+            <li>将一组连续的定义域映射到一组离散的值域中，根据值域中的值数，将连续的定义域域划分为几个均匀的分段。</li>
+
+            <h4>d3.scaleTime() 时间比例尺</h4>
+
+            <hr>
+            <h4>continuous.domain([domain]) 定义域</h4>
+            <li>比例尺的 domain 设置为指定的数值数组。数组比例包含两个或者两个以上元素。如果给定的数组中的元素不是数值类型，则会被强制转为数值类型。如果没有指定 domain
+                则会返回当前比例尺的 domain 的拷贝。</li>
+
+            <h4>continuous.range([range]) 定义域值</h4>
+            <li>比例尺的 range 设置为指定的数组。数组必须包含两个或两个以上元素。</li>
+
+        </ul>
+        <hr />
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        {
+            const NS = 'http://www.w3.org/2000/svg';
+
+            const svg = d3.select('.box').append('svg').attr('xlink', NS).attr('width', 1200).attr('height', 800);
+
+            // 获取SVG画布的宽和高
+            const width = +svg.attr('width');
+            const height = +svg.attr('height');
+            const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const data = [
+                { name: '小明', value: 200 },
+                { name: '小花', value: 382 },
+                { name: '小红', value: 458 },
+                { name: '小五', value: 110 },
+                { name: '小琴', value: 542 },
+                { name: '小梅', value: 624 },
+                { name: '小会', value: 324 },
+                { name: '小林', value: 484 },
+            ];
+
+            const g = svg.append('g').classed('g-main', true).attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+            // 定义度X比例尺
+            const xScale = d3
+                .scaleLinear()  // 线性比例尺
+                .domain([0, d3.max(data, (d) => d.value)])  // 根据数据的最大值生成标尺比例
+                .range([0, innerWidth]);
+
+            // 定义X坐标轴
+            const xAxis = d3.axisBottom(xScale);
+
+            // 渲染X坐标轴 将xAxis坐标轴 通过call方法 填满g元素，也就是：call()函数将 g元素传给xAxis函数，然后xAxis()在g元素中渲染出来
+            g.append('g').call(xAxis).attr('transform', `translate(0, ${innerHeight})`);
+
+
+            // 定义Y比例尺
+            const yScale = d3
+                .scaleBand()    // 序数比例尺
+                .domain(data.map((d) => d.name)) // 要
+                .range([0, innerHeight])
+                .padding(0.2) // 设置间距 0.2 === 2%
+
+
+            // 定义Y坐标轴
+            const yAxis = d3.axisLeft(yScale)
+            // .tickSize(-innerWidth)  // Y坐标轴线
+
+            // 渲染Y坐标轴 将yAxis坐标轴 通过call方法 填满g元素，也就是：call()函数将 g元素传给yAxis函数，然后yAxis()在g元素中渲染出来
+            g.append('g').call(yAxis);
+
+            // 修改 X坐标轴 和 Y坐标轴 的文本大小
+            d3.selectAll('.tick text').attr('font-size', 14);
+
+            // 添加标题
+            g.append('text').classed('title', true)
+                .text('2022年 秋季学生成绩')
+                .attr('font-size', 26)
+                .attr('text-anchor', 'middle')
+                .attr('transform', `translate(${innerWidth / 2})`)
+
+            // 渲染 条形
+            data.forEach((d, i) => {
+                console.log(yScale(d.name), xScale(d.value));
+                console.log('bandwidth', yScale.bandwidth());
+                g.append('rect')
+                    .transition()
+                    .duration(3000)
+                    .delay(function (d, i) {
+                        return i * 500;
+                    })
+                    .attr('x', 1)
+                    .attr('y', yScale(d.name))
+                    .attr('width', xScale(d.value))
+                    .attr('height', yScale.bandwidth())
+                    .attr('fill', `hsl(${Math.random() * 360}, 100%, 50%)`)
+            });
+
+            // 渲染 条形数据
+            data.forEach((d, i) => {
+                g.append('text')
+                    .transition()
+                    .duration(3000)
+                    .delay(function (d, i) {
+                        return i * 500;
+                    })
+                    .text(d.value)
+                    .attr('x', xScale(d.value))
+                    .attr('y', yScale(d.name))
+                    .attr('dx', 10)
+                    .attr('dy', yScale.bandwidth() / 1.8)
+                    .attr('fill', `hsl(${Math.random() * 360}, 100%, 50%)`)
+            });
+        }
+        {
+            const NS = 'http://www.w3.org/2000/svg';
+
+            const svg = d3.select('.box').append('svg').attr('xlink', NS).attr('width', 1200).attr('height', 800);
+
+            // 获取SVG画布的宽和高
+            const width = +svg.attr('width');
+            const height = +svg.attr('height');
+            const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const data = [
+                { name: '小明', value: 200 },
+                { name: '小花', value: 382 },
+                { name: '小红', value: 458 },
+                { name: '小五', value: 110 },
+                { name: '小琴', value: 542 },
+                { name: '小梅', value: 624 },
+                { name: '小会', value: 324 },
+                { name: '小林', value: 484 },
+            ];
+
+            const g = svg.append('g').classed('g-main', true).attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+            // 定义度X比例尺
+            const xScale = d3
+                .scaleBand()    // 序数比例尺
+                .domain(data.map((d) => d.name))
+                .range([0, innerWidth])
+                .padding(0.2) // 设置间距 0.2 === 2%
+
+
+            // 定义X坐标轴
+            const xAxis = d3.axisBottom(xScale);
+
+            // 渲染X坐标轴 将xAxis坐标轴 通过call方法 填满g元素，也就是：call()函数将 g元素传给xAxis函数，然后xAxis()在g元素中渲染出来
+            g.append('g').call(xAxis).attr('transform', `translate(0, ${innerHeight})`);
+
+
+            // 定义Y比例尺
+            const yScale = d3
+                .scaleLinear()  // 线性比例尺
+                .domain([d3.max(data, (d) => d.value), 0])  // 根据数据的最大值生成标尺比例
+                .range([0, innerHeight]);
+
+
+            // 定义Y坐标轴
+            const yAxis = d3.axisLeft(yScale)
+            // .tickSize(-innerWidth)  // Y坐标轴线
+
+            // 渲染Y坐标轴 将yAxis坐标轴 通过call方法 填满g元素，也就是：call()函数将 g元素传给yAxis函数，然后yAxis()在g元素中渲染出来
+            g.append('g').call(yAxis);
+
+            // 修改 X坐标轴 和 Y坐标轴 的文本大小
+            d3.selectAll('.tick text').attr('font-size', 14);
+
+            // 添加标题
+            g.append('text').classed('title', true)
+                .text('2022年 秋季学生成绩')
+                .attr('font-size', 26)
+                .attr('text-anchor', 'middle')
+                .attr('transform', `translate(${innerWidth / 2})`)
+
+            // 渲染 条形
+            const rect = g.append('g');
+            data.forEach((d, i) => {
+                console.log(xScale(d.name), yScale(d.value));
+                console.log('bandwidth', xScale.bandwidth());
+                rect.append('rect')
+                    .transition()
+                    .duration(3000)
+                    .delay(function (d, i) {
+                        return i * 500;
+                    })
+                    .attr('x', xScale(d.name))
+                    .attr('y', -innerHeight)
+                    .attr('width', xScale.bandwidth())
+                    .attr('height', yScale(d.value))
+                    .attr('transform', `translate(0, ${yScale(-d.value)})`)
+                    .attr('fill', `hsl(${Math.random() * 360}, 100%, 50%)`)
+            });
+
+            // 渲染 条形数据
+            data.forEach((d, i) => {
+                g.append('text')
+                    .transition()
+                    .duration(3000)
+                    .delay(function (d, i) {
+                        return i * 500;
+                    })
+                    .text(d.value)
+                    .attr('x', xScale(d.name))
+                    .attr('y', innerHeight)
+                    .attr('dx', xScale.bandwidth() / 2.8)
+                    .attr('dy', -10)
+                    // .attr('transform', `translate(0, ${yScale(-d.value)})`)
+                    .attr('fill', `hsl(${Math.random() * 360}, 100%, 50%)`)
+            });
+        }
+    </script>
+</body>
+
+</html>

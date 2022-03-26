@@ -53,6 +53,24 @@
 
             <h4>d3.axisLeft(scale)</h4>
             <li>使用给定的 scale 构建一个刻度在左的坐标轴生成器。</li>
+
+            <h2>selection.call(function[, arguments…])</h2>
+            <li>call()是一个高阶函数：即函数的输入是另一个函数，而这里就是 坐标轴axis。<br>调用一次指定的 function，并为将当前选择集作为第一个参数，此外还可以使用可选的其他参数。返回选择集，等价于手动调用函数，但是这种方法支持链式调用。 </li>
+            <code>
+                <pre>
+                // 例如有一个设置样式的函数:
+                function name(selection, first, last) {
+                    selection.attr("first-name", first)
+                             .attr("last-name", last);
+                };
+
+                // 可以写成如下形式:
+                d3.selectAll("div").call(name, "John", "Snow");
+
+                // 等价于：
+                name(d3.selectAll("div"), "John", "Snow");
+                </pre>
+            </code>
         </ul>
 
         <hr />

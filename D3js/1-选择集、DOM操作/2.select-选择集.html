@@ -47,7 +47,7 @@
         <h3>d3.select() 和 d3.selectAll()返回的对象就是选择集，可对这些选择集进行添加、删除、修改等DOM操作，所以选择集
             是数据绑定的基本受体！！这两个方法的选择器与jQuery的元素、属性、css选择器使用方法基本一样</h3>
 
-        <ul>
+        <ul id="ul">
             <h4>d3.selection() 根元素（即html）选择器</h4>
             <li>选择器根元素: document.documentElement. 整个方法可以用来测试是否为选择集实例 (instanceof d3.selection) 也可以用来扩展选择集原型链。</li>
 
@@ -113,6 +113,9 @@
         console.log('选择多个dom', all);
         console.log('选择多个dom的个数据', all.size());
 
+        
+        const h3 = d3.select('.box h3');
+        h3.style('color', 'purple');
 
 
         // 根据类名 选择多个dom
@@ -121,8 +124,11 @@
 
 
         // 选择多个元素下指定符合条件的元素
-        const b_all = d3.select("p").selectAll("b");
-        b_all.style('color', 'blue');
+        // const li_all = d3.select("ul").selectAll("li");
+        // 简写 
+        const li_all = d3.selectAll("ul li");
+        
+        li_all.style('color', '#666');
 
 
         // 选择多个元素下指定符合条件的元素
