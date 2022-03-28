@@ -2,6 +2,8 @@
 logs
 *.log
 *.mp4
+*.rar
+*.zip
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -42,6 +44,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+D3.js-Demos-master/
 拓扑图/
 
 # TypeScript v1 declaration files

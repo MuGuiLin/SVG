@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3 世界地图</title>
+    <link rel="stylesheet" href="./css/d3tip.css">
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            margin: auto;
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3 世界地图</h1>
+    <hr>
+
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <br>
+
+        <div id="map-box"></div>
+        <a href="https://openlayers.org/en/latest/examples/topojson.html" target="_blank"
+            rel="noopener noreferrer">topojson 编码拓扑，</a>
+        <a href="https://www.d3js.org.cn/document/d3-geo/#projections" target="_blank"
+            rel="noopener noreferrer">projections 投影方法</a>
+    </div>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!-- 悬浮提示插件 -->
+    <!-- <script src="./js/d3-tip-2021.js"></script> -->
+    <!-- <script src="./js/d3.tip.v0.6.3.js"></script> -->
+    <script src="./js/d3-tip.js"></script>
+    <!-- 数据转换插件 -->
+    <script src="./js/topojson.js"></script>
+
+    <script>
+        console.log(d3);
+        console.log(topojson);
+
+        const xmlns = "http://www.w3.org/2000/svg";
+        const xlink = "http://www.w3.org/1999/xlink";
+
+        const svg = d3
+            .select("#map-box")
+            .insert("svg")
+            .attr("xmlns", xmlns)
+            .attr("xmlns:xlink", xlink)
+            .attr("width", 1600)
+            .attr("height", 880)
+        // .attr("viewBox", "0 0 1600 800");
+
+        // 获取SVG画布的宽和高
+        const width = +svg.attr("width");
+        const height = +svg.attr("height");
+        const margin = { top: 80, right: 50, bottom: 20, left: 50 };
+
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
+
+        // 创建区域分组
+        const g = svg.append('g')
+            .attr('id', 'map-group')
+            .attr('transform', `translate(${margin.left}, ${margin.top})`);
+        // 标题
+        g.append('text')
+            .text('世界地图')
+            .attr('x', innerWidth / 2)
+            .attr('y', -30)
+            .attr('font-size', 40)
+            .attr('text-anchor', 'middle');
+
+        g.append('rect')
+            .attr('x', -10)
+            .attr('y', -10)
+            .attr('rx', innerHeight / 2)
+            .attr('width', innerWidth + 20)
+            .attr('height', innerHeight + 20)
+            .attr('fill', 'cyan')
+            .attr('stroke', 'gray');
+
+        // 地图投影方式函数
+        /*
+        d3.geoAlbers()
+        d3.geoAlbersUsa()
+        d3.geoArea(t)
+        d3.geoAzimuthalEqualArea()
+        d3.geoAzimuthalEqualAreaRaw(n,e)
+        d3.geoAzimuthalEquidistant()
+        d3.geoAzimuthalEquidistantRaw(n,e)
+        d3.geoBounds(t)
+        d3.geoCentroid(t)
+        d3.geoCircle()
+        d3.geoClipAntimeridian(i)
+        d3.geoClipCircleGs(t)
+        d3.geoClipExtent()
+        d3.geoClipRectangleJs(t,n,e,r)
+        d3.geoConicConformal()
+        d3.geoConicConformalRawXh(t,n)
+        d3.geoConicEqualAreaqh()
+        d3.geoConicEqualAreaRawFh(t,n)
+        d3.geoConicEquidistant()
+        d3.geoConicEquidistantRawVh(t,n)
+        d3.geoContains(t,n)
+        d3.geoDistanceul(t,n)
+        d3.geoEqualEarth()
+        d3.geoEqualEarthRawJh(t,n)
+        d3.geoEquirectangular()
+        d3.geoEquirectangularRawGh(t,n)
+        d3.geoGnomonic()
+        d3.geoGnomonicRawtd(t,n)
+        d3.geoGraticule_l()
+        d3.geoGraticule10()
+        d3.geoIdentity()
+        d3.geoInterpolate(t,n)
+        d3.geoLengthil(t)
+        d3.geoMercator()
+        d3.geoMercatorRawLh(t,n)
+        d3.geoNaturalEarth1()
+        d3.geoNaturalEarth1Rawnd(t,n)
+        d3.geoOrthographic()
+        d3.geoOrthographicRawed(t,n)
+        d3.geoPath(t,n)
+        d3.geoProjectionzh(t)
+        d3.geoProjectionMutatorDh(t)
+        d3.geoRotationzs(t)
+        d3.geoStereographic()
+        d3.geoStereographicRawrd(t,n)
+        d3.geoStreamsf(t,n)
+        d3.geoTransform(t)
+        d3.geoTransverseMercator()
+        d3.geoTransverseMercatorRawid(t,n)
+        */
+
+        // 创建投影
+        const projection = d3.geoNaturalEarth1()
+        // .center([107, 31])  // 设置投影的中心点 经纬度
+        // .scale(100) // 设置缩放因子
+        // .translate([width / 2, height / 2]); // 设置平移偏移量
+
+
+        // 创建一个地理路径生成器（将数据映射到画布上）
+        const geoPath = d3.geoPath()
+            .projection(projection) // 设置地理路径生成器的投影方式
+
+        // 鼠标悬浮提示插件
+        const tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .html((d) => {
+                // console.log('应该方法会以tip.show()是执行', d);
+                return d.properties.name;
+            });
+        // 把tip以参数形有置入到svg对象中
+        svg.call(tip);
+
+        // console.log(tip)
+        // 获取中国地图的json文件
+        d3.json('./data/countries-110m.json').then(function (res) {
+            console.log('TopoJson格式：', res);//features
+
+            // 将TopoJson格式 转为 GeoJson格式
+            const geoJson = topojson.feature(res, res.objects.countries);
+
+            // 设置投影显示比例
+            projection.fitSize([innerWidth, innerHeight], geoJson);
+            console.log('GeoJson格式：', geoJson);
+
+
+            //新建一个颜色比例尺
+            var scaleColor = d3.scaleOrdinal()
+                .domain(d3.range(geoJson.features.length))
+
+                .range(d3.schemeCategory10);
+
+                // .range(d3.schemePaired);
+                // .range(d3.schemePastel1);
+                // .range(d3.schemePastel2);
+
+                // .range(d3.schemeSet1);
+                // .range(d3.schemeSet2);
+                // .range(d3.schemeSet3);
+
+            //绘制区域
+            g.append('g')
+                .selectAll('path')
+                .data(geoJson.features)
+                .join('path')
+                .attr('d', geoPath)
+                .attr('fill', function (d, i) {
+                    return scaleColor(i);
+                })
+                .attr('stroke', 'gray')
+                .attr('stroke-widht', 1)
+                .on('click', (d) => {
+                    tip.show(d);
+                })
+                .on('mouseover', function (d, i) {
+                    d3.select(this)
+                        .attr('opacity', 0.6)
+                        .attr('fill', 'yellow')
+                        .attr('stroke', 'red')
+                        .attr('stroke-width', 2);
+                    tip.show(d);
+                })
+                .on('mouseout', function (d, i) {
+                    d3.select(this)
+                        .attr('opacity', 1)
+                        .attr('stroke', 'gray')
+                        .attr('stroke-width', 1)
+                        .attr('fill', scaleColor(i));
+                });
+
+
+            //绘制文字
+            // g.append('g')
+            //     .selectAll('text')
+            //     .data(geoJson.features)
+            //     .enter()
+            //     .append('text')
+            //     .text(function (d, i) {
+            //         return d.properties.name;
+            //     })
+            //     .attr('x', function (d, i) {
+            //         var position = projection(d.properties.centroid || [0, 0]);
+            //         return position[0];
+            //     })
+            //     .attr('y', function (d, i) {
+            //         var position = projection(d.properties.centroid || [0, 0]);
+            //         return position[1];
+            //     })
+            //     .attr('font-size', 12)
+            //     .attr('text-anchor', 'middle');
+
+        });
+    </script>
+</body>
+
+</html>

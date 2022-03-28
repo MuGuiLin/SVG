@@ -207,7 +207,8 @@
             // 定义Y比例尺
             const yScale = d3
                 .scaleLinear()  // 线性比例尺
-                .domain([d3.max(data, (d) => d.value), 0])  // 根据数据的最大值生成标尺比例
+                // .domain([d3.max(data, (d) => d.value), 0])  // 根据数据的最大值生成标尺比例
+                .domain([0, d3.max(data, (d) => d.value)].reverse())  // 根据数据的最大值生成标尺比例
                 .range([0, innerHeight]);
 
 

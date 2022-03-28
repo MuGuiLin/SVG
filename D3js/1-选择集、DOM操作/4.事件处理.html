@@ -19,6 +19,7 @@
         }
 
         svg {
+            background-color: black;
             border: 1px solid gray;
         }
     </style>
@@ -36,7 +37,7 @@
         <hr />
 
         <h3>为了给DOM添加更友好的行为和交互，选择集允许监听和分派事件。</h3>
-
+        <img src="./img/d3事件.png" alt="" />
         <ul>
             <h4>selection.on(typenames[, listener[, capture]]) 事件绑定</h4>
             <li>为每个选中的元素添加或者移除一个指定typenames 事件的 listener. typenames 是一个字符串表示的事件类型, 比如 click, mouseover, 或者 submit;
@@ -115,7 +116,7 @@
         });
 
 
-        
+
         // 选择器 参数函数
         //如果选择器的参数是一个函数，则会在选择前执行对应的函数，并且会传递当前元素的关联数据 (d)，当前的索引 (i) 以及当前分组 (nodes)，在函数中 this 指向当前 DOM 元素(nodes[i]). 为函数时必须返回一个元素，或者 null。例如选择每个 p 元素的前一个同胞节点:
         var prevDom = d3.selectAll("li").select(function () {
@@ -139,47 +140,45 @@
         });
 
 
-         /** 链式调用设置
-         * 
-         * 按照惯例，返回当前选择集的方法前设置 4 个空格缩进，返回新的选择集的则使用 2 个空格缩进。这种写法有助于在链式调用中发现选择集的变化
-         * 选择集是不可变的。影响被选中的元素 (或顺序) 的方法都会返回一个新的选择集，而不是在当前选择集上进行修改然后返回。但是请注意，元素必然是可变的！！
-         * 
-        */
+        /** 链式调用设置
+        * 
+        * 按照惯例，返回当前选择集的方法前设置 4 个空格缩进，返回新的选择集的则使用 2 个空格缩进。这种写法有助于在链式调用中发现选择集的变化
+        * 选择集是不可变的。影响被选中的元素 (或顺序) 的方法都会返回一个新的选择集，而不是在当前选择集上进行修改然后返回。但是请注意，元素必然是可变的！！
+        * 
+       */
         const svg = d3.select(".box").append("svg")
-                .attr("width", 960)
-                .attr("height", 500);
-        svg.append("g")
-            .attr("transform", "translate(20, 20)")
-            .append("rect")
-                .attr("width", 920)
-                .attr("height", 460)
-                .on('click', (event) => {
-                    /*鼠标在窗口中的位置 clientX,clientY*/
-                    const { clientX, clientY } = event;
-                    console.log(clientX, clientY);
+            .attr("width", 960)
+            .attr("height", 500)
+            .on('click', (event) => {
+                /*鼠标在窗口中的位置 clientX,clientY*/
+                const { clientX, clientY } = event;
+                console.log(clientX, clientY);
 
-                    /*获取rect矩形在窗口中的位置left,to，使用getBoundingClientRect 方法*/
-                    const { left, top } = event.target.getBoundingClientRect();
-                    // const { left, top } = getComputedStyle(event.target);
+                /*获取rect矩形在窗口中的位置left,to，使用getBoundingClientRect 方法*/
+                const { left, top } = event.target.getBoundingClientRect();
+                // const { left, top } = getComputedStyle(event.target);
 
-                    /*鼠标在rect矩形 中的位置=鼠标在窗口轴的位置减去rect矩形 在窗口中的位置*/
-                    const [x, y] = [clientX - left, clientY - top];
+                /*鼠标在rect矩形 中的位置=鼠标在窗口轴的位置减去rect矩形 在窗口中的位置*/
+                const [x, y] = [clientX - left, clientY - top];
 
-                    d3.select('#posXY').text(`X：${x}，Y：${y}`);
+                d3.select('#posXY').text(`X：${x}，Y：${y}`);
 
-                    const r = d3.randomUniform(2, 20)();
-                    svg.append('circle')
-                    .attr('cx', x + (r*2))
-                    .attr('cy', y + (r*2))
+                const r = d3.randomUniform(2, 20)();
+                svg.append('circle')
+                    .attr('cx', x)
+                    .attr('cy', y)
                     .attr('r', r)
                     .attr('fill', `hsl(${d3.randomUniform(0, 360)()}, 100%, 50%)`)
-                });
+            });
         svg.append('text')
             .attr('id', 'posXY')
-            .attr('x', 480 - 172.5)
-            .attr('y', 250 + 18.5)
+            .attr('x', svg.attr('width') / 2)
+            .attr('y', svg.attr('height') / 2)
             .attr('fill', 'blue')
-            .style('font-size', '28px');
+            .style('font-size', '28px')
+            .style('text-anchor', 'middle')
+            .style('dominant-baseline', 'mathematical')
+            ;
 
 
     </script>

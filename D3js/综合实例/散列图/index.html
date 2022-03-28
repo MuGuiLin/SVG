@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - 比例尺 实例</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+
+        select {
+            padding: 6px 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - scaleLinear-比例尺 实例</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+
+        <hr />
+
+        <h3> <a href="https://www.d3js.org.cn/document/d3-scale/" target="_blank" rel="noopener noreferrer">d3-scale</a>
+            例尺是一个很方便的工具：将抽象的维度数据映射为可视化表示。可以将实际的数据空间映射到屏幕空间。它通常与坐标轴一起使用。</h3>
+        <div id="svg-box"></div>
+        <ul>
+            <h4>d3.scaleLinear() 线性比例尺</h4>
+            <li>将一组线性的定义域映射到一组线性的值域当中。</li>
+
+            <h4>d3.scaleBand() 序数比例尺</h4>
+            <li>会将一组离散的定义域映射到一组线性的定义域中,根据定义域中的值将值域分割为几个均匀的分段，并返回分段中的第一个值。</li>
+
+            <h4>d3.scaleOrdinal() 序数比例尺</h4>
+
+            <h4>d3.scaleQuantize() 量化比例尺</h4>
+            <li>将一组连续的定义域映射到一组离散的值域中，根据值域中的值数，将连续的定义域域划分为几个均匀的分段。</li>
+
+            <h4>d3.scaleTime() 时间比例尺</h4>
+
+            <hr>
+            <h4>continuous.domain([domain]) 定义域</h4>
+            <li>比例尺的 domain 设置为指定的数值数组。数组比例包含两个或者两个以上元素。如果给定的数组中的元素不是数值类型，则会被强制转为数值类型。如果没有指定 domain
+                则会返回当前比例尺的 domain 的拷贝。</li>
+
+            <h4>continuous.range([range]) 定义域值</h4>
+            <li>比例尺的 range 设置为指定的数组。数组必须包含两个或两个以上元素。</li>
+
+        </ul>
+
+        <select id="select"></select>
+        <hr />
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        {
+            const NS = "http://www.w3.org/2000/svg";
+
+            const svg = d3
+                .select(".box")
+                .append("svg")
+                .attr("xlink", NS)
+                .attr("width", 1600)
+                .attr("height", 900);
+
+            // 获取SVG画布的宽和高
+            const width = +svg.attr("width");
+            const height = +svg.attr("height");
+            const margin = { top: 80, right: 80, bottom: 80, left: 80 };
+
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const xLabel = "确诊人数";
+            const yLabel = "新增确诊";
+            // 比例尺
+            let xScale, yScale;
+            // 全局定义，方便查看其他字段
+            let xScaleVal = (o) => Math.log(o[xLabel] + 1),
+                yScaleVal = (o) => Math.log(o[yLabel] + 1);
+
+            let date = [];
+
+            const lineRender = (data) => {
+                // const data = [
+                //     { name: '小明', value: 200 },
+                //     { name: '小花', value: 382 },
+                //     { name: '小红', value: 458 },
+                //     { name: '小五', value: 110 },
+                //     { name: '小琴', value: 542 },
+                //     { name: '小梅', value: 624 },
+                //     { name: '小会', value: 324 },
+                //     { name: '小林', value: 484 },
+                // ];
+
+                const g = svg
+                    .append("g")
+                    .classed("g-main", true)
+                    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+                // 定义度X比例尺
+                const xScale = d3
+                    .scaleLinear() // 线性比例尺
+                    .domain([0, d3.max(data, (d) => d[i]["地区"])]) // 根据数据的最大值生成标尺比例
+                    .range([0, innerWidth]);
+
+                // 定义X坐标轴
+                const xAxis = d3.axisBottom(xScale);
+
+                // 渲染X坐标轴 将xAxis坐标轴 通过call方法 填满g元素，也就是：call()函数将 g元素传给xAxis函数，然后xAxis()在g元素中渲染出来
+                g.append("g")
+                    .call(xAxis)
+                    .attr("transform", `translate(0, ${innerHeight})`);
+
+                // 定义Y比例尺
+                const yScale = d3
+                    .scaleBand() // 序数比例尺
+                    .domain(data.map((d) => d.name)) // 要
+                    .range([0, innerHeight])
+                    .padding(0.2); // 设置间距 0.2 === 2%
+
+                // 定义Y坐标轴
+                const yAxis = d3.axisLeft(yScale);
+                // .tickSize(-innerWidth)  // Y坐标轴线
+
+                // 渲染Y坐标轴 将yAxis坐标轴 通过call方法 填满g元素，也就是：call()函数将 g元素传给yAxis函数，然后yAxis()在g元素中渲染出来
+                g.append("g").call(yAxis);
+
+                // 修改 X坐标轴 和 Y坐标轴 的文本大小
+                d3.selectAll(".tick text").attr("font-size", 14);
+
+                // 添加标题
+                g.append("text")
+                    .classed("title", true)
+                    .text("2022年 秋季学生成绩")
+                    .attr("font-size", 26)
+                    .attr("text-anchor", "middle")
+                    .attr("transform", `translate(${innerWidth / 2})`);
+
+                // 渲染 条形
+                data.forEach((d, i) => {
+                    console.log(yScale(d.name), xScale(d.value));
+                    console.log("bandwidth", yScale.bandwidth());
+                    g.append("rect")
+                        .transition()
+                        .duration(3000)
+                        .delay(function (d, i) {
+                            return i * 500;
+                        })
+                        .attr("x", 1)
+                        .attr("y", yScale(d.name))
+                        .attr("width", xScale(d.value))
+                        .attr("height", yScale.bandwidth())
+                        .attr("fill", `hsl(${Math.random() * 360}, 100%, 50%)`);
+                });
+
+                // 渲染 条形数据
+                data.forEach((d, i) => {
+                    g.append("text")
+                        .transition()
+                        .duration(3000)
+                        .delay(function (d, i) {
+                            return i * 500;
+                        })
+                        .text(d.value)
+                        .attr("x", xScale(d.value))
+                        .attr("y", yScale(d.name))
+                        .attr("dx", 10)
+                        .attr("dy", yScale.bandwidth() / 1.8)
+                        .attr("fill", `hsl(${Math.random() * 360}, 100%, 50%)`);
+                });
+            };
+
+            // 生成 X、Y 的 比例尺和坐标轴
+            const scaleAxisRender = (data) => {
+                console.log(data);
+                // 定义比例尺
+                xScale = d3
+                    .scaleLinear()
+                    // .domain([d3.min(data, o => Math.log(o['确诊人数'] + 1)), d3.max(data, o => Math.log(o['确诊人数'] + 1))])
+                    // 下面的domain等价于上面的domain
+                    // .domain(d3.extent(data, o => Math.log(o['确诊人数'] + 1)))
+                    .domain(d3.extent(data, xScaleVal))
+                    .range([0, innerWidth])
+                    .nice();
+
+                yScale = d3
+                    .scaleLinear()
+                    .domain(d3.extent(data, yScaleVal).reverse()) // .reverse()反转 重下向上
+                    .range([0, innerHeight])
+                    .nice();
+
+                // 定义坐标轴
+                const xAxis = d3
+                    .axisBottom(xScale)
+                    .tickSize(-innerHeight)
+                    .tickFormat(d3.format("0.3s"))
+                    .tickPadding(10);
+
+                const yAxis = d3
+                    .axisLeft(yScale)
+                    .tickSize(-innerWidth)
+                    .tickFormat(d3.format("0.3s"))
+                    .tickPadding(10);
+
+                // 生成 比例尺, 坐标轴
+                const g = svg
+                    .append("g")
+                    .classed("box-main", true)
+                    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+                const xAxisGroup = g
+                    .append("g")
+                    .call(xAxis)
+                    .attr("id", "xAxis")
+                    .attr("transform", `translate(0, ${innerHeight})`);
+                xAxisGroup
+                    .append("text")
+                    .text(xLabel + "（对数）")
+                    .attr("x", innerWidth / 2)
+                    .attr("y", 55)
+                    .attr("fill", "red")
+                    .attr("font-size", "18");
+                xAxisGroup.selectAll(".domain").remove();
+
+                const yAxisGroup = g.append("g").call(yAxis).attr("id", "yAxis");
+                yAxisGroup
+                    .append("text")
+                    .text(yLabel + "（对数）")
+                    .attr("x", -innerHeight / 2)
+                    .attr("y", -40)
+                    .attr("fill", "blue")
+                    .attr("text-anchor", "middle")
+                    .attr("font-size", "18")
+                    .attr("transform", `rotate(-90)`);
+                yAxisGroup.selectAll(".domain").remove();
+            };
+
+            let d = "M";
+            const dataRender = (data, day) => {
+                console.log(data);
+                const g = d3.select(".box-main");
+
+                const date = g.selectAll(".day").data([day]);
+                const textEnter = date
+                    .enter()
+                    .append("text")
+                    .attr("class", "day")
+                    .attr("x", innerWidth / 2)
+                    .attr("y", -20)
+                    .attr("font-size", "56")
+                    .attr("text-anchor", "middle")
+                    .text((o) => o);
+                date.merge(textEnter).text((o) => o);
+
+                const circle = g.selectAll("circle").data(data, (d) => d["地区"]);
+                const enter = circle
+                    .enter()
+                    .append("circle")
+                    .attr("cx", (d) => xScale(xScaleVal(d)))
+                    .attr("cy", (d) => yScale(yScaleVal(d)))
+                    .attr("r", (d) => {
+                        return d["新增确诊"] + 20;
+                    })
+                    .attr("opacity", 0.8)
+                    .style("fill", (d) => `hsl(${Math.random() * 360}, 100%, 50%)`);
+
+                circle
+                    .merge(enter)
+                    .transition()
+                    .ease(d3.easeLinear)
+                    .duration(1000)
+                    .attr("cx", (d) => xScale(xScaleVal(d)))
+                    .attr("cy", (d) => yScale(yScaleVal(d)));
+
+                const path = g.selectAll("path").data(data, (d) => d["地区"]);
+                const enter2 = path
+                    .enter()
+                    .append("path")
+                    .attr("fill", "none")
+                    .attr("d", (o, i) => {
+                        d += `${xScale(xScaleVal(o))}, ${yScale(yScaleVal(o))} `;
+
+                        return d;
+                    })
+                    .attr("stroke", (d) => `hsl(${Math.random() * 360}, 100%, 50%)`);
+
+                path.merge(enter2).transition().ease(d3.easeLinear).duration(1000);
+            };
+
+            // d3.csv('./data/data.csv').then((res) => {
+            d3.csv("./data/hubeinxt.csv").then((res) => {
+                // console.log(res);
+                // 格式化数据
+                const data = res.filter((o) => "总计" !== o["地区"]);
+                data.forEach(o => {
+                    o['确诊人数'] = +o['确诊人数']; // +将字符数字 转 数字
+                    o['新增确诊'] = +o['新增确诊'];
+                    if (o['新增确诊'] < 0) {
+                        o['新增确诊'] = 0;
+                    }
+                });
+                // console.log(data);
+
+                // 获取月份 去重
+                date = Array.from(new Set(data.map((o) => o["日期"])));
+                //     月份 排序（确保正序，如果a是正数，那a就排前，了排后，否则反之）
+                date = date.sort((a, b) => new Date(a) - new Date(b));
+                // console.log(date);
+
+                // 数据组装（二维数组）
+                const innerData = [];
+                date.forEach((o, i) => {
+                    innerData.push([]);
+                    d3.select("#select").append("option").text(o).attr("value", i).on('click', function (event) {
+                        console.log(event)
+                    });
+                });
+                // console.log(innerData);
+                data.forEach((o, i) => {
+                    // 把各个地区，以日期分类（每天 => 第个地区）
+                    innerData[date.indexOf(o["日期"])].push(o);
+                });
+
+                let index = 0;
+                const itmer = setInterval(() => {
+                    if (index >= innerData.length) {
+                        clearInterval(itmer);
+                    } else {
+                        dataRender(innerData[index], date[index]);
+                        index += 1;
+                        console.log(index);
+                    }
+                }, 1000);
+
+                // lineRender(interArr);
+                scaleAxisRender(data);
+                // console.log(interArr);
+
+            });
+        }
+    </script>
+</body>
+
+</html>
