@@ -39,46 +39,46 @@
         <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
 
         <hr />
-
         <select id="select"></select>
         <hr />
     </div>
     <script src="https://d3js.org/d3.v7.min.js"></script>
 
     <script>
+        console.log(d3);
         {
             const NS = "http://www.w3.org/2000/svg";
 
-            const svg = d3
-                .select(".box")
-                .append("svg")
+            const svg = d3.select(".box").append("svg")
                 .attr("xlink", NS)
-                .attr("width", 1600)
+                .attr("width", 2200)
                 .attr("height", 900);
 
             // 获取SVG画布的宽和高
             const width = +svg.attr("width");
             const height = +svg.attr("height");
             const margin = { top: 80, right: 80, bottom: 80, left: 80 };
-
             const innerWidth = width - margin.left - margin.right;
             const innerHeight = height - margin.top - margin.bottom;
 
-            const xLabel = "确诊人数";
-            const yLabel = "新增确诊";
+            const xLabel = "日期";
+            const yLabel = "现有确诊";
             // 比例尺
             let xScale, yScale;
             // 全局定义，方便查看其他字段
-            let xScaleVal = (o) => Math.log(o[xLabel] + 1),
-                yScaleVal = (o) => Math.log(o[yLabel] + 1);
+            let xScaleVal = (o) => {
+                return o[xLabel];
+            },
+                yScaleVal = (o) => o[yLabel];
 
             let date = [];
+            let provinces = [];
 
             // 生成 X、Y 的 比例尺和坐标轴
             const scaleAxisRender = (data) => {
                 console.log(data);
                 // 定义比例尺
-                xScale = d3.scaleLinear()
+                xScale = d3.scaleTime()
                     // .domain([d3.min(data, o => Math.log(o['确诊人数'] + 1)), d3.max(data, o => Math.log(o['确诊人数'] + 1))])
                     // 下面的domain等价于上面的domain
                     // .domain(d3.extent(data, o => Math.log(o['确诊人数'] + 1)))
@@ -87,19 +87,21 @@
                     .nice();
 
                 yScale = d3.scaleLinear()
-                    .domain(d3.extent(data, yScaleVal).reverse()) // .reverse()反转 重下向上
+                    // .domain(d3.extent(data, yScaleVal).reverse()) // .reverse()反转 重下向上
+                    .domain([d3.max(data, yScaleVal), d3.min(data, yScaleVal)]) // 反转 重下向上
                     .range([0, innerHeight])
                     .nice();
 
                 // 定义坐标轴
                 const xAxis = d3.axisBottom(xScale)
+                    .ticks(Math.floor(date.length) / 25)
+                    .tickFormat(d3.timeFormat('%m月%d'))
                     .tickSize(-innerHeight)
-                    .tickFormat(d3.format("0.3s"))
                     .tickPadding(10);
 
                 const yAxis = d3.axisLeft(yScale)
                     .tickSize(-innerWidth)
-                    .tickFormat(d3.format("0.3s"))
+                    .tickFormat(d3.format("0.2s"))
                     .tickPadding(10);
 
                 // 生成 比例尺, 坐标轴
@@ -107,109 +109,119 @@
                     .classed("box-main", true)
                     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-                const xAxisGroup = g.append("g")
-                    .call(xAxis)
+                const xAxisGroup = g.append("g").call(xAxis)
                     .attr("id", "xAxis")
                     .attr("transform", `translate(0, ${innerHeight})`);
                 xAxisGroup.append("text")
-                    .text(xLabel + "（对数）")
+                    .text(xLabel + '（1月21日 - 2月27日）')
                     .attr("x", innerWidth / 2)
                     .attr("y", 55)
                     .attr("fill", "red")
                     .attr("font-size", "18");
-                xAxisGroup.selectAll(".domain").remove();
 
                 const yAxisGroup = g.append("g").call(yAxis).attr("id", "yAxis");
                 yAxisGroup.append("text")
-                    .text(yLabel + "（对数）")
+                    .text(yLabel + '（人数）')
                     .attr("x", -innerHeight / 2)
-                    .attr("y", -40)
+                    .attr("y", -55)
                     .attr("fill", "blue")
                     .attr("text-anchor", "middle")
                     .attr("font-size", "18")
                     .attr("transform", `rotate(-90)`);
-                yAxisGroup.selectAll(".domain").remove();
+
+                g.selectAll('.tick text').attr('font-size', '14px');
+                g.append('path').attr('id', 'alterPath');
             };
 
-            let d = "M";
-            const dataRender = (data, day) => {
-                console.log(data);
+            // 拆线
+            const dataRender = (data, province) => {
+                // console.log(data);
+
                 const g = d3.select(".box-main");
 
-                const date = g.selectAll(".day").data([day]);
-                const textEnter = date.enter()
+                // 省份
+                const _province = g.selectAll(".g-province").data([province]);
+                const textEnter = _province.enter()
                     .append("text")
-                    .attr("class", "day")
+                    .attr("class", "g-province")
                     .attr("x", innerWidth / 2)
                     .attr("y", -20)
                     .attr("font-size", "56")
                     .attr("text-anchor", "middle")
                     .text((o) => o);
-                date.merge(textEnter).text((o) => o);
+                _province.merge(textEnter).text((o) => o);
 
-                const circle = g.selectAll("circle").data(data, (d) => d["地区"]);
-                const enter = circle.enter()
-                    .append("circle")
-                    .attr("cx", (d) => xScale(xScaleVal(d)))
-                    .attr("cy", (d) => yScale(yScaleVal(d)))
-                    .attr("r", (d) => {
-                        return d["新增确诊"] + 20;
-                    })
-                    .attr("opacity", 0.8)
-                    .style("fill", (d) => `hsl(${Math.random() * 360}, 100%, 50%)`);
-                circle.merge(enter)
+
+                // 拆线
+                const line = d3.line()
+                    .x(d => xScale(xScaleVal(d)))
+                    .y(d => yScale(yScaleVal(d)))
+                    .curve(
+                        d3.curveCardinal.tension(0.1) //  tension 拆线平滑度
+                    );
+                d3.select('#alterPath').datum(data)
                     .transition()
                     .ease(d3.easeLinear)
-                    .duration(1000)
-                    .attr("cx", (d) => xScale(xScaleVal(d)))
-                    .attr("cy", (d) => yScale(yScaleVal(d)));
+                    .duration(800)
+                    .attr('d', line)
+                    .attr('fill', `hsla(${Math.random() * 360}, 100%, 50%, 30%)`)
+                    .attr("stroke", "blue")
+                    .attr("stroke-width", 5)
             };
 
-            // d3.csv('./data/data.csv').then((res) => {
-            d3.csv("./data/hubeinxt.csv").then((res) => {
+            d3.csv("./data/province.csv").then((res) => {
                 // console.log(res);
-                // 格式化数据
-                const data = res.filter((o) => "总计" !== o["地区"]);
+
+                // 数据过滤，去除总计 和 湖北（因为占比太多，影响观看） 
+                let data = res.filter((o) => "总计" !== o["省份"]);
+                data = data.filter((o) => "湖北" !== o["省份"]);
+                // console.log(data);
                 data.forEach(o => {
-                    o['确诊人数'] = +o['确诊人数']; // +将字符串数字 转为 数字
-                    o['新增确诊'] = +o['新增确诊'];
-                    if (o['新增确诊'] < 0) {
-                        o['新增确诊'] = 0;
-                    }
+                    o[yLabel] = +o[yLabel];     // +将字符串数字 转为 数字
+                    o[xLabel] = new Date(o[xLabel]);    // 将日期字符串 转为 JS日期对象 Fri Jan 31 2020 00:00:00 GMT+0800 (中国标准时间)
                 });
                 // console.log(data);
 
-                // 获取月份并去重（根据月份时行分组）
+                // 获取日期并去重（根据日期进行分组）
                 date = Array.from(new Set(data.map((o) => o["日期"])));
-                // 月份 排序（确保正序，如果a是正数，那a就排前，了排后，否则反之）
-                date = date.sort((a, b) => new Date(a) - new Date(b));
-                // console.log(date);
 
-                // 数据组装（二维数组）
-                const innerData = [];
-                date.forEach((o, i) => {
-                    innerData.push([]);
+                // 获取省份并去重（根据省份进行分组）
+                provinces = Array.from(new Set(data.map((o) => o["省份"])));
+
+                // 数据组装（对象数组）
+                let innerData = {};
+                provinces.forEach((o, i) => {
+                    innerData[o] = [];
                     d3.select("#select").append("option").text(o).attr("value", i).on('click', function (event) {
-                        console.log(event)
+                        console.log(event);
                     });
                 });
-                // console.log(innerData);
 
-                data.forEach((o, i) => {
-                    // 把各个地区，以日期分类（每天 => 第个地区）
-                    innerData[date.indexOf(o["日期"])].push(o);
+                data.forEach(o => {
+                    // 把每条数据，以省份分类（省份 => 日期）
+                    innerData[o["省份"]].push(o);
                 });
+
+                // 根据省份日期 排序（确保正序，如果a是正数，那a就排前，了排后，否则反之）
+                provinces.forEach(o => {
+                    innerData[o] = innerData[o].sort((a, b) => a['日期'] - b['日期']);
+                });
+
+                console.log(innerData);
 
                 let index = 0;
                 const itmer = setInterval(() => {
-                    if (index >= innerData.length) {
+                    if (index >= provinces.length) {
                         clearInterval(itmer);
                     } else {
-                        dataRender(innerData[index], date[index]);
+                        const key = provinces[index];
+                        dataRender(innerData[key], key);
                         index += 1;
                     }
                 }, 1000);
+
                 scaleAxisRender(data);
+
             });
         }
     </script>
