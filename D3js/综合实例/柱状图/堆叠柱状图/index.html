@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - 堆叠柱状图</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+
+        .g-text {
+            position: relative;
+            z-index: 666;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - d3.stack() 堆叠柱状图</h1>
+    <hr>
+    <div class="box">
+        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+
+        <a href="https://www.d3js.org.cn/document/d3-shape/#stacks" target="_blank"
+            rel="noopener noreferrer">d3.stack()堆叠布局生成器</a>
+        <hr />
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="./js/moment.min.js"></script>
+
+    <script>
+        console.log(d3);
+        {
+            const NS = "http://www.w3.org/2000/svg";
+
+            const svg = d3.select(".box").append("svg")
+                .attr("xlink", NS)
+                .attr("width", 1600)
+                .attr("height", 800);
+
+            // 获取SVG画布的宽和高
+            const width = +svg.attr("width");
+            const height = +svg.attr("height");
+            const margin = { top: 80, right: 180, bottom: 80, left: 80 };
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            // 原始数据
+            const naiveDate = [
+                { month: new Date(2022, 0, 3), apples: 3840, bananas: 1920, cherries: 960, dates: 400 },
+                { month: new Date(2022, 1, 3), apples: 1600, bananas: 1440, cherries: 960, dates: 400 },
+                { month: new Date(2022, 2, 3), apples: 640, bananas: 960, cherries: 640, dates: 800 },
+                { month: new Date(2022, 3, 3), apples: 320, bananas: 3580, cherries: 640, dates: 460 }
+            ];
+            const naiveKeys = ['apples', 'bananas', 'cherries', 'dates'];
+
+            const xValue = d => moment(d.month.toISOString()).format('YYYY年-MM月-DD日');
+
+            /*
+             * https://www.d3js.org.cn/document/d3-shape/#stacks
+             * d3.stack() 有些形状类型可以堆叠，将一个形状与另一个邻近放置（将上一项的数据进行累加）。
+             */
+            // 堆叠处理后的数据
+            const stackDate = d3.stack()
+                .keys(naiveKeys) // 要堆叠数据字段的字段名（注：一定要和数据中的字段名相同！！)
+                // .offset(d3.stackOffsetWiggle)
+                // .offset(d3.stackOffsetExpand)
+                .offset(d3.stackOffsetDiverging)
+                // .offset(d3.stackOffsetNone)
+                // .offset(d3.stackOffsetSilhouette)
+                // .offset(d3.stackOffsetWiggle)
+                .order(d3.stackOrderNone)(naiveDate); // 堆叠顺序（升/降序）
+
+            console.log('原始数据：', naiveDate);
+            console.log('堆叠处理后的数据：', stackDate);
+
+            // 定义比例尺
+            const xScale = d3.scaleBand()
+                // .domain(naiveDate.map(o => o.month))
+                .domain(naiveDate.map(o => xValue(o)))
+                .range([0, innerWidth])
+                .padding(0.5);
+
+            const yScale = d3.scaleLinear()
+                .domain([0, d3.max(stackDate, o => d3.max(o, d => d[1]))]) // 这里的最大值要从，经过堆叠处理后的数据中获取！！
+                .range([innerHeight, 0])
+                .nice();
+
+            // 颜色比例尺
+            const color = d3.scaleOrdinal()
+                .domain(naiveKeys)
+                // .range(d3.schemePaired)
+                // .range(d3.schemePastel1)
+                // .range(d3.schemePastel2)
+                .range(d3.schemeSet1)
+            // .range(d3.schemeSet2)
+            // .range(d3.schemeSet3);
+
+            // 定义坐标轴
+            const xAxis = d3.axisBottom(xScale)
+                .tickSize(-innerHeight)
+                // .tickFormat(d3.timeFormat('%Y年 %m月 %d日'))
+                .tickPadding(10);
+
+            const yAxis = d3.axisLeft(yScale)
+                .tickSize(-innerWidth)
+                // .tickFormat(d3.format("0.2s"))
+                .tickPadding(10);
+
+            // 生成 比例尺, 坐标轴
+            const g = svg.append("g")
+                .classed("box-main", true)
+                .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+            const xAxisGroup = g.append("g").call(xAxis)
+                .attr("id", "xAxis")
+                .attr("transform", `translate(0, ${innerHeight})`);
+            xAxisGroup.append("text")
+                .text('月 份')
+                .attr("x", innerWidth / 2)
+                .attr("y", 55)
+                .attr("fill", "red")
+                .attr("font-size", "18");
+
+            const yAxisGroup = g.append("g").call(yAxis).attr("id", "yAxis");
+            yAxisGroup.append("text")
+                .text('数 量')
+                .attr("x", -innerHeight / 2)
+                .attr("y", -55)
+                .attr("fill", "blue")
+                .attr("text-anchor", "middle")
+                .attr("font-size", "18")
+                .attr("transform", `rotate(-90)`);
+
+            g.selectAll('.tick text').attr('font-size', '16px');
+
+            // 堆叠矩形
+            // g.selectAll('.g-data').data(stackDate).join('g')
+            //     .attr('class', 'g-data')
+            //     .attr('fill', d => color(d.key))
+            //     .selectAll('.g-rect').data(d => d).join('rect')
+            //     .attr('class', 'g-rect')
+            //     .attr('x', d => {
+            //         return xScale(xValue(d.data))
+            //     })
+            //     .attr('y', d => yScale(d[1]))
+            //     .attr('width', xScale.bandwidth())
+            //     .attr('height', d => yScale(d[0]) - yScale(d[1]));
+
+            const group = g.selectAll('.g-data').data(stackDate).join('g')
+                .attr('class', 'g-data')
+                .attr('fill', d => color(d.key));
+
+            // 矩形
+            group.selectAll('.g-rect').data(d => d).join('rect')
+                .attr('class', 'g-rect')
+                .attr('x', d => xScale(xValue(d.data)))
+                .transition()
+                .ease(d3.easeLinear)
+                .duration(800)
+                .attr('y', d => yScale(d[1]))
+                .attr('width', xScale.bandwidth())
+                .attr('height', d => yScale(d[0]) - yScale(d[1]));
+
+            // 文本
+            group.selectAll('.g-text').data(d => d).join('text')
+                .attr('class', 'g-text')
+                .text((d, i) => d[1])
+                .transition()
+                .ease(d3.easeLinear)
+                .duration(800)
+                .attr('x', d => xScale(xValue(d.data)))
+                .attr('y', d => yScale(d[1]))
+                .attr('dx', 72)
+                .attr('dy', 22)
+                .attr('fill', 'white')
+                .attr('text-anchor', 'middle');
+
+            // 分类
+            const type = g.append('g').attr('class', 'g-type').attr("transform", `translate(${innerWidth + 20}, ${innerHeight - 120})`);
+
+            type.selectAll('.t-rect').data(naiveKeys.reverse()).join('rect')
+                .attr('x', 0)
+                .attr('y', (d, i) => {
+                    return i * 30
+                })
+                .attr('width', 50)
+                .attr('height', 20)
+                .attr('fill', d => color(d));
+
+            type.selectAll('.g-text').data(naiveKeys).join('text')
+                .attr('class', 'g-text')
+                .text((d, i) => d)
+                .attr('x', 55)
+                .attr('y', (d, i) => i * 30)
+                .attr('dx', 0)
+                .attr('dy', 15)
+                .attr('fill', d => color(d))
+                .attr('text-anchor', 'start');
+
+        }
+    </script>
+</body>
+
+</html>
