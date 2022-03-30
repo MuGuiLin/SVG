@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>D3 tree 树状图</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - Tree 树 实例</title>
     <style>
         h1 {
             text-align: center;
@@ -19,140 +19,244 @@
         }
 
         svg {
-            margin: auto;
             border: 1px solid gray;
+        }
+
+        select {
+            padding: 6px 20px;
+            font-size: 18px;
         }
     </style>
 </head>
 
 <body>
-    <h1>D3 tree 树状图</h1>
+    <h1>D3js - Tree 树 实例</h1>
     <hr>
-
-    <article class="box">
-        <a href="https://www.d3js.org.cn/introduce/" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
-        <a href="https://www.d3js.org.cn/document/" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+    <div class="box">
+        <a href="https://d3js.org" target="_blank" rel="noopener noreferrer">D3js 官网</a>、
+        <a href="https://observablehq.com/@d3/gallery" target="_blank" rel="noopener noreferrer">D3js 画廊</a>、
+        <a href="https://www.d3js.org.cn/introduce" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
         <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
-        <a href="https://www.d3js.org.cn/svg/get_start/" target="_blank" rel="noopener noreferrer">SVG 手册</a>
+        <a href="https://www.d3js.org.cn/svg/get_start" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
 
-        <section id="svg-box"></section>
-    </article>
-    
+        <hr>
+        
+        <ul>
+            <h4><a href="https://www.d3js.org.cn/document/d3-hierarchy/#hierarchy" target="_blank" rel="noopener noreferrer">d3.hierarchy(data[, children]) 计算层次布局</a></h4>
+            <li>根据指定的层次结构数据构造一个根节点，指定的数据 data 必须为一个表示根节点的对象。
+                <img src="./img/d3.hierarchy().png" alt="" />
+            </li>
+
+            <h4><a href="https://www.d3js.org.cn/document/d3-hierarchy/#tree" target="_blank"  rel="noopener noreferrer">d3.tree(root) 创建树形布局</a></h4>
+            <li>对指定的 root hierarchy 进行布局，并为 root 以及它的每一个后代附加x 和 y两个坐村属性。
+                <img src="./img/tree.png" alt="" />
+            </li>
+
+            <h4><a href="https://www.d3js.org.cn/document/d3-shape/#links" target="_blank" rel="noopener noreferrer">links 生成曲线（d3.linkHorizontal()、d3.linkVertical()、d3.linkRadial()）</a></h4>
+            <li>生成从一个源点到目标点的光滑的三次贝塞尔曲线，曲线在起点和终点的切线要么是 垂直vertical，要么是 水平horizontal，要么是 径向radial的。</li>
+
+        </ul>
+
+        <hr />
+
+    </div>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+
     <script>
-        //   准备数据，要是树型结构
-        var root = {
-            name: "地区1",
-            children: [
-                {
-                    name: "地区2",
-                    children: [
-                        {
-                            name: "地区3",
-                        },
-                    ],
-                },
-                {
-                    name: "地区2",
-                    children: [
-                        {
-                            name: "地区3",
-                        },
-                    ],
-                },
-                {
-                    name: "地区2",
-                    children: [
-                        {
-                            name: "地区3",
-                        },
-                    ],
-                },
-                {
-                    name: "地区2",
-                    children: [
-                        {
-                            name: "地区3",
-                        },
-                    ],
-                },
-            ],
-        };
-        var width = 1000;
-        var height = 800;
-        var cluster = d3.tree().size([height - 100, width - 300]); // 设置绘制范围
-        var hierachyData = d3.hierarchy(root); //对数据进行层级划分标记加工
-        var nodes = cluster(hierachyData); //对数据添加x,y坐标
-        var svg = d3
-            .select("#svg-box")
-            .append("svg")
-            .attr("width", "80%")
-            .attr("viewBox", `0 0 ${width} ${height + 20}`) //加上这个后，图形才可以成比例缩放
-            .append("g")
-            .attr("transform", "translate(50,50)");
-        //   这个是定义箭头
-        d3.select("#svg-box > svg")
-            .append("defs")
-            .append("marker")
-            .attr("id", "arrowhead")
-            .attr("refX", 0)
-            .attr("refY", 10)
-            .attr("markerWidth", 100)
-            .attr("markerHeight", 100)
-            .attr("orient", "auto") // 这个属性设置后可以根据线条方向进行旋转
-            .append("path")
-            .attr("d", "M10,0 L10,20 L0,10 Z")
-            .attr('fill', 'red')
-    
-    
-        drawLink(); //绘制线条
-        drawNode(); //绘制节点
-        function drawLink() {
-            svg
-                .selectAll(".link")
-                .data(nodes.descendants()) // nodes.decendtants() 把数据格式进行平铺成了数字，以便在这里遍历
-                .enter()
-                .append("path")
-                .attr("class", "link")
-                .attr("d", (d) => {
-                    if (d.depth !== 0) {
-                        return `M ${d.x} ${d.y} L ${d.parent.x} ${d.parent.y}`; // 这里根据需求可以画贝塞尔曲线或折线
+        console.log(d3);
+
+        // 从上到下
+        {
+            const NS = "http://www.w3.org/2000/svg";
+            d3.select(".box").append("h2").text('从上到下');
+            const svg = d3.select(".box").append("svg")
+                .attr("xlink", NS)
+                .attr("width", 1600)
+                .attr("height", 800);
+
+            // 获取SVG画布的宽和高
+            const width = +svg.attr("width");
+            const height = +svg.attr("height");
+            const margin = { top: 50, right: 20, bottom: 50, left: 20 };
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const box = svg.append('g')
+                .attr('class', 'tree-box')
+                .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+            // 根据数据绘制树
+            const dataRender = (data) => {
+                // console.log(data);
+
+                // 设置颜色
+                // const color = d3.scaleOrdinal()
+                //     // .domain(data.descendants().filter(d => d.depth <= 1))
+                //     .domain(data.descendants().filter(d => d.depth <= 1).map(d => d.data.name))
+                //     .range(d3.schemeCategory10);
+                // 上面的简写
+                const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+                // 填充色
+                const fill = (d) => {
+                    if (0 === d.depth) {
+                        return color(d.data.name);
                     }
-                })
-                .attr("stroke", "black")
-                .attr("marker-start", "url(#arrowhead)"); //把箭头加在这里
-        }
-        function drawNode() {
-            var myNode = svg
-                .selectAll("nodes")
-                .data(nodes.descendants())
-                .enter()
-                .append("g");
-            // 添加方框
-            myNode
-                .append("rect")
-                .attr("width", 100)
-                .attr("height", 30)
-                .attr("stroke", "red")
-                .attr("fill", "white")
-                .attr("x", (d) => {
-                    return d.x - 50;
-                })
-                .attr("y", (d) => {
-                    return d.y;
-                });
-            // 添加文本
-            myNode
-                .append("text")
-                .attr("dx", (d) => {
-                    return d.x - 30;
-                })
-                .attr("dy", (d) => {
-                    return d.y + 20;
-                })
-                .text((d) => {
-                    return d.data.name;
-                });
+                    while (d.depth > 1) {
+                        d = d.parent;
+                    }
+                    return color(d.data.name);
+                };
+
+                const link = d3.linkHorizontal() // 生成从终点 到 起点处的水平方向的曲线。
+                    // const link = d3.linkVertical() // 生成从终点 到 起点处的垂直方向的曲线。
+                    .x(function (d) { return d.x; })
+                    .y(function (d) { return d.y; });
+
+                // const link = d3.linkRadial()
+                //     .angle(function (d) { return d.x; })
+                //     .radius(function (d) { return d.y; });
+
+
+                /**
+                * 生成线段
+                */
+                const path = box.selectAll("path").data(data.links()).join('path')
+                    // .attr('d', d3.linkHorizontal().x(d => d.x).y(d => d.y))
+                    .attr('d', link)
+                    // .attr("fill", (d) => `hsl(${Math.random() * 360}, 100%, 50%)`)
+                    .attr("fill", 'none')
+                    .attr('stroke', 'gray')
+                    .attr('stroke-width', 1);
+
+                /**
+                * 生成圆点
+                */
+                const circle = box.selectAll("circle").data(data.descendants()).join('circle')
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y)
+                    .attr('r', 10)
+                    .attr('fill', fill)
+                    .attr('stroke', 'gray');
+
+                /**
+                 * 生成文本
+                */
+                const text = box.selectAll("text").data(data.descendants()).join('text')
+                    .text(d => {
+                        // console.log(d);
+                        return d.data.name;
+                    })
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y)
+                    .attr('dy', d => d.children ? -15 : 20)
+                    .attr('font-size', 12)
+                    .attr('text-anchor', 'middle');
+            };
+
+            d3.json("./data/games.json").then((res) => {
+
+                console.log('原始数据：', res);
+                const root = d3.hierarchy(res);
+                /**
+                 * 通过d3.hierarchy()转换后，每条数据会加上： depth(层级深度), height(层级高度), parent(层级父节点)
+                */
+                console.log('转换后的数据：', root);
+
+                // 设置树的[宽, 高]比例尺，并绑定数据
+                const tree = d3.tree().size([innerWidth, innerHeight])(root);
+                /**
+                 * 通过d3.tree()转换后，每条数据又会加上：x(x坐标位置), y(y坐标位置)
+                */
+                console.log('树转换后的数据：', tree);
+
+
+                console.log('tree的方法links()：', tree.links());
+                console.log('tree的方法descendants:()：', tree.descendants());
+
+                // 生成树
+                dataRender(tree);
+            });
+        };
+
+
+
+
+
+        // 从左到右
+        {
+            const NS = "http://www.w3.org/2000/svg";
+
+            d3.select(".box").append("h2").text('从左到右');
+            const svg = d3.select(".box").append("svg")
+                .attr("xlink", NS)
+                .attr("width", 1600)
+                .attr("height", 1600);
+
+            // 获取SVG画布的宽和高
+            const width = +svg.attr("width");
+            const height = +svg.attr("height");
+            const margin = { top: 20, right: 80, bottom: 20, left: 60 };
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const box = svg.append('g').attr('class', 'tree-box')
+                .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+
+            // 根据数据绘制树
+            const dataRender = (data) => {
+
+                // 设置颜色
+                const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+                // 填充色
+                const fill = (d) => {
+                    if (0 === d.depth) {
+                        return color(d.data.name);
+                    }
+                    while (d.depth > 1) {
+                        d = d.parent;
+                    }
+                    return color(d.data.name);
+                };
+
+                /**
+                * 生成线段
+                */
+                const path = box.selectAll("path").data(data.links()).join('path')
+                    .attr('d', d3.linkHorizontal().x(d => d.y).y(d => d.x))
+                    .attr("fill", 'none')
+                    .attr('stroke', 'gray')
+                    .attr('stroke-width', 1);
+
+                /**
+                * 生成圆点
+                */
+                const circle = box.selectAll("circle").data(data.descendants()).join('circle')
+                    .attr('cx', d => d.y)
+                    .attr('cy', d => d.x)
+                    .attr('r', 10)
+                    .attr('fill', fill)
+                    .attr('stroke', 'gray');
+
+                /**
+                 * 生成文本
+                */
+                const text = box.selectAll("text").data(data.descendants()).join('text')
+                    .text(d => d.data.name)
+                    .attr('x', d => d.y)
+                    .attr('y', d => d.x)
+                    .attr('dx', d => d.children ? -12 : 12)
+                    .attr('dy', 3)
+                    .attr('font-size', 12)
+                    .attr('text-anchor', d => d.children ? 'end' : 'start');
+            };
+
+            d3.json("./data/games.json").then((res) => {
+                dataRender(d3.tree().size([innerHeight, innerWidth])(d3.hierarchy(res)));
+            });
         }
     </script>
 </body>

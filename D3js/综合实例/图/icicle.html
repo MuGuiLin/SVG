@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - Icicle 冰锥(冰柱) 实例</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+
+        select {
+            padding: 6px 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - Icicle 冰锥(冰柱)图 实例</h1>
+    <hr>
+    <div class="box">
+        <a href="https://d3js.org" target="_blank" rel="noopener noreferrer">D3js 官网</a>、
+        <a href="https://observablehq.com/@d3/gallery" target="_blank" rel="noopener noreferrer">D3js 画廊</a>、
+        <a href="https://www.d3js.org.cn/introduce" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+
+        <hr>
+        <ul>
+            <h4><a href="https://www.d3js.org.cn/document/d3-hierarchy/#hierarchy" target="_blank" rel="noopener noreferrer">d3.hierarchy(data[, children]) 计算层次布局</a></h4>
+            <li>根据指定的层次结构数据构造一个根节点，指定的数据 data 必须为一个表示根节点的对象。</li>
+
+            <h4><a href="https://www.d3js.org.cn/document/d3-hierarchy/#partition" target="_blank" rel="noopener noreferrer">d3.partition(root) 创建分区图布局</a></h4>
+            <li>生成邻接图：一个节点链接树图的空间填充变体，在将层次数据传递给 treemap 布局之前，必须调用 root.sum。在计算布局之前还可能需要调用 root.sort 对节点进行排序。</li>
+        </ul>
+        <img src="./img/Icicle冰锥图.png" alt="" />
+        <hr />
+
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        console.log(d3);
+
+        // 从上到下
+        {
+            const NS = "http://www.w3.org/2000/svg";
+            d3.select(".box").append("h2").text('从上到下');
+            const svg = d3.select(".box").append("svg")
+                .attr("xlink", NS)
+                .attr("width", 1600)
+                .attr("height", 800);
+
+            // 获取SVG画布的宽和高
+            const width = +svg.attr("width");
+            const height = +svg.attr("height");
+            const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const box = svg.append('g')
+                .attr('class', 'chart-box')
+                .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+
+            // 根据数据绘制图
+            const dataRender = (data) => {
+                // console.log(data);
+
+                const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+                // 填充色
+                const fill = (d) => {
+                    if (0 === d.depth) {
+                        return color(d.data.name);
+                    }
+                    while (d.depth > 1) {
+                        d = d.parent;
+                    }
+                    return color(d.data.name);
+                };
+
+                // 创建分组
+                const chart = box.selectAll(".g-chart").data(data.descendants()).join('g').attr('class', 'g-chart')
+
+                /**
+                * 生成矩形
+                */
+                const rect = chart.append('rect')
+                    .attr('x', d => {
+                        // console.log(d);
+                        return d.x0;
+                    })
+                    .attr('y', d => d.y0)
+                    .attr('width', d => d.x1 - d.x0)
+                    .attr('height', d => d.y1 - d.y0)
+                    .attr("fill", fill)
+                    .attr('stroke', 'white');
+
+                /**
+                 * 生成文本
+                */
+                const text = chart.append('text')
+                    .text(d => d.data.name)
+                    .attr('x', d => (d.x0 + d.x1) / 2)
+                    .attr('y', d => (d.y0 + d.y1) / 2)
+                    // .attr('dx', (d, i) => d.y1 / 2)
+                    // .attr('dy', (d, i) => d.y1 / 2)
+                    .attr('font-size', '12')
+                    .attr('text-anchor', 'middle')
+
+            };
+
+            d3.json("./data/games.json").then((res) => {
+                console.log('原始数据：', res);
+
+                const root = d3.hierarchy(res)
+                    // 求和计算
+                    .sum((d) => {
+                        // console.log(d);
+                        return d.popularity
+                    })
+                    // 对各个节点进行排序
+                    .sort((a, b) => {
+                        return a.popularity - b.popularity
+                    });
+
+                /**
+                 * 通过d3.hierarchy()转换后，每条数据会加上： depth(层级深度), height(层级高度), parent(层级父节点), value
+                */
+                console.log('转换后的数据：', root);
+
+                // 设置图的[宽, 高]比例尺，并绑定数据
+                const chart = d3.partition().size([innerWidth, innerHeight])(root);
+
+                /** 
+                 * 通过d3.partition()转换后，每条数据又会加上：x0(x0坐标位置), y0(y0坐标位置), x1(x1坐标位置), y1(y1坐标位置)
+                */
+                console.log('图转换后的数据：', chart);
+
+                console.log('chart的方法links()：', chart.links());
+                console.log('chart的方法descendants:()：', chart.descendants());
+
+                dataRender(chart);
+            });
+        }
+
+
+        // 从左到右
+        {
+            const NS = "http://www.w3.org/2000/svg";
+            d3.select(".box").append("h2").text('从左到右');
+            const svg = d3.select(".box").append("svg")
+                .attr("xlink", NS)
+                .attr("width", 1600)
+                .attr("height", 1600);
+
+            // 获取SVG画布的宽和高
+            const width = +svg.attr("width");
+            const height = +svg.attr("height");
+            const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const box = svg.append('g')
+                .attr('class', 'chart-box')
+                .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+
+            // 根据数据绘制图
+            const dataRender = (data) => {
+                // console.log(data);
+
+                const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+                // 填充色
+                const fill = (d) => {
+                    if (0 === d.depth) {
+                        return color(d.data.name);
+                    }
+                    while (d.depth > 1) {
+                        d = d.parent;
+                    }
+                    return color(d.data.name);
+                };
+
+                // 创建分组
+                const chart = box.selectAll(".g-chart").data(data.descendants()).join('g').attr('class', 'g-chart')
+
+                /**
+                * 生成矩形
+                */
+                const rect = chart.append('rect')
+                    .attr('x', d => d.y0)
+                    .attr('y', d => d.x0)
+                    .attr('width', d => d.y1 - d.y0)
+                    .attr('height', d => d.x1 - d.x0)
+                    .attr("fill", fill)
+                    .attr('stroke', 'white');
+
+                /**
+                 * 生成文本
+                */
+                const text = chart.append('text')
+                    .text(d => d.data.name)
+                    .attr('x', d => (d.y0 + d.y1) / 2)
+                    .attr('y', d => (d.x0 + d.x1) / 2)
+                    .attr('dy', 5)
+                    .attr('fill', 'white')
+                    .attr('font-size', '14')
+                    .attr('text-anchor', 'middle')
+
+            };
+
+            d3.json("./data/games.json").then((res) => {
+                dataRender(d3.partition()
+                    .size([innerHeight, innerWidth])
+                    (d3.hierarchy(res)
+                        .sum((d) => d.popularity)
+                        .sort((a, b) => a.popularity - b.popularity)
+                    )
+                );
+            });
+        }
+
+    </script>
+</body>
+
+</html>
