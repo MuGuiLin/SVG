@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - d3-force 力导图 实例</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+
+        select {
+            padding: 6px 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - d3-force 力导图 实例</h1>
+    <hr>
+    <div class="box">
+        <a href="https://d3js.org" target="_blank" rel="noopener noreferrer">D3js 官网</a>、
+        <a href="https://observablehq.com/@d3/gallery" target="_blank" rel="noopener noreferrer">D3js 画廊</a>、
+        <a href="https://www.d3js.org.cn/introduce" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+
+        <hr>
+        <ul>
+            <h4><a href="https://www.d3js.org.cn/document/d3-force/#installing" target="_blank" rel="noopener noreferrer">d3.forceSimulation([nodes]) 创建一个新的没有任何 forces(力模型) 的仿真</a></h4>
+            <li>如果没有指定 nodes 则默认为空数组。仿真会自动 starts(启动)；使用 simulation.on 来监听仿真运行过程中的 tick 事件。如果你想手动运行仿真，则需要调用  simulation.stop 然后根据需求调用 simulation.tick。</li>
+
+            <h4>d3.forceManyBody()</h4>
+            <li>创建一个使用默认参数的电荷力模型。
+                <ul>
+                    <li>manyBody.strength([strength]) 强度访问器</li>
+                </ul>
+            </li>
+
+            <h4>d3.forceCenter([x, y]) 向心力模型</h4>
+            <li>指定的 x- 和 y- 坐标创建一个新的向心力模型。如果 x 和 y 没有指定则默认为 ⟨0,0⟩。
+
+            </li>
+
+            <h4>d3.forceLink([links]) 弹簧力模型</h4>
+            <li>根据指定的 links 以及默认参数创建一个弹簧力模型。如果没有指定 links 则默认为空数组。
+                <ul>
+                    <li>llink.distance([distance]) 距离访问器</li>
+                </ul>
+            </li>
+        </ul>
+        <img src="./img/Sunburst太阳风暴图.png" alt="" />
+        <br>
+        <img src="./img/Icicle冰锥图 与 Sunburst太阳风暴图.png" alt="" />
+
+        <hr />
+        <a href="https://observablehq.com/@d3/force-directed-graph" target="_blank"
+            rel="noopener noreferrer">Force-Directed Graph Demo</a>
+        <br />
+
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        console.log(d3);
+        {
+            const NS = "http://www.w3.org/2000/svg";
+            const svg = d3.select(".box").append("svg")
+                .attr("xlink", NS)
+                .attr("width", 1500)
+                .attr("height", 1200);
+
+            // 获取SVG画布的宽和高
+            const width = +svg.attr("width");
+            const height = +svg.attr("height");
+            const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const box = svg.append('g').attr('class', 'chart-box');
+
+            let line, circle;
+
+            // 根据数据绘制图
+            const dataRender = (nodes, links) => {
+                // console.log(data);
+
+                const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+                /**
+                * 生成线段
+                */
+                line = box.selectAll("line").data(links).join('line')
+                    .attr("fill", color)
+                    .attr('stroke', 'gray')
+                    .attr('opacity', 0.8);
+
+                /**
+                 * 生成圆点
+                */
+                circle = box.selectAll("circle").data(nodes).join('circle')
+                    .attr("fill", color)
+                    // .attr("fill", 'blue')
+                    .attr('stroke', 'white')
+                    .attr('opacity', 0.8);
+            };
+
+            const ticks = () => {
+                line.attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                circle
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y)
+                    .attr('r', (d, i) => i === 0 ? 20 : 10);
+            };
+
+
+            d3.json("./data/socfb-Caltech36.json").then((res) => {
+                console.log('原始数据：', res);
+
+                const nodes = [];
+
+                for (let i = 0; i < res['#links']; i++) {
+                    nodes.push({ index: i });
+                }
+
+                dataRender(nodes, res.links);
+
+                console.log(nodes);
+
+                const simulation = d3.forceSimulation(nodes)    // 建一个新的没有任何 forces(力模型) 的仿真
+                    .force("my-force-box",
+                        d3.forceManyBody()  // 电荷力模型 （万有斥力）
+                            .strength(-60)  // 强度访问器
+                    )
+                    .force("link",
+                        d3.forceLink(res.links) // 创建一个弹簧力模型
+                            .strength(0.1)
+                            .distance(100)  // 距离访问器
+                    )
+                    .force("center",
+                        d3.forceCenter(width / 2, height / 2)   // 创建一个新的向心力模型（如果 x 和 y 没有指定则默认为⟨0, 0⟩ ）
+                    )
+                    .on('tick', ticks);
+            });
+        }
+
+    </script>
+</body>
+
+</html>
