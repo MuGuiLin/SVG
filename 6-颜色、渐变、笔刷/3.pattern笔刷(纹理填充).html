@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>SVG笔刷-笔刷</title>
+	<title>SVG笔刷-笔刷(纹理填充)</title>
 	<style>
 		h1 {
 			text-align: center;
@@ -26,7 +26,7 @@
 </head>
 
 <body>
-	<h1>SVG笔刷-笔刷</h1>
+	<h1>SVG笔刷-笔刷(纹理填充)</h1>
 	<hr>
 	<div class="box">
 		<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
@@ -50,7 +50,7 @@
             <li>width：用户坐标系统中标识了一个水平长度，单位：number ("em" | "ex" | "px" | "in" | "cm" | "mm" | "pt" | "pc" | "%")</li>
             <li>height：用户坐标系统中标识了一个垂直长度</li>
             <li>xlink:href：图像的URL指向，可直接用 href</li>
-            <li>patternUnits：模式单元，用于<pattern>元素的几何属性的坐标系，属性值：userSpaceOnUse | objectBoundingBox(默认)</li>
+            <li>patternUnits：模式单元，用于&lt;pattern>元素的几何属性的坐标系，属性值：<b>userSpaceOnUse[基于svg标签的坐标系] | objectBoundingBox[基于填充元素标签的坐标系](默认)</b></li>
             <li>patternContentUnits：定义用于元素内容的坐标系，属性值：userSpaceOnUse(默认) | objectBoundingBox</li>
             <li>patternTransform：定义应用于图案拼贴的转换定义(transform definitions)的列表</li>
             <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/preserveAspectRatio" target="_blank">preserveAspectRatio：控制图像比例</a></li>

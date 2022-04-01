@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SVG渐变- 线性渐变 和 径向渐变</title>
+	<style>
+		h1 {
+			text-align: center;
+		}
+
+		.box {
+			margin: auto;
+			width: 80%;
+			line-height: 36px;
+			font-size: 18px;
+		}
+
+		svg {
+			border: 1px solid gray;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>SVG渐变- D3js 中的 线性渐变 和 径向渐变</h1>
+	<hr>
+	<div class="box">
+		<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+		<a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG
+			手册</a>、
+		<a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+		<a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+		<a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+
+		<img src="./img/SVG渐变.jpg" />
+
+		<h3>SVG渐变色</h3>
+		<p>渐变色(gradient)是指从一种颜色平滑的过渡到另外一种颜色。而且，我们可以将多种渐变色应用到同一个网页元素上。在SVG里，有两种主要的渐变色类型：</p>
+		<li>线性渐变色 Linear</li>
+		<li>径向(辐射式/放射式)渐变色 Radial</li>
+
+
+		<h3>SVG线性渐变色 – &lt;linearGradient></h3>
+		<p> &lt;linearGradient>标记就是用来定义渐变色的。<br>
+			&lt;linearGradient>标记必须放在&lt;defs>标记内。&lt;defs>标记就是“definitions”单词的简写，用来容纳其它各种SVG标记。</p>
+		<br> <b>线性渐变色可以定义成水平渐变色，垂直渐变色和斜向渐变色：</b>
+
+		<li>当y1和y2相等，而x1和x2不等时，就形成了水平渐变色</li>
+		<li>当y1和y2不等，而x1和x2相等时，就形成了垂直渐变色</li>
+		<li>当y1和y2不等，而x1和x2也不等时，就形成了斜向渐变色</li>
+		<br><br>
+
+		<h3>SVG径向渐变色 – &lt;radialGradient></h3>
+		<p> &lt;radialGradient>标记用来定义一个辐射式渐变色。<br>
+			&lt;radialGradient>标记必须放置在<defs>标记内。<defs>标记是单词“definitions”的简写，用来容纳各种其它标记</p>
+		<br> <b>线性渐变色可以定义成水平渐变色，垂直渐变色和斜向渐变色：</b>
+
+		<li>当y1和y2相等，而x1和x2不等时，就形成了水平渐变色</li>
+		<li>当y1和y2不等，而x1和x2相等时，就形成了垂直渐变色</li>
+		<li>当y1和y2不等，而x1和x2也不等时，就形成了斜向渐变色</li>
+		<br><br>
+		<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="2000">
+
+			<defs>
+				<!-- 定义线性渐变色1 -->
+				<linearGradient id="linear1">
+					<stop offset="0" stop-color="red"></stop>
+					<stop offset="0.5" stop-color="green" stop-opacity="0.8"></stop>
+					<stop offset="1" stop-color="blue"></stop>
+				</linearGradient>
+
+
+				<!-- 定义线性渐变色2 -->
+				<linearGradient id="linear2" x1="0" y1="0" x2="1" y2="1">
+					<stop offset="0" stop-color="red"></stop>
+					<stop offset="0.5" stop-color="green"></stop>
+					<stop offset="1" stop-color="blue"></stop>
+				</linearGradient>
+
+				<!-- 
+						<linearGradient>标记的id属性定义了这个渐变色的唯一标志
+						<linearGradient>标记的x1, x2, y1,y2四个属性定义了渐变色的起始位置和终止位置
+						渐变色的颜色组成可以是2个或2个以上的颜色。每种颜色都使用一个<stop>标记定义。offset属性用来定义渐变色的开始和结束位置。
+						fill属性定义了需要引用的渐变色的ID
+					 -->
+
+				<linearGradient id="linear-g" x1="1" y1="0" x2="1" y2="1">
+					<stop offset="0%" stop-color="#2BA175"></stop>
+					<stop offset="100%" stop-color="transparent"></stop>
+				</linearGradient>
+
+				<linearGradient id="linear-y" x1="1" y1="0" x2="1" y2="1">
+					<stop offset="0" stop-color="#928448"></stop>
+					<stop offset="30%" stop-color="#928448"></stop>
+					<stop offset="1" stop-color="transparent"></stop>
+				</linearGradient>
+
+				<linearGradient id="linear-r" x1="1" y1="0" x2="1" y2="1">
+					<stop offset="0" stop-color="#8B495E"></stop>
+					<stop offset="1" stop-color="transparent"></stop>
+				</linearGradient>
+
+
+
+				<!-- 定义径向渐变色1 -->
+				<radialGradient id="radial1" cx="0.5" cy="0.5" r="0.5">
+					<stop offset="0" stop-color=""></stop>
+					<stop offset="0.5" stop-color="green"></stop>
+					<stop offset="1" stop-color="blue"></stop>
+				</radialGradient>
+
+				<radialGradient id="radial2" cx="0.5" cy="0.5" r="0.5" fx="0.8" fy="0.2">
+					<stop offset="0" stop-color="red"></stop>
+					<stop offset="0.5" stop-color="green"></stop>
+					<stop offset="1" stop-color="blue"></stop>
+				</radialGradient>
+
+				<radialGradient id="radial3" cx="20%" cy="20%" r="30%" fx="70%" fy="70%">
+					<stop offset="0%" style="stop-color: #ffffff; stop-opacity: 1;"></stop>
+					<stop offset="100%" style="stop-color: #0000ff; stop-opacity: 1;"></stop>
+				</radialGradient>
+
+				<!-- 
+						<radialGradient>标记的id属性定义了这个渐变色的唯一标志
+						cx,cy和r属性定义了辐射的最大圆，fx和fy属性定义了辐射的焦点
+						渐变色是有两个或两个以上的颜色组成。各个颜色使用<stop>标记定义。offset定义了渐变色的起始位置和终止位置。
+						fill属性里指明了需要引用的渐变色的id
+					 -->
+
+
+				<g id="status-1">
+					<rect width="300" height="142" fill="url(#linear-g)"></rect>
+				</g>
+			</defs>
+
+
+			<text x="100" y="90">线性渐变</text>
+			<!-- 填充线性渐变色：url(#glinear1) -->
+			<rect x="100" y="100" width="500" height="300" fill="url(#linear1)"></rect>
+
+			<!-- 填充线性渐变色：url(#linear2) -->
+			<rect x="100" y="450" width="500" height="300" fill="url(#linear2)"></rect>
+
+			<text x="650" y="440">D3js 线性渐变</text>
+			<rect x="650" y="450" width="500" height="300" id="rect-linear-3"></rect>
+
+
+			<text x="100" y="920">径向渐变</text>
+			<!-- 填充径向渐变色：url(#radial1) -->
+			<rect x="100" y="950" width="500" height="300" fill="url(#radial1)"></rect>
+
+			<!-- 填充径向渐变色：url(#radial2) -->
+			<rect x="100" y="1300" width="500" height="300" fill="url(#radial2)"></rect>
+
+
+			<!-- <rect x="100" y="1650" width="300" height="142" fill="url(#linear-g)"></rect> -->
+			<use x="100" y="1650" href="#status-1"></use>
+			<rect x="450" y="1650" width="300" height="142" fill="url(#linear-y)"></rect>
+			<rect x="800" y="1650" width="300" height="142" fill="url(#linear-r)"></rect>
+
+
+			<g transform="translate(800, 100)">
+				<circle cx="100" cy="100" r="90" fill="url(#linear1)"></circle>
+				<circle cx="70" cy="80" r="20" fill="white"></circle>
+				<circle cx="130" cy="80" r="20" fill="white"></circle>
+				<circle cx="65" cy="75" r="10" fill="black"></circle>
+				<circle cx="125" cy="75" r="10" fill="black"></circle>
+				<path d="M 50 140 A 60 60 0 0 0 150 140" stroke="white" stroke-width="3" fill="none"></path>
+			</g>
+
+			<g transform="translate(800, 950)">
+				<circle cx="100" cy="100" r="90" fill="url(#radial1)"></circle>
+				<circle cx="70" cy="80" r="20" fill="white"></circle>
+				<circle cx="130" cy="80" r="20" fill="white"></circle>
+				<circle cx="65" cy="75" r="10" fill="black"></circle>
+				<circle cx="125" cy="75" r="10" fill="black"></circle>
+				<path d="M 50 140 A 60 60 0 0 0 150 140" stroke="white" stroke-width="3" fill="none"></path>
+			</g>
+
+			<g transform="translate(800, 1200)">
+				<ellipse cx="100" cy="70" rx="85" ry="55" style="fill:blue;" />
+				<ellipse cx="100" cy="70" rx="85" ry="55" fill="url(#radial3)" />
+			</g>
+		</svg>
+
+	</div>
+
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<script>
+
+		const defs = d3.select('svg').append('defs');
+		const linearGradient = defs.append('linearGradient')
+			.attr('id', 'linear3')
+
+			// 从上到下
+			// .attr('x1', 1)
+			// .attr('y1', 0)
+			// .attr('x2', 1)
+			// .attr('y2', 1);
+
+			// 从下到上
+			.attr('x1', 1)
+			.attr('y1', 1)
+			.attr('x2', 1)
+			.attr('y2', 0);
+
+		linearGradient.append('stop')
+			.attr('offset', 0.0)
+			// .attr('stop-color', '')	// 不设置为默认为黑色(继承父元素)
+			.attr('stop-opacity', 1);
+
+		linearGradient.append('stop')
+			.attr('offset', 0.1)
+			.attr('stop-color', 'white');
+
+		linearGradient.append('stop')
+			.attr('offset', 0.2)
+			.attr('stop-color', 'gray')
+			.attr('stop-opacity', 1);
+
+		linearGradient.append('stop')
+			.attr('offset', 0.3)
+
+		linearGradient.append('stop')
+			.attr('offset', 0.4)
+			.attr('stop-color', 'red')
+
+		linearGradient.append('stop')
+			.attr('offset', 0.5)
+			.attr('stop-color', 'orange')
+
+		linearGradient.append('stop')
+			.attr('offset', 0.6)
+			.attr('stop-color', 'yellow')
+
+		linearGradient.append('stop')
+			.attr('offset', 0.7)
+			.attr('stop-color', 'green')
+
+		linearGradient.append('stop')
+			.attr('offset', 0.8)
+			.attr('stop-color', 'cyan')
+
+		linearGradient.append('stop')
+			.attr('offset', 0.9)
+			.attr('stop-color', 'blue')
+
+		linearGradient.append('stop')
+			.attr('offset', 1)
+			.attr('stop-color', 'purple')
+
+		d3.select('#rect-linear-3').attr("fill", 'url(#linear3)')
+	</script>
+</body>
+
+</html>

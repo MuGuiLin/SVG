@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SVG图像 - image标签 D3js 图像-缩放</title>
+	<style>
+		h1 {
+			text-align: center;
+		}
+
+		.box {
+			margin: auto;
+			width: 80%;
+			height: 800px;
+			line-height: 36px;
+			font-size: 18px;
+		}
+
+		svg {
+			position: absolute;
+			left: 0;
+			border: 2px double rgb(99, 99, 99);
+		}
+
+		svg text {
+			font-size: 16px;
+		}
+
+		svg text tspan {
+			font-weight: bold;
+		}
+
+		svg text tspan.slice {
+			fill: blue;
+			font-weight: bold;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>SVG图像 - image标签 D3js 图像-缩放</h1>
+	<hr>
+	<div class="box">
+		<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+		<a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG
+			手册</a>、
+		<a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+		<a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+		<a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br />
+
+		<h2>SVG图像标签<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/image"
+				target="_blank">&lt;image></a>：</h2>
+
+		<p>SVG文档中的SVG元素包含图像信息。它表现为图像文件或者其他SVG文件。</p>
+		<p>SVG图像格式转换软件支持JPEG、PNG格式，是否支持动图GIF不明确，注：虽然SVG绘制的是矢量图形，但通过image标签引用过来的图像就不是矢量的了！！</p>
+		<p>SVG文件是这样的一种图像：不被当做外部资源加载，不可以用:visited
+			样式，不能有交互。使用动态SVG元素，可以用&lt;use>引入外部的URL。使用SVG文件并添加scripts在里面，可以用&lt;object> 放在 &lt;foreignObject>中。</p>
+
+		<h4>注意：HTML规范中定义&lt;image>和&lt;img>在解析时是等效的。这种规范只适用于SVG文件或SVG区块内。</h4>
+
+		<ul>
+			<h4>专有属性：</h4>
+			<li>x：图像水平方向上到原点的距离</li>
+			<li>y：图像竖直方向上到原点的距离</li>
+			<li>width：图像宽度。和HTML的&lt;img>不同，该属性是必须的</li>
+			<li>height：图像高度。和HTML的&lt;img>不同，该属性是必须的</li>
+			<li>xlink:href：图像的URL指向，可直接用 href</li>
+			<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/preserveAspectRatio"
+					target="_blank">preserveAspectRatio：控制图像比例</a></li>
+
+			<h4>API：https://developer.mozilla.org/en-US/docs/Web/API/SVGImageElement</h4>
+		</ul>
+
+		<h2>控制图像比例：preserveAspectRatio(align meetOrSlice)</h2>
+		<ul>
+			<h4>align：none、xMinYMin、xMidYMin、xMaxYMin、xMinYMid、xMidYMid(默认值)、xMaxYMid、xMinYMax、xMidYMax、xMaxYMax</h4>
+			<h4>meetOrSlice：meet(默认值)、slice </h4>
+
+			<h4>完整默认：preserveAspectRatio="xMidYMid meet"； &lt;image x="0" y="0" href="xxxx.jpg"
+				preserveAspectRatio="xMidYMid meet">&lt;/image> </h4>
+		</ul>
+
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2000" height="2000"
+			visited="0 0 2000 2000"></svg>
+
+	</div>
+	<svg width="2030" height="950" id="mainsvg" class="svgs"></svg>
+
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<script>
+		let svg = d3.select("svg");
+		const width = +svg.attr('width');
+		const height = +svg.attr('height');
+		let imgdir = './img/img11.jpg';
+
+
+		// 图像缩放
+		let ratioImg = [
+			'none',
+			'xMidYMid slice',
+			'xMidYMid meet',
+			'xMinYMin slice',
+			'xMaxYMax meet'
+		];
+
+		svg.selectAll('.priimage').data(ratioImg).join('image')
+			.attr('class', 'priimage')
+			.attr('id', 'myimg')
+			.attr("x", (d, i) => i * 360 + 180)
+			.attr("y", 100)
+			.attr('width', 250)
+			.attr('height', 250)
+			.attr('preserveAspectRatio', d => d)
+			.attr("xlink:href", imgdir);
+
+
+		//pattern笔刷(纹理填充)
+		let ratiocircle = [
+			{ patternUnits: "objectBoundingBox", r: 'none', id: 'thenone' },
+			{ patternUnits: "objectBoundingBox", r: 'xMidYMid meet', id: 'themeetmid' },
+			{ patternUnits: "objectBoundingBox", r: 'xMidYMid slice', id: 'theslice' },
+			{ patternUnits: "objectBoundingBox", r: 'xMinYMin meet', id: 'themeetmin' },
+			{ patternUnits: "userSpaceOnUse", r: 'none', id: 'userspace' }
+		];
+		var defs = svg.append('defs');
+		defs.selectAll('.mypattern').data(ratiocircle).join('pattern')
+			.attr('class', 'mypattern')
+			.attr("id", d => d.id)
+			.attr("width", d => d.patternUnits === 'objectBoundingBox' ? 1 : 300)
+			.attr("height", d => d.patternUnits === 'objectBoundingBox' ? 1 : 300)
+			.attr("patternUnits", d => d.patternUnits)
+			.append("svg:image")
+			.attr("xlink:href", imgdir)
+			.attr('preserveAspectRatio', d => d.r)
+			.attr("width", 300)
+			.attr("height", 300)
+			.attr("x", 0)
+			.attr("y", 0);
+
+		svg.selectAll(".mycircle").data(ratiocircle).join('circle')
+			.attr('class', 'mycircle')
+			.attr("cx", (d, i) => i * 360 + 180 + 125)
+			.attr("cy", 600)
+			.attr("r", 150)
+			.attr('stroke', 'black').attr('stroke-width', '2px')
+			.style("fill", d => `url(#${d.id})`);
+
+
+
+		/*
+		defs.append("pattern")
+			.attr("id", "thenone")
+			.attr("x", 0)
+			.attr("y", 0)
+			.attr("width", 1)
+			.attr("height", 1)
+			.attr("patternUnits", "objectBoundingBox")
+			.append("svg:image")
+			.attr("xlink:href", imgdir)
+			.attr('preserveAspectRatio', 'none')
+			.attr("width", 200)
+			.attr("height", 200)
+			.attr("x", 0)
+			.attr("y", 0);
+
+		defs.append("pattern")
+			.attr("id", "grump_avatar1_1")
+			.attr("x", 0)
+			.attr("y", 0)
+			.attr("width", 1)
+			.attr("height", 1)
+			.attr("patternUnits", "objectBoundingBox")
+			.append("svg:image")
+			.attr("xlink:href", imgdir)
+			.attr('preserveAspectRatio', 'xMidYMid meet')
+			.attr("width", 200)
+			.attr("height", 200)
+			.attr("x", 0)
+			.attr("y", 0);
+
+		defs.append("pattern")
+			.attr("id", "grump_avatar1_2")
+			.attr("x", 0)
+			.attr("y", 0)
+			.attr("width", 1)
+			.attr("height", 1)
+			.attr("patternUnits", "objectBoundingBox")
+			.append("svg:image")
+			.attr("xlink:href", imgdir)
+			.attr('preserveAspectRatio', 'xMidYMid slice')
+			.attr("width", 200)
+			.attr("height", 200)
+			.attr("x", 0)
+			.attr("y", 0);
+
+		defs.append("pattern")
+			.attr("id", "grump_avatar1_3")
+			.attr("x", 0)
+			.attr("y", 0)
+			.attr("width", 1)
+			.attr("height", 1)
+			.attr("patternUnits", "objectBoundingBox")
+			.append("svg:image")
+			.attr("xlink:href", imgdir)
+			.attr('preserveAspectRatio', 'xMinYMin meet')
+			.attr("width", 200)
+			.attr("height", 200)
+			.attr("x", 0)
+			.attr("y", 0);
+
+		defs.append("svg:pattern")
+			.attr("id", "userspace")
+			.attr("width", config.avatar_size)
+			.attr("height", config.avatar_size)
+			.attr("patternUnits", "userSpaceOnUse")
+			.append("svg:image")
+			.attr("xlink:href", imgdir)
+			.attr("width", config.avatar_size)
+			.attr("height", config.avatar_size)
+			.attr("x", 0)
+			.attr("y", 0);
+
+		defs.append("svg:pattern")
+			.attr("id", "grump_avatarrect")
+			.attr("width", rectwidth)
+			.attr("height", rectHeight)
+			.attr("patternUnits", "userSpaceOnUse")
+			.append("svg:image")
+			.attr("xlink:href", imgdir)
+			.attr("width", rectwidth)
+			.attr("height", rectHeight)
+			.attr("x", 100)
+			.attr("y", 0);
+
+		svg.append("circle")
+			.attr("cx", config.avatar_size/2)
+			.attr("cy", config.avatar_size/2)
+			.attr("r", config.avatar_size/2)
+			.style("fill", "#000000")
+			//.attr("xlink:href", 'ff7.jpg');
+			.style("fill", "url(#thenone)");
+		
+		svg.append("circle")
+			.attr("cx", config.avatar_size * 3 / 2)
+			.attr("cy", config.avatar_size/2)
+			.attr("r", config.avatar_size/2)
+			.style("fill", "#fff")
+			.style("fill", "url(#grump_avatar1_1)");
+		
+		svg.append("circle")
+			.attr("cx", config.avatar_size * 5 / 2)
+			.attr("cy", config.avatar_size/2)
+			.attr("r", config.avatar_size/2)
+			.style("fill", "#fff")
+			.style("fill", "url(#grump_avatar1_2)");
+		
+		svg.append("circle")
+			.attr("cx", config.avatar_size * 7 / 2)
+			.attr("cy", config.avatar_size/2)
+			.attr("r", config.avatar_size/2)
+			.style("fill", "#fff")
+			.style("fill", "url(#grump_avatar1_3)");
+		
+		svg.append("circle")
+			.attr("cx", config.avatar_size * 9 / 2)
+			.attr("cy", config.avatar_size/2)
+			.attr("r", config.avatar_size/2)
+			.style("fill", "url(#userspace)");
+			
+		*/
+	</script>
+</body>
+
+</html>

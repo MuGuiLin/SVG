@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SVG笔刷-笔刷(纹理填充) Textures.js</title>
+	<style>
+		h1 {
+			text-align: center;
+		}
+
+		.box {
+			margin: auto;
+			width: 80%;
+			line-height: 36px;
+			font-size: 18px;
+			min-height: 2000px;
+		}
+
+		svg {
+			border: 1px solid gray;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>SVG笔刷-笔刷(纹理填充) Textures.js 用于数据可视化的 SVG 模式</h1>
+	<hr>
+	<div class="box">
+		<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+		<a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+		<a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+		<a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+		<a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br>
+
+		<img src="./img/Textures.js SVG纹理填充.png" />
+		<br>
+		<a href="https://riccardoscalco.it/textures/" target="_blank">Textures.js 官网 用于数据可视化的 SVG 模式 </a>、
+		<a href="https://github.com/riccardoscalco/textures" target="_blank">Textures.js Github </a>、
+		<a href="https://unpkg.com/textures@1.2.0/dist/textures.js" target="_blank">Textures.js 下载 </a>
+
+		<h3>Textures(纹理).js</h3>
+		<p>Textures.js是一个用于创建SVG模式的JavaScript库。它建立在d3.js之上，专为数据可视化而设计。</p>
+
+		<h3>SVG笔刷</h3>
+		<p>&lt;pattern>元素定义模式。它用于以平铺方式填充图形元素。使用预定义的图形对一个对象进行填充或描边，就要用到pattern元素。pattern元素让预定义图形能够以固定间隔在x轴和y轴上重复（或平铺）从而覆盖要涂色的区域。先使用pattern元素定义图案，然后在给定的图形元素上用属性fill或属性stroke引用用来填充或描边的图案。</p>
+		<li>&lt;pattern> 的id属性定义了模式的唯一名称。</li>
+		<li>patternUnits用于定义x，y，宽度和高度属性。</li>
+		<li>cx和cy是图案边界框的x和y轴坐标。</li>
+
+		<ul>
+			<h4>专有属性：</h4>
+			<li>x：用户坐标系统中标识了一个x轴坐标</li>
+			<li>y：用户坐标系统中标识了一个y轴坐标</li>
+			<li>width：用户坐标系统中标识了一个水平长度，单位：number ("em" | "ex" | "px" | "in" | "cm" | "mm" | "pt" | "pc" | "%")</li>
+			<li>height：用户坐标系统中标识了一个垂直长度</li>
+			<li>xlink:href：图像的URL指向，可直接用 href</li>
+			<li>patternUnits：模式单元，用于&lt;pattern>元素的几何属性的坐标系，属性值：<b>userSpaceOnUse[基于svg标签的坐标系] | objectBoundingBox[基于填充元素标签的坐标系](默认)</b></li>
+			<li>patternContentUnits：定义用于元素内容的坐标系，属性值：userSpaceOnUse(默认) | objectBoundingBox</li>
+			<li>patternTransform：定义应用于图案拼贴的转换定义(transform definitions)的列表</li>
+			<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/preserveAspectRatio" target="_blank">preserveAspectRatio：控制图像比例</a></li>
+			<h4>API：https://developer.mozilla.org/en-US/docs/Web/API/SVGImageElement</h4>
+		</ul>
+
+		<h3><a href="https://riccardoscalco.it/textures/" target="_blank">Textures.js 官网 用于数据可视化的 SVG 模式 </a></h3>
+
+		<h4>线条纹理</h4>
+		<svg id="svg-1" xmlns="http://www.w3.org/2000/svg" width="100%" height="600">
+			<text x="50" y="40">笔刷填充：fill</text>
+
+			<path id="fill-fl-0" d="M930 350 h100 100 v100 100 h-100 -100 z" stroke="gray"></path>
+			<path id="stroke-sl-5" d="M1200 350 h100 100 v100 100 h-100 -100 z" stroke-width="50"  fill="transparent"></path>
+
+			<rect id="fill-fl-1" x="50" y="50" width="200" height="200" stroke="gray"></rect>
+			<rect id="fill-fl-2" x="270" y="50" width="200" height="200" stroke="gray"></rect>
+			<rect id="fill-fl-3" x="490" y="50" width="200" height="200" stroke="gray"></rect>
+			<rect id="fill-fl-4" x="710" y="50" width="200" height="200" stroke="gray"></rect>
+			<rect id="fill-fl-5" x="930" y="50" width="200" height="200" stroke="gray"></rect>
+			<rect id="fill-fl-6" x="1150" y="50" width="200" height="200" stroke="gray"></rect>
+
+			<text x="50" y="340">笔刷描边：stroke</text>
+			<rect id="stroke-sl-1" x="75" y="375" width="150" height="150" stroke-width="5" fill="transparent"></rect>
+			<rect id="stroke-sl-2" x="295" y="375" width="150" height="150" stroke-width="50" fill="transparent"></rect>
+			<rect id="stroke-sl-3" x="510" y="375" width="150" height="150" stroke-width="60" fill="transparent"></rect>
+			<text x="565" y="458">CUP</text>
+			<rect id="stroke-sl-4" x="730" y="375" width="150" height="150" stroke-width="50" fill="transparent"></rect>
+		</svg>
+
+		<h4>圆点纹理</h4>
+		<svg id="svg-2" xmlns="http://www.w3.org/2000/svg" width="100%" height="600">
+			<text x="100" y="90">笔刷填充：fill</text>
+			<rect id="fill-fc-1" x="100" y="100" width="300" height="200" stroke="blue"></rect>
+			<rect id="fill-fc-2" x="420" y="100" width="300" height="200" stroke="blue"></rect>
+			<rect id="fill-fc-3" x="740" y="100" width="300" height="200" stroke="blue"></rect>
+			<rect id="fill-fc-4" x="1060" y="100" width="300" height="200" stroke="blue"></rect>
+			
+			<path id="fill-fc-5" d="M 1180 375 h200 100 v100 100 h-200 -100 z" stroke="gray"></path>
+
+			<text x="100" y="1040">笔刷描边：stroke</text>
+			<rect id="stroke-sc-1" x="100" y="375" width="300" height="200" stroke-width="20" fill="transparent"></rect>
+			<rect id="stroke-sc-2" x="495" y="375" width="300" height="200" stroke-width="30" fill="transparent"></rect>
+
+			<path id="stroke-sc-3" d="M 850 375 h200 100 v100 100 h-200 -100 z" stroke-width="20" fill="transparent"></path>	
+		</svg>
+
+		<h4>路径纹理</h4>
+		<svg id="svg-3" xmlns="http://www.w3.org/2000/svg" width="100%" height="600">
+			<text x="100" y="90">笔刷填充：fill</text>
+			<rect id="fill-fp-1" x="100" y="100" width="300" height="200" stroke="blue"></rect>
+			<rect id="fill-fp-2" x="420" y="100" width="300" height="200" stroke="blue"></rect>
+			<rect id="fill-fp-3" x="740" y="100" width="300" height="200" stroke="blue"></rect>
+			<rect id="fill-fp-4" x="1060" y="100" width="300" height="200" stroke="blue"></rect>
+
+			<text x="100" y="1040">笔刷描边：stroke</text>
+			<rect id="stroke-sp-1" x="100" y="375" width="300" height="200" stroke-width="20" fill="transparent"></rect>
+			<rect id="stroke-sp-2" x="450" y="375" width="300" height="200" stroke-width="30" fill="transparent"></rect>
+			<rect id="stroke-sp-3" x="800" y="375" width="300" height="200" stroke-width="30" fill="transparent"></rect>
+			<rect id="stroke-sp-4" x="1150" y="375" width="300" height="200" stroke-width="30" fill="transparent"></rect>
+		</svg>
+
+		<script src="https://d3js.org/d3.v7.min.js"></script>
+		<script src="https://unpkg.com/textures@1.2.3/dist/textures.js"></script>
+
+		<script>
+			console.log('Textures.js：', textures);
+
+			// 线条纹理
+			const setLines = (svg, attr) => {
+				const lines = textures.lines()
+					.size(20)
+					.strokeWidth(1)
+					.heavier(1)
+					.lighter(0.5)
+					.thinner(0.5)
+					// .orientation("vertical", "horizontal")
+					.shapeRendering("crispEdges")
+					.background("transparent");
+
+				lines.stroke("gray");
+				lines['stroke']('gray');
+
+				for (const key in attr) {
+					lines[key](attr[key]);
+					if (Array.isArray(attr[key])) {
+						lines[key](...attr[key]);
+					}
+				}
+				svg.call(lines);
+				return lines.url();
+			};
+
+			// 圆点纹理
+			const setCircles = (svg, attr) => {
+				const circles = textures.circles()
+					.fill('transparent')
+					.size(20)
+					.strokeWidth(1)
+					.heavier(1)
+					.lighter(0.5)
+					.thinner(0.5)
+					.radius(4)
+					.background("transparent")
+					.complement();
+
+				circles.stroke("gray");
+				circles['stroke']('gray');
+
+				for (const key in attr) {
+					circles[key](attr[key]);
+					if (Array.isArray(attr[key])) {
+						circles[key](...attr[key]);
+					}
+				}
+				svg.call(circles);
+				return circles.url();
+			}
+
+			// 路径纹理
+			const setPaths = (svg, attr) => {
+				const paths = textures.paths()
+					.d("caps")
+					.size(20)
+					.strokeWidth(1)
+					.heavier(1)
+					.lighter(0.5)
+					.thinner(0.5)
+					.shapeRendering("crispEdges")
+					.background("transparent");
+
+				paths.stroke("gray");
+				paths['stroke']('gray');
+
+				for (const key in attr) {
+					paths[key](attr[key]);
+					if (Array.isArray(attr[key])) {
+						paths[key](...attr[key]);
+					}
+				}
+				svg.call(paths);
+				return paths.url();
+			}
+
+			{
+				// 线条纹理
+				const tLines = textures.lines();
+
+				const svg1 = d3.select('#svg-1');
+				svg1.call(tLines);
+				
+				svg1.select('#fill-fl-0')
+					.attr('fill', setLines(svg1, { stroke: 'darkorange',  size: 10,  thinner: 1, orientation: ['vertical', 'horizontal'] }));
+
+				svg1.select('#fill-fl-1')
+					.attr('fill', tLines.stroke("red").url());
+
+				svg1.select('#fill-fl-2')
+					.attr('fill', function () {
+						const fill = setLines(svg1, { stroke: 'blue' });
+						console.dir(fill);
+						return fill;
+					});
+
+				svg1.select('#fill-fl-3')
+					.attr('fill', setLines(svg1, { stroke: 'green', strokeWidth: 10, thinner: 2, orientation: '7/8' }));
+
+				d3.select('#fill-fl-4')
+					.attr('fill', setLines(svg1, { stroke: 'red', size: 40, orientation: ['3/8', '7/8'] }));
+
+				d3.select('#fill-fl-5')
+					.attr('fill', setLines(svg1, { stroke: 'blue', size: 5, orientation: ['vertical', 'horizontal'] }));
+
+				svg1.select('#fill-fl-6')
+					.attr('fill', setLines(svg1, { stroke: 'yellow', thinner: 2, background: 'cyan', }));
+
+
+				svg1.select('#stroke-sl-1')
+					.attr('stroke', setLines(svg1, { stroke: 'red' }));
+
+				d3.select('#stroke-sl-2')
+					.attr('stroke', setLines(svg1, { stroke: 'green', strokeWidth: 10, thinner: 2, orientation: '7/8' }));
+
+				d3.select('#stroke-sl-3')
+					.attr('stroke', setLines(svg1, { stroke: 'blue', size: 13, thinner: 0.2, strokeWidth: 1, orientation: ['vertical', 'horizontal'] }));
+
+				d3.select('#stroke-sl-4')
+					.attr('stroke', setLines(svg1, { stroke: 'yellow', thinner: 2, background: 'cyan', }));
+				
+				d3.select('#stroke-sl-5')
+					.attr('stroke', setLines(svg1, { stroke: 'red', size: 40, orientation: ['3/8', '7/8'] }));
+
+			};
+
+			{
+				// 圆点纹理
+				const svg2 = d3.select('#svg-2');
+
+				d3.select('#fill-fc-1')
+					.attr('fill', setCircles(svg2));
+
+				d3.select('#fill-fc-2')
+					.attr('fill', setCircles(svg2, { stroke: 'green', strokeWidth: 10, thinner: 2 }));
+
+				d3.select('#fill-fc-3')
+					.attr('fill', setCircles(svg2, { size: 10, fill: 'darkorange', stroke: 'red', strokeWidth: 1, radius: 4, thinner: 0.5, complement: '' }));
+
+				d3.select('#fill-fc-4')
+					.attr('fill', setCircles(svg2, { size: 30, fill: 'blue', stroke: 'yellow', strokeWidth: 1, radius: 20, thinner: 1 }));
+
+				d3.select('#fill-fc-5')
+					.attr('fill',  setCircles(svg2, {stroke: '#FF08BE'}));
+
+
+				d3.select('#stroke-sc-1')
+					.attr('stroke', setCircles(svg2));
+
+				d3.select('#stroke-sc-2')
+					.attr('stroke', setCircles(svg2, { size: 30, fill: 'blue', stroke: 'yellow', strokeWidth: 1, radius: 20, thinner: 1 }));
+					
+				d3.select('#stroke-sc-3')
+					.attr('stroke', setCircles(svg2, { size: 10, fill: 'darkorange', stroke: 'red', strokeWidth: 1, radius: 4, thinner: 0.5, complement: '' }));
+
+			};
+
+
+			{
+				// 路径纹理
+				const svg3 = d3.select('#svg-3');
+
+				d3.select('#fill-fp-1')
+					.attr('fill', setPaths(svg3, { d: 'crosses' }));
+
+
+				d3.select('#fill-fp-2')
+
+					.attr('fill', setPaths(svg3, { d: 'hexagons', stroke: 'green', strokeWidth: 10, thinner: 0.5 }));
+				// .attr('fill', setPaths(svg3, { d: 'woven', stroke: 'green', strokeWidth: 5, thinner: 0.5 }));
+				// .attr('fill', setPaths(svg3, { d: 'waves', stroke: 'green', strokeWidth: 5, thinner: 0.5 }));
+				// .attr('fill', setPaths(svg3, { d: 'nylon', stroke: 'green', strokeWidth: 5, thinner: 0.5 }));
+				// .attr('fill', setPaths(svg3, { d: 'squares', stroke: 'green', strokeWidth: 5, thinner: 0.5 }));
+
+				d3.select('#fill-fp-3')
+					.attr('fill', setPaths(svg3, { size: 10, fill: 'darkorange', stroke: 'red', strokeWidth: 1, thinner: 0.5 }));
+
+				d3.select('#fill-fp-4')
+					.attr('fill', setPaths(svg3, { size: 30, fill: 'blue', stroke: 'yellow', strokeWidth: 1, thinner: 1 }));
+
+
+				d3.select('#stroke-sp-1')
+					.attr('stroke', setPaths(svg3));
+
+				d3.select('#stroke-sp-2')
+					.attr('stroke', setPaths(svg3, { d: 'woven', stroke: 'red', strokeWidth: 5, thinner: 0.5 }));
+
+				d3.select('#stroke-sp-3')
+					.attr('stroke', setPaths(svg3, { d: 'waves', stroke: 'green', strokeWidth: 5, thinner: 0.5 }));
+
+				d3.select('#stroke-sp-4')
+					.attr('stroke', setPaths(svg3, { d: 'nylon', stroke: 'blue', strokeWidth: 5, thinner: 0.5 }));
+			}
+
+
+		</script>
+
+	</div>
+</body>
+
+</html>

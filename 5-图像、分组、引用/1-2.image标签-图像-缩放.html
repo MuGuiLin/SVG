@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG图像 - image标签 图像-缩放</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            height: 800px;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            position: absolute;
+            left: 0;
+            border: 2px double rgb(99, 99, 99);
+        }
+        svg text{
+            font-size: 16px;
+        }
+        svg text tspan{
+            font-weight: bold;
+        } 
+        svg text tspan.slice{
+            fill: blue;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG图像 - image标签 </h1>
+    <hr>
+    <div class="box">
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.w3schools.cn/graphics/svg_reference.asp" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+        <a href="https://cloud.tencent.com/developer/doc/1231" target="_blank" rel="noopener noreferrer">SVG 教程</a>、
+        <a href="https://c.runoob.com/more/svgeditor/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器1</a>、
+        <a href="http://svg.p12345.com/" target="_blank" rel="noopener noreferrer">SVG 在线编辑器2</a><br />
+
+        <h2>SVG图像标签<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/image" target="_blank">&lt;image></a>：</h2>
+
+        <p>SVG文档中的SVG元素包含图像信息。它表现为图像文件或者其他SVG文件。</p> 
+        <p>SVG图像格式转换软件支持JPEG、PNG格式，是否支持动图GIF不明确，注：虽然SVG绘制的是矢量图形，但通过image标签引用过来的图像就不是矢量的了！！</p>
+        <p>SVG文件是这样的一种图像：不被当做外部资源加载，不可以用:visited 样式，不能有交互。使用动态SVG元素，可以用&lt;use>引入外部的URL。使用SVG文件并添加scripts在里面，可以用&lt;object> 放在 &lt;foreignObject>中。</p>
+        
+        <h4>注意：HTML规范中定义&lt;image>和&lt;img>在解析时是等效的。这种规范只适用于SVG文件或SVG区块内。</h4>
+
+		<ul>
+			<h4>专有属性：</h4>
+			<li>x：图像水平方向上到原点的距离</li>
+            <li>y：图像竖直方向上到原点的距离</li>
+            <li>width：图像宽度。和HTML的&lt;img>不同，该属性是必须的</li>
+            <li>height：图像高度。和HTML的&lt;img>不同，该属性是必须的</li>
+            <li>xlink:href：图像的URL指向，可直接用 href</li>
+            <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/preserveAspectRatio" target="_blank">preserveAspectRatio：控制图像比例</a></li>
+
+            <h4>API：https://developer.mozilla.org/en-US/docs/Web/API/SVGImageElement</h4>
+		</ul>
+        
+        <h2>控制图像比例：preserveAspectRatio(align meetOrSlice)</h2>
+        <ul>
+            <h4>align：none、xMinYMin、xMidYMin、xMaxYMin、xMinYMid、xMidYMid(默认值)、xMaxYMid、xMinYMax、xMidYMax、xMaxYMax</h4>
+            <h4>meetOrSlice：meet(默认值)、slice </h4>
+
+            <h4>完整默认：preserveAspectRatio="xMidYMid meet"； &lt;image x="0" y="0" href="xxxx.jpg" preserveAspectRatio="xMidYMid meet">&lt;/image> </h4>
+        </ul>
+       
+
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2000" height="2000" visited="0 0 2000 2000" >
+           
+            <rect x="20" y="20" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="20" y="20" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="none" patternUnits="objectBoundingBox"></image>
+            <text x="20" y="350">preserveAspectRatio="<tspan>none</tspan>"</text>
+
+            <rect x="340" y="20" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="340" y="20" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="none slice" patternUnits="userSpaceOnUse"></image>
+            <text x="340" y="350">preserveAspectRatio="<tspan class="slice">none slice</tspan>"</text>
+
+
+
+            <rect x="20" y="410" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="20" y="410" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMinYMin" ></image>
+            <text x="20" y="740">preserveAspectRatio="<tspan>xMinYMin</tspan>"</text>
+
+            <rect x="340" y="410" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="340" y="410" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMinYMin slice"></image>
+            <text x="340" y="740">preserveAspectRatio="<tspan class="slice">xMinYMin slice</tspan>"</text>
+
+            <rect x="660" y="410" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="660" y="410" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMidYMin"></image>
+            <text x="660" y="740">preserveAspectRatio="<tspan>xMidYMin</tspan>"</text>
+
+            <rect x="980" y="410" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="980" y="410" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMidYMin slice"></image>
+            <text x="980" y="740">preserveAspectRatio="<tspan class="slice">xMidYMin slice</tspan>"</text>
+
+            <rect x="1300" y="410" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="1300" y="410" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMaxYMin"></image>
+            <text x="1300" y="740">preserveAspectRatio="xMaxYMin"</text>
+
+            <rect x="1620" y="410" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="1620" y="410" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMaxYMin slice"></image>
+            <text x="1620" y="740">preserveAspectRatio="xMaxYMin slice"</text>
+
+            
+
+
+
+            <rect x="20" y="800" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="20" y="800" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMinYMid"></image>
+            <text x="20" y="1130">preserveAspectRatio="<tspan>xMinYMid</tspan>"</text>
+
+            <rect x="340" y="800" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="340" y="800" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMinYMid slice"></image>
+            <text x="340" y="1130">preserveAspectRatio="<tspan class="slice">xMinYMid slice</tspan>"</text>
+
+            <rect x="660" y="800" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="660" y="800" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMidYMid"></image>
+            <text x="660" y="1130">preserveAspectRatio="<tspan>xMidYMid</tspan>"</text>
+
+            <rect x="980" y="800" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="980" y="800" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMidYMid slice"></image>
+            <text x="980" y="1130">preserveAspectRatio="<tspan class="slice">xMidYMid slice</tspan>"</text>
+
+            <rect x="1300" y="800" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="1300" y="800" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMaxYMid"></image>
+            <text x="1300" y="1130">preserveAspectRatio="xMaxYMid"</text>
+
+            <rect x="1620" y="800" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="1620" y="800" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMaxYMid slice"></image>
+            <text x="1620" y="1130">preserveAspectRatio="xMaxYMid slice"</text>
+
+
+
+
+
+
+            <rect x="20" y="1200" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="20" y="1200" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMinYMax"></image>
+            <text x="20" y="1530">preserveAspectRatio="<tspan>xMinYMax</tspan>"</text>
+
+            <rect x="340" y="1200" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="340" y="1200" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMinYMax slice"></image>
+            <text x="340" y="1530">preserveAspectRatio="<tspan class="slice">xMinYMax slice</tspan>"</text>
+
+            <rect x="660" y="1200" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="660" y="1200" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMidYMax"></image>
+            <text x="660" y="1530">preserveAspectRatio="<tspan>xMidYMax</tspan>"</text>
+
+            <rect x="980" y="1200" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="980" y="1200" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMidYMax slice"></image>
+            <text x="980" y="1530">preserveAspectRatio="<tspan class="slice">xMidYMax slice</tspan>"</text>
+
+            <rect x="1300" y="1200" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="1300" y="1200" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMaxYMax"></image>
+            <text x="1300" y="1530">preserveAspectRatio="xMaxYMax"</text>
+
+            <rect x="1620" y="1200" width="300" height="300" fill="none" stroke="red"></rect>
+            <image x="1620" y="1200" width="300" height="300" href="./img/img11.jpg" preserveAspectRatio="xMaxYMax slice"></image>
+            <text x="1620" y="1530">preserveAspectRatio="xMaxYMax slice"</text>
+
+        </svg>
+
+    </div>
+</body>
+
+</html>
