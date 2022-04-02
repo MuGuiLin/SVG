@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3js - 比例尺 实例</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .box {
+            margin: auto;
+            width: 80%;
+            line-height: 36px;
+            font-size: 18px;
+        }
+
+        svg {
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>D3js - scaleLinear-比例尺 实例</h1>
+    <hr>
+    <div class="box">
+        <a href="https://d3js.org" target="_blank" rel="noopener noreferrer">D3js 官网</a>、
+        <a href="https://observablehq.com/@d3/gallery" target="_blank" rel="noopener noreferrer">D3js 画廊</a>、
+        <a href="https://www.d3js.org.cn/introduce" target="_blank" rel="noopener noreferrer">D3js 指南</a>、
+        <a href="https://www.d3js.org.cn/document" target="_blank" rel="noopener noreferrer">D3js 文档</a>、
+        <a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" target="_blank" rel="noopener noreferrer">SVG 文档</a>、
+        <a href="https://www.d3js.org.cn/svg/get_start" target="_blank" rel="noopener noreferrer">SVG 手册</a>、
+
+        <hr>
+
+        <h3> <a href="https://www.d3js.org.cn/document/d3-scale/" target="_blank" rel="noopener noreferrer">d3-scale</a>
+            例尺是一个很方便的工具：将抽象的维度数据映射为可视化表示。可以将实际的数据空间映射到屏幕空间。它通常与坐标轴一起使用。</h3>
+        <img src="./img/d3过度自定义插值器transition.tween.png" alt="" />
+        <hr />
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        {
+            const NS = 'http://www.w3.org/2000/svg';
+
+            const svg = d3.select('.box').append('svg').attr('xlink', NS).attr('width', 1200).attr('height', 800);
+
+            // 获取SVG画布的宽和高
+            const width = +svg.attr('width');
+            const height = +svg.attr('height');
+            const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const data = [
+                { name: '小明', value: 200 },
+                { name: '小花', value: 382 },
+                { name: '小红', value: 458 },
+                { name: '小五', value: 110 },
+                { name: '小琴', value: 542 },
+                { name: '小梅', value: 666 },
+                { name: '小会', value: 324 },
+                { name: '小林', value: 750 },
+            ];
+
+            const g = svg.append('g').classed('g-main', true).attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+            // 定义度X比例尺
+            const xScale = d3
+                .scaleLinear()  // 线性比例尺
+                .domain([0, d3.max(data, (d) => d.value)])  // 根据数据的最大值生成标尺比例
+                .range([0, innerWidth]);
+
+            // 定义X坐标轴
+            const xAxis = d3.axisBottom(xScale);
+
+            // 渲染X坐标轴 将xAxis坐标轴 通过call方法 填满g元素，也就是：call()函数将 g元素传给xAxis函数，然后xAxis()在g元素中渲染出来
+            g.append('g').call(xAxis).attr('transform', `translate(0, ${innerHeight})`);
+
+
+            // 定义Y比例尺
+            const yScale = d3
+                .scaleBand()    // 序数比例尺
+                .domain(data.map((d) => d.name)) // 要
+                .range([0, innerHeight])
+                .padding(0.2) // 设置间距 0.2 === 2%
+
+
+            // 定义Y坐标轴
+            const yAxis = d3.axisLeft(yScale)
+            // .tickSize(-innerWidth)  // Y坐标轴线
+
+            // 渲染Y坐标轴 将yAxis坐标轴 通过call方法 填满g元素，也就是：call()函数将 g元素传给yAxis函数，然后yAxis()在g元素中渲染出来
+            g.append('g').call(yAxis);
+
+            // 修改 X坐标轴 和 Y坐标轴 的文本大小
+            d3.selectAll('.tick text').attr('font-size', 14);
+
+            // 添加标题
+            g.append('text').classed('title', true)
+                .text('2022年 秋季学生成绩')
+                .attr('font-size', 26)
+                .attr('text-anchor', 'middle')
+                .attr('transform', `translate(${innerWidth / 2})`)
+
+
+            const group = g.selectAll('.group').data(data).enter().append('g');
+
+            const trans = d3.transition()
+                // .ease(d3.easeLinear)
+                .duration(3000);
+
+            const format = d3.format(".2f");
+
+            // 渲染 条形
+            group.append('rect')
+                .attr('x', 1)
+                .attr('y', d => yScale(d.name))
+                .attr('height', yScale.bandwidth())
+                // .attr('fill', d => `hsl(${Math.random() * 360}, 100%, 50%)`);
+                .attr('fill', d => d3.interpolateRainbow(Math.random()))
+                .transition(trans)
+                .delay(function (d, i) {
+                    return i * 500;
+                })
+                .attr('width', d => xScale(d.value));
+
+
+            // 渲染 条形数据
+            group.append('text')
+                .attr('y', d => yScale(d.name))
+                .attr('dx', 10)
+                .attr('dy', yScale.bandwidth() / 1.8)
+                .attr('fill', d => d3.interpolateRainbow(Math.random()))
+                .transition(trans)
+                .delay(function (d, i) {
+                    return i * 500;
+                })
+                .attr('x', d => xScale(d.value))
+                .tween('text', function(d) {
+                    const item = d3.interpolate(this.textContent, d.value);
+                    return function(t) {
+                        this.textContent = format(item(t));
+                    }
+                });
+
+        }
+
+    </script>
+</body>
+
+</html>

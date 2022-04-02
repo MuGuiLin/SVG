@@ -132,141 +132,71 @@
                 .attr('text-anchor', 'middle')
                 .attr('transform', `translate(${innerWidth / 2})`)
 
-            // 渲染 条形
-            data.forEach((d, i) => {
-                console.log(yScale(d.name), xScale(d.value));
-                console.log('bandwidth', yScale.bandwidth());
-                g.append('rect')
-                    .transition()
-                    .duration(3000)
-                    .delay(function (d, i) {
-                        return i * 500;
-                    })
-                    .attr('x', 1)
-                    .attr('y', yScale(d.name))
-                    .attr('width', xScale(d.value))
-                    .attr('height', yScale.bandwidth())
-                    .attr('fill', `hsl(${Math.random() * 360}, 100%, 50%)`)
-            });
 
-            // 渲染 条形数据
-            data.forEach((d, i) => {
-                g.append('text')
-                    .transition()
-                    .duration(3000)
-                    .delay(function (d, i) {
-                        return i * 500;
-                    })
-                    .text(d.value)
-                    .attr('x', xScale(d.value))
-                    .attr('y', yScale(d.name))
-                    .attr('dx', 10)
-                    .attr('dy', yScale.bandwidth() / 1.8)
-                    .attr('fill', `hsl(${Math.random() * 360}, 100%, 50%)`)
-            });
+            const group = g.selectAll('.group').data(data).enter().append('g');
+            // const group = g.selectAll('.group').data(data).join('g');
+
+            // 生成条形
+            const rects = group.append('rect')
+                .attr('x', 1)
+                .attr('y', d => yScale(d.name))
+                .attr('height', yScale.bandwidth());
+
+            // 生成文本
+            const texts = group.append('text')
+                .attr('y', d => yScale(d.name))
+                .attr('dx', 10)
+                .attr('dy', yScale.bandwidth() / 1.8)
+
+            // 数字格式化 .2f 表示 保留2位小数
+            const format = d3.format(".2f");
+
+            // 过渡动画
+            (async () => {
+                let counter = 0;
+                do {
+                    data.forEach((d, i) => {
+                        d.value = Math.random() * 666
+                    });
+
+                    const trans = d3.transition()
+                        // .ease(d3.easeLinear)
+                        .duration(2000);    // 这里就是相当于setInterval定时器中的 间隔时间
+
+                    // 条形动画
+                    rects.transition(trans)
+                        .delay((d, i) => i * 500)
+                        .attr('width', d => xScale(d.value))
+                        .attr('fill', d => d3.interpolateRainbow(Math.random()));
+
+                    // 文本动画
+                    texts.transition(trans)
+                        .delay((d, i) => i * 500)
+                        .attr('x', d => xScale(d.value))
+                        .attr('fill', d => d3.interpolateRainbow(Math.random()))
+                        .tween('text', function (d) {
+                            // d3.interpolate(初始值[当前的值]，终止值[预期的值]);
+                            const newVal = d3.interpolate(this.textContent, d.value);
+                            return function (t) {
+                                this.textContent = format(newVal(t)); // 保留2位小数
+                            }
+                        });
+
+                    // 注：trans.end() => 当过渡动画在指定的时间内运行结束后，这里必需要加上 await => 等着结果的返回，否则不向下执行代码！！
+                    await trans.end();
+
+                    counter++;
+
+                    console.log(`通过async 和 await 的阻塞机制，这些代码会延时执行，现在是第 【${counter}】 次：执行`, data)
+
+                // 注：这里是无限循环，所以会不断的执行上面{}中的代码，通过async 和 await 的阻塞机制
+                } while (true);
+
+            })();
+
+
         }
-        {
-            const NS = 'http://www.w3.org/2000/svg';
 
-            const svg = d3.select('.box').append('svg').attr('xlink', NS).attr('width', 1200).attr('height', 800);
-
-            // 获取SVG画布的宽和高
-            const width = +svg.attr('width');
-            const height = +svg.attr('height');
-            const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-
-            const innerWidth = width - margin.left - margin.right;
-            const innerHeight = height - margin.top - margin.bottom;
-
-            const data = [
-                { name: '小明', value: 200 },
-                { name: '小花', value: 382 },
-                { name: '小红', value: 458 },
-                { name: '小五', value: 110 },
-                { name: '小琴', value: 542 },
-                { name: '小梅', value: 624 },
-                { name: '小会', value: 324 },
-                { name: '小林', value: 484 },
-            ];
-
-            const g = svg.append('g').classed('g-main', true).attr('transform', `translate(${margin.left}, ${margin.top})`);
-
-            // 定义度X比例尺
-            const xScale = d3
-                .scaleBand()    // 序数比例尺
-                .domain(data.map((d) => d.name))
-                .range([0, innerWidth])
-                .padding(0.2) // 设置间距 0.2 === 2%
-
-
-            // 定义X坐标轴
-            const xAxis = d3.axisBottom(xScale);
-
-            // 渲染X坐标轴 将xAxis坐标轴 通过call方法 填满g元素，也就是：call()函数将 g元素传给xAxis函数，然后xAxis()在g元素中渲染出来
-            g.append('g').call(xAxis).attr('transform', `translate(0, ${innerHeight})`);
-
-
-            // 定义Y比例尺
-            const yScale = d3
-                .scaleLinear()  // 线性比例尺
-                // .domain([d3.max(data, (d) => d.value), 0])  // 根据数据的最大值生成标尺比例
-                .domain([0, d3.max(data, (d) => d.value)].reverse())  // 根据数据的最大值生成标尺比例
-                .range([0, innerHeight]);
-
-
-            // 定义Y坐标轴
-            const yAxis = d3.axisLeft(yScale)
-            // .tickSize(-innerWidth)  // Y坐标轴线
-
-            // 渲染Y坐标轴 将yAxis坐标轴 通过call方法 填满g元素，也就是：call()函数将 g元素传给yAxis函数，然后yAxis()在g元素中渲染出来
-            g.append('g').call(yAxis);
-
-            // 修改 X坐标轴 和 Y坐标轴 的文本大小
-            d3.selectAll('.tick text').attr('font-size', 14);
-
-            // 添加标题
-            g.append('text').classed('title', true)
-                .text('2022年 秋季学生成绩')
-                .attr('font-size', 26)
-                .attr('text-anchor', 'middle')
-                .attr('transform', `translate(${innerWidth / 2})`)
-
-            // 渲染 条形
-            const rect = g.append('g');
-            data.forEach((d, i) => {
-                console.log(xScale(d.name), yScale(d.value));
-                console.log('bandwidth', xScale.bandwidth());
-                rect.append('rect')
-                    .transition()
-                    .duration(3000)
-                    .delay(function (d, i) {
-                        return i * 500;
-                    })
-                    .attr('x', xScale(d.name))
-                    .attr('y', -innerHeight)
-                    .attr('width', xScale.bandwidth())
-                    .attr('height', yScale(d.value))
-                    .attr('transform', `translate(0, ${yScale(-d.value)})`)
-                    .attr('fill', `hsl(${Math.random() * 360}, 100%, 50%)`)
-            });
-
-            // 渲染 条形数据
-            data.forEach((d, i) => {
-                g.append('text')
-                    .transition()
-                    .duration(3000)
-                    .delay(function (d, i) {
-                        return i * 500;
-                    })
-                    .text(d.value)
-                    .attr('x', xScale(d.name))
-                    .attr('y', innerHeight)
-                    .attr('dx', xScale.bandwidth() / 2.8)
-                    .attr('dy', -10)
-                    // .attr('transform', `translate(0, ${yScale(-d.value)})`)
-                    .attr('fill', `hsl(${Math.random() * 360}, 100%, 50%)`)
-            });
-        }
     </script>
 </body>
 
