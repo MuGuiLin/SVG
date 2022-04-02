@@ -89,11 +89,45 @@
 
             const data = [100, 200, 300, 250, 200, 350];
 
+            // const rect = svg.selectAll("rect").data(data).enter().append("rect")
+            //     .transition() // 添加过度
+            //     .duration(2000) // 动画的持续时间  毫秒
+            //     .delay(function (d, i) { // 延迟执行
+            //         return i * 300; // 每个柱子逐渐开始的效果
+            //     })
+            //     .attr("x", 0)
+            //     .attr("y", (d, i) => i * 60)
+            //     .attr("width", (d, i) => d)
+            //     .attr("height", 30)
+            //     .attr("fill", 'blue');
+
+            // const text = svg.selectAll("text").data(data).enter().append("text")
+            //     .transition() // 添加过度
+            //     .duration(2000) // 动画的持续时间  毫秒
+            //     .delay(function (d, i) { // 延迟执行
+            //         return i * 300; // 每个文本逐渐开始的效果
+            //     })
+            //     .text((t) => t)
+            //     .attr("x", d => d + 5)
+            //     .attr("y", (d, i) => i * 60)
+            //     .attr("dy", 22)
+            //     .attr("fill", 'red');
+
+            /**
+             * 多个图源 共用一个过度动画
+            */
+            const trans = d3.transition()   // 添加过度
+                .duration(2000) // 动画的持续时间  毫秒
+                // .delay(function (d, i) { // 延迟执行
+                //     console.log(d, i)
+                //     return i * 300;  // 每个柱子逐渐开始的效果
+                // });
+
             const rect = svg.selectAll("rect").data(data).enter().append("rect")
-                .transition()//添加过度
-                .duration(2000)//动画的持续时间  毫秒
-                .delay(function (d, i) {//延迟执行
-                    return i * 300;//每个柱子逐渐开始的效果
+                .transition(trans)
+                .delay(function (d, i) {    // 延迟执行
+                    console.log(d, i)
+                    return i * 300; // 每个柱子逐渐开始的效果
                 })
                 .attr("x", 0)
                 .attr("y", (d, i) => i * 60)
@@ -102,16 +136,18 @@
                 .attr("fill", 'blue');
 
             const text = svg.selectAll("text").data(data).enter().append("text")
-                .transition()//添加过度
-                .duration(2000)//动画的持续时间  毫秒
-                .delay(function (d, i) {//延迟执行
-                    return i * 300;//每个柱子逐渐开始的效果
+                .transition(trans)
+                .delay(function (d, i) {    // 延迟执行
+                    return i * 300; // 每个文本逐渐开始的效果
                 })
                 .text((t) => t)
                 .attr("x", d => d + 5)
                 .attr("y", (d, i) => i * 60)
                 .attr("dy", 22)
                 .attr("fill", 'red');
+
+            // 过度结束
+            trans.end();
         }
     </script>
 </body>

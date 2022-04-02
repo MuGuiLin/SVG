@@ -26,6 +26,10 @@
             padding: 6px 20px;
             font-size: 18px;
         }
+
+        svg circle {
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -42,8 +46,10 @@
 
         <hr>
         <ul>
-            <h4><a href="https://www.d3js.org.cn/document/d3-force/#installing" target="_blank" rel="noopener noreferrer">d3.forceSimulation([nodes]) 创建一个新的没有任何 forces(力模型) 的仿真</a></h4>
-            <li>如果没有指定 nodes 则默认为空数组。仿真会自动 starts(启动)；使用 simulation.on 来监听仿真运行过程中的 tick 事件。如果你想手动运行仿真，则需要调用  simulation.stop 然后根据需求调用 simulation.tick。</li>
+            <h4><a href="https://www.d3js.org.cn/document/d3-force/#installing" target="_blank"
+                    rel="noopener noreferrer">d3.forceSimulation([nodes]) 创建一个新的没有任何 forces(力模型) 的仿真</a></h4>
+            <li>如果没有指定 nodes 则默认为空数组。仿真会自动 starts(启动)；使用 simulation.on 来监听仿真运行过程中的 tick 事件。如果你想手动运行仿真，则需要调用
+                simulation.stop 然后根据需求调用 simulation.tick。</li>
 
             <h4>d3.forceManyBody()</h4>
             <li>创建一个使用默认参数的电荷力模型。
@@ -64,9 +70,6 @@
                 </ul>
             </li>
         </ul>
-        <img src="./img/Sunburst太阳风暴图.png" alt="" />
-        <br>
-        <img src="./img/Icicle冰锥图 与 Sunburst太阳风暴图.png" alt="" />
 
         <hr />
         <a href="https://observablehq.com/@d3/force-directed-graph" target="_blank"
@@ -94,18 +97,21 @@
 
             const box = svg.append('g').attr('class', 'chart-box');
 
-            let line, circle;
+            let line, circle, ticksFn, simulation;
 
             // 根据数据绘制图
             const dataRender = (nodes, links) => {
                 // console.log(data);
 
-                const color = d3.scaleOrdinal(d3.schemeCategory10);
+                const color = d3.scaleOrdinal(d3.schemeCategory10).domain([0, nodes.length - 1]);
+                // const color = d3.scaleDiverging(d3.interpolateRainbow).domain([0, nodes.length - 1]);
+
 
                 /**
                 * 生成线段
                 */
-                line = box.selectAll("line").data(links).join('line')
+                // line = box.selectAll("line").data(links).join('line')
+                line = box.selectAll("line").data(links).enter().append('line')
                     .attr("fill", color)
                     .attr('stroke', 'gray')
                     .attr('opacity', 0.8);
@@ -117,10 +123,43 @@
                     .attr("fill", color)
                     // .attr("fill", 'blue')
                     .attr('stroke', 'white')
-                    .attr('opacity', 0.8);
+                    .attr('opacity', 0.8)
+
+                    .on('mouseover', function (event) {
+                        d3.select(this)
+                            .transition()
+                            .duration(500)
+                            .attr('r', 15);
+                    }).on('mouseout', function (event) {
+                        d3.select(this)
+                            .transition()
+                            .duration(500)
+                            .attr('r', 10);
+                    })
+                    .call(
+                        // 圆点拖拽
+                        d3.drag()
+                            // 拖拽开始 (mousedown or touchstart)
+                            .on('start', function () {
+                                d3.select(this).raise().attr('stroke', 'red');
+                                simulation.stop();
+                            })
+                            // 拖拽中 (mousemove or touchmove)
+                            .on('drag', function (event, d) {
+                                d3.select(this)
+                                    .attr('cx', d.x = event.x)
+                                    .attr('cy', d.y = event.y)
+                                ticksFn();
+                            })
+                            // 拖拽结束 (mouseup, touchend or touchcancel)
+                            .on('end', function () {
+                                d3.select(this).attr('stroke', 'white');
+                                simulation.restart();
+                            })
+                    );
             };
 
-            const ticks = () => {
+            ticksFn = () => {
                 line.attr('x1', d => d.source.x)
                     .attr('y1', d => d.source.y)
                     .attr('x2', d => d.target.x)
@@ -132,35 +171,38 @@
                     .attr('r', (d, i) => i === 0 ? 20 : 10);
             };
 
+            (async () => {
+                await d3.json("./data/socfb-Caltech36.json").then((res) => {
+                    console.log('原始数据：', res);
 
-            d3.json("./data/socfb-Caltech36.json").then((res) => {
-                console.log('原始数据：', res);
+                    const nodes = [];
 
-                const nodes = [];
+                    for (let i = 0; i < res['#links']; i++) {
+                        nodes.push({ index: i });
+                    }
 
-                for (let i = 0; i < res['#links']; i++) {
-                    nodes.push({ index: i });
-                }
+                    dataRender(nodes, res.links);
 
-                dataRender(nodes, res.links);
+                    console.log(nodes);
 
-                console.log(nodes);
+                    // 力模型
+                    simulation = d3.forceSimulation(nodes)    // 建一个新的没有任何 forces(力模型) 的仿真
+                        .force("my-force-box",
+                            d3.forceManyBody()  // 电荷力模型 （万有斥力）
+                                .strength(-60)  // 强度访问器
+                        )
+                        .force("link",
+                            d3.forceLink(res.links) // 创建一个弹簧力模型
+                                .strength(0.1)
+                                .distance(100)  // 距离访问器
+                        )
+                        .force("center",
+                            d3.forceCenter(width / 2, height / 2)   // 创建一个新的向心力模型（如果 x 和 y 没有指定则默认为⟨0, 0⟩ ）
+                        )
+                        .on('tick', ticksFn);
+                });
 
-                const simulation = d3.forceSimulation(nodes)    // 建一个新的没有任何 forces(力模型) 的仿真
-                    .force("my-force-box",
-                        d3.forceManyBody()  // 电荷力模型 （万有斥力）
-                            .strength(-60)  // 强度访问器
-                    )
-                    .force("link",
-                        d3.forceLink(res.links) // 创建一个弹簧力模型
-                            .strength(0.1)
-                            .distance(100)  // 距离访问器
-                    )
-                    .force("center",
-                        d3.forceCenter(width / 2, height / 2)   // 创建一个新的向心力模型（如果 x 和 y 没有指定则默认为⟨0, 0⟩ ）
-                    )
-                    .on('tick', ticks);
-            });
+            })();
         }
 
     </script>

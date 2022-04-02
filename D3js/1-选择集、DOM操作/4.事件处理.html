@@ -22,6 +22,20 @@
             background-color: black;
             border: 1px solid gray;
         }
+
+        .d3-drag {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            display: block;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50px;
+            text-align: center;
+            background: rgba(0, 0, 255, 0.8);
+            border: 2px solid #666;
+        }
     </style>
 </head>
 
@@ -40,6 +54,9 @@
 
         <h3>为了给DOM添加更友好的行为和交互，选择集允许监听和分派事件。</h3>
         <img src="./img/d3事件.png" alt="" />
+
+        <a class="d3-drag" href="https://www.d3js.org.cn/document/d3-drag/#installing" target="_blank"
+            rel="noopener noreferrer">d3-drag</a>
         <ul>
             <h4>selection.on(typenames[, listener[, capture]]) 事件绑定</h4>
             <li>为每个选中的元素添加或者移除一个指定typenames 事件的 listener. typenames 是一个字符串表示的事件类型, 比如 click, mouseover, 或者 submit;
@@ -116,6 +133,34 @@
         radio.on('click', (event) => {
             alert(event.target.value);
         });
+
+        d3.select('.d3-drag').call(
+            // 圆点拖拽
+            d3.drag()
+                // 拖拽开始 (mousedown or touchstart)
+                .on('start', function () {
+
+                })
+                // 拖拽中 (mousemove or touchmove)
+                .on('drag', function (event) {
+                    console.log(event, event.subject.y)
+
+                    // const { top, left } = event.target.getBoundingClientRect();
+                    // const { top, left } = d3.select(this).getBoundingClientRect();
+                    // const [x, y] = [event.clientX - left, event.clientY - top];
+
+                    const [x, y] = [event.x - event.subject.x, event.y - event.subject.y];
+
+                    
+                    d3.select(this)
+                        .style('top', y + 'px')
+                        .style('left', x + 'px')
+                })
+                // 拖拽结束 (mouseup, touchend or touchcancel)
+                .on('end', function () {
+
+                })
+        )
 
 
 
