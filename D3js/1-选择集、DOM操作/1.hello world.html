@@ -71,6 +71,7 @@
 
         // 给选择的每个h3项设置样式(不同样式)
         h3.style("color", (elem, index, eleArr) => {
+			console.log(elem, index, eleArr);
             const h = d3.randomUniform(0, 360)();
             console.log(h);
             return `hsl(${h}, 100%, 50%`;
