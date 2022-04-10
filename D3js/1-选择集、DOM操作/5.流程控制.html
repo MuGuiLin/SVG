@@ -91,28 +91,22 @@
     <script>
         console.dir(d3);
 
-
         // 选择1个dom
         const a = d3.select('a');
         console.log('选择1个dom', a);
-
 
         // 根据ID名 选择1个dom
         const id_a = d3.select('#a');
         console.log('根据ID名 选择1个dom', id_a);
 
-
         // 选择多个dom
         const all = d3.selectAll('a');
         console.log('选择多个dom', all);
         console.log('选择多个dom的个数据', all.size());
-        
-
 
         // 根据类名 选择多个dom
         const class_a = d3.selectAll('.a');
         console.log('根据类名, 选择多个dom', class_a);
-
 
         // 选择多个元素下指定符合条件的元素
         const b_all = d3.select("p").selectAll("b");
